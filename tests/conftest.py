@@ -1,5 +1,4 @@
 import os
-import pytest
 
 # Set all env vars before any app imports
 os.environ.setdefault("DATABASE_URL", "postgresql+psycopg://ci:ci-only@localhost:5432/kb_test")

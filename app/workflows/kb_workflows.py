@@ -59,7 +59,8 @@ async def save_draft_to_db(draft: dict, workflow_id: str) -> str:
 
 @activity.defn
 async def notify_human_agent(article_id: str, draft: dict) -> None:
-    import os, httpx
+    import os
+    import httpx
 
     webhook_url = os.getenv("NOTIFICATION_WEBHOOK_URL")
     if not webhook_url:

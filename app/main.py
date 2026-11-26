@@ -1,10 +1,10 @@
+from contextlib import asynccontextmanager
+
 from dotenv import load_dotenv
-
-load_dotenv()
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
+
+load_dotenv()  # must run before app.db.models reads DATABASE_URL at import
 
 
 @asynccontextmanager
@@ -30,7 +30,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from app.api.routes import router
+from app.api.routes import router  # noqa: E402  (needs the env loaded above)
 
 app.include_router(router, prefix="/api/v1")
 
