@@ -1,0 +1,82 @@
+name: CI — Test & Lint
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: ci  # throwaway, CI-only container
+          POSTGRES_PASSWORD: ci-only
+          POSTGRES_DB: kb_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      DATABASE_URL: postgresql+psycopg://ci:ci-only@localhost:5432/kb_test
+      TEMPORAL_HOST: localhost:7233
+      FIREWORKS_API_KEY: ${{ secrets.FIREWORKS_API_KEY }}
+      API_KEYS: ${{ vars.TEST_API_KEYS || 'test-key-1,test-key-2' }}
+      NOTIFICATION_WEBHOOK_URL: ""
+      PYTHONPATH: .
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2    
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio httpx ruff
+
+      - name: Lint with Ruff
+        run: ruff check app/ tests/ --ignore E501
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short
+
+  docker-build-check:
+    runs-on: ubuntu-latest
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.10.0
+
+      - name: Build Docker image (verify it builds)
+        uses: docker/build-push-action@v6.15.0
+        with:
+          context: .
+          push: false
+          tags: kb-agent:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
