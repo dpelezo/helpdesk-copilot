@@ -16,12 +16,12 @@ async def test_health_no_auth_needed():
 
 @pytest.mark.asyncio
 async def test_protected_route_no_key():
-    """Request with no API key should return 403."""
+    """Request with no API key should return 401."""
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
         response = await client.get("/api/v1/kb-drafts")
-    assert response.status_code == 403
+    assert response.status_code == 401
 
 
 @pytest.mark.asyncio
@@ -70,7 +70,7 @@ async def test_kb_list_protected():
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
         response = await client.get("/api/v1/kb")
-    assert response.status_code == 403
+    assert response.status_code == 401
 
 
 @pytest.mark.asyncio
@@ -89,7 +89,7 @@ async def test_kb_list_with_valid_key():
 
 @pytest.mark.asyncio
 async def test_post_ticket_no_key():
-    """POST ticket without key should return 403."""
+    """POST ticket without key should return 401."""
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
@@ -102,4 +102,4 @@ async def test_post_ticket_no_key():
                 "conversation": [],
             },
         )
-    assert response.status_code == 403
+    assert response.status_code == 401

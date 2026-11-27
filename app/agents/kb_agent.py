@@ -150,7 +150,7 @@ def check_duplicates(state: AgentState) -> AgentState:
 
         duplicate_of = best_id if best_score > 0.85 else None
         return {**state, "similarity_score": best_score, "duplicate_of": duplicate_of}
-    except Exception as e:
+    except Exception:
         return {**state, "similarity_score": 0.0, "duplicate_of": None}
 
 

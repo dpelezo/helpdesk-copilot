@@ -3,11 +3,12 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Security
 from temporalio.client import Client
 from app.workflows.kb_workflows import KBCreationWorkflow
-from app.db.models import get_db, KBArticle, KBStatus, slugify
+from app.db.models import get_db, KBArticle, KBStatus
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update
+from sqlalchemy import select
 from app.auth.auth import verify_api_key
-import os, uuid
+import os
+import uuid
 
 router = APIRouter()
 RequireAuth = Security(verify_api_key)
@@ -56,7 +57,6 @@ def article_to_helpdesk_format(article: KBArticle) -> dict:
 
 
 async def get_temporal_client() -> Client:
-    import os
     from temporalio.client import Client
 
     host = os.getenv("TEMPORAL_HOST", "localhost:7233")
