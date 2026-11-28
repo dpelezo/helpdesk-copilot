@@ -30,9 +30,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from app.api.reviews import router as review_router  # noqa: E402
 from app.api.routes import router  # noqa: E402  (needs the env loaded above)
 
 app.include_router(router, prefix="/api/v1")
+app.include_router(review_router, prefix="/api/v1")
 
 
 @app.get("/health", tags=["Health"])

@@ -3,6 +3,7 @@ import asyncio, os
 from temporalio.client import Client
 from temporalio.worker import Worker
 from langsmith import traceable
+from app.workflows import review
 from app.workflows.kb_workflows import (
     KBCreationWorkflow,
     fetch_existing_kb,
@@ -48,8 +49,16 @@ async def main():
         ],
     )
 
+    # The knowledge review (#28) uses pydantic models, so it gets a client with that converter.
+    review_worker = Worker(
+        await review.connect(),
+        task_queue=review.TASK_QUEUE,
+        workflows=[review.ReviewWorkflow],
+        activities=review.ACTIVITIES,
+    )
+
     print(f"🚀 Worker started — host: {host} namespace: {namespace}")
-    await worker.run()
+    await asyncio.gather(worker.run(), review_worker.run())
 
 
 if __name__ == "__main__":

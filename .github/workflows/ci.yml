@@ -58,6 +58,9 @@ jobs:
         run: ruff check app/ tests/ --ignore E501
 
       - name: Tests
+        # The review workflow tests need Temporal's test server; here a skip is a failure.
+        env:
+          REQUIRE_TEMPORAL_TESTS: "1"
         run: pytest tests/ -v --tb=short
 
   docker:
