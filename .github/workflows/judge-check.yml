@@ -1,0 +1,38 @@
+name: judge check
+
+# Issue #26: check the cause-matching judge (GLM-5.2) against the 24 hand
+# labels in evals/extraction/judge_labels.jsonl. Fails below 90% agreement.
+# Manual only (Actions > judge check > Run workflow): every run spends Telnyx credit.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: judge check (hand labels)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      LLM_MODEL: zai-org/GLM-5.2
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check the key is set (without printing it)
+        run: test -n "$TELNYX_API_KEY" || { echo "TELNYX_API_KEY secret is missing"; exit 1; }
+
+      - name: Judge against the hand labels
+        run: python -m app.evals.extraction_score

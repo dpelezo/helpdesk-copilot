@@ -1,0 +1,24 @@
+{"extracted": "If your Microsoft cloud storage is full, you cannot send or receive email.", "cause": "mailbox-full", "same": true, "note": "Same cause, product wording."}
+{"extracted": "An attachment larger than 20 MB keeps the message stuck in the Outbox.", "cause": "mailbox-full", "same": false, "note": "Near miss: one big message, not a full mailbox."}
+{"extracted": "Exchange Online has a service incident, so messages wait in the Outbox.", "cause": "email-service-outage", "same": true, "note": ""}
+{"extracted": "Outlook is set to Work Offline, so nothing is sent.", "cause": "email-service-outage", "same": false, "note": "Near miss: a client setting, not a service outage."}
+{"extracted": "Outlook keeps asking for a password because the account password has expired.", "cause": "outlook-password-expired", "same": true, "note": ""}
+{"extracted": "The account password has expired.", "cause": "mailbox-full", "same": false, "note": "Different cause in the same issue."}
+{"extracted": "The drive is almost out of space because of large files in Downloads.", "cause": "disk-nearly-full", "same": true, "note": ""}
+{"extracted": "Temporary Windows Update files are taking up a lot of space on the C: drive.", "cause": "update-cache-filling-disk", "same": true, "note": ""}
+{"extracted": "Temporary Windows Update files are taking up a lot of space on the C: drive.", "cause": "disk-nearly-full", "same": false, "note": "Near miss: update cache, not user files."}
+{"extracted": "When the processor gets too hot it slows itself down to cool off.", "cause": "slow-thermal-throttling", "same": true, "note": "Throttling described without the word."}
+{"extracted": "Too many apps start automatically and keep running in the background.", "cause": "slow-low-disk", "same": false, "note": "Different cause in the same issue."}
+{"extracted": "Updates downloading and installing in the background can slow the PC down.", "cause": "slow-pending-updates", "same": true, "note": ""}
+{"extracted": "Blocked vents or a fan that has stopped working make the laptop run hot.", "cause": "overheating-fan", "same": true, "note": ""}
+{"extracted": "Blocked vents or a fan that has stopped working make the laptop run hot.", "cause": "overheating-pending-firmware", "same": false, "note": "Hardware cause vs pending updates."}
+{"extracted": "The installation fails because there is not enough free space on the drive.", "cause": "install-disk-full", "same": true, "note": ""}
+{"extracted": "The installation fails because there is not enough free space on the drive.", "cause": "install-catalog-outage", "same": false, "note": "Local disk vs the catalog service."}
+{"extracted": "Some app updates need the latest version of Windows, so install pending Windows updates first.", "cause": "app-update-waits-for-os", "same": true, "note": ""}
+{"extracted": "Microsoft Defender security intelligence is out of date.", "cause": "av-definitions-stale", "same": true, "note": "Vendor name for definitions."}
+{"extracted": "Microsoft Defender security intelligence is out of date.", "cause": "av-low-disk", "same": false, "note": "Symptom shared, cause differs: no disk space."}
+{"extracted": "The printer shows as Offline in Printers & scanners.", "cause": "printer-offline", "same": true, "note": ""}
+{"extracted": "Paper is stuck inside the printer.", "cause": "printer-paper-jam", "same": true, "note": ""}
+{"extracted": "Paper is stuck inside the printer.", "cause": "printer-offline", "same": false, "note": "Different cause in the same issue."}
+{"extracted": "The VPN connection fails because the client certificate is no longer valid.", "cause": "vpn-certificate-expired", "same": true, "note": ""}
+{"extracted": "The VPN connection fails because the client certificate is no longer valid.", "cause": "vpn-client-outdated", "same": false, "note": "Certificate vs client version."}
