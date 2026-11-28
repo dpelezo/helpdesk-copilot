@@ -17,6 +17,11 @@ published, and whether it is the current release. Exactly one release is current
   ``text`` property are there for Cypher queries and retrieval (#30, #31).
 
 Only approved facts are published: a release with anything ``unpublishable()`` is refused.
+
+**Vectors (#30).** ``embed`` stores an embedding on a release's issue, symptom and cause nodes
+and records the model and dimensions on its manifest; ``similar`` searches them through
+Neo4j's native vector index, always with the model the release was embedded with. Vectors are
+derived data: they do not change the release's content or hash.
 """
 
 from __future__ import annotations
@@ -73,10 +78,12 @@ class Manifest:
     edges: int
     published_at: str
     status: str  # "current", "superseded" or "rolled_back"
+    embedding_model: str | None = None
+    embedding_dimensions: int | None = None
 
     @classmethod
     def of(cls, record: dict[str, Any]) -> Manifest:
-        return cls(**{k: record[k] for k in cls.__dataclass_fields__})
+        return cls(**{k: record.get(k) for k in cls.__dataclass_fields__})
 
 
 def decide(release: KnowledgeRelease, existing: Manifest | None, current: Manifest | None) -> str:
@@ -122,7 +129,11 @@ SCHEMA = [
     "CREATE INDEX knowledge_release IF NOT EXISTS FOR (n:Knowledge) ON (n.release_id)",
 ]
 
-_MANIFEST = "r {.release_id, .sha256, .supersedes, .nodes, .edges, .published_at, .status}"
+_MANIFEST = ("r {.release_id, .sha256, .supersedes, .nodes, .edges, .published_at, .status, "
+             ".embedding_model, .embedding_dimensions}")
+VECTOR_INDEX = "knowledge_embedding"
+# Entry points for a ticket's text (#31): what a user describes, and what can explain it.
+EMBEDDED_KINDS = ("issue", "symptom", "cause")
 
 
 class GraphStore:
@@ -224,6 +235,77 @@ class GraphStore:
         self._run(work)
         return self.manifest(current.release_id), self.manifest(current.supersedes)
 
+    # Vectors
+
+    def _vector_dimensions(self) -> int | None:
+        with self.driver.session(database=self.database) as session:  # SHOW runs outside a transaction function
+            rows = session.run("SHOW VECTOR INDEXES YIELD name, options WHERE name = $name RETURN options",
+                               name=VECTOR_INDEX).data()
+        if not rows:
+            return None
+        return int(rows[0]["options"]["indexConfig"]["vector.dimensions"])
+
+    def embed(self, embed, model: str, release_id: str | None = None) -> tuple[str, int]:
+        """Embed a release's entry nodes. Returns ('embedded' or 'noop', how many nodes)."""
+        manifest = self.manifest(release_id) if release_id else self.current()
+        if manifest is None:
+            raise PublishError(f"no release {release_id}" if release_id else "nothing is published yet")
+        if manifest.embedding_model == model:
+            return "noop", 0
+        if manifest.embedding_model is not None:
+            raise PublishError(f"{manifest.release_id} is embedded with {manifest.embedding_model}; "
+                               f"publish a new release to embed with {model}")
+        rows = self._read(lambda tx: tx.run(
+            "MATCH (n:Knowledge {release_id: $id}) WHERE n.kind IN $kinds RETURN n.uid AS uid, n.text AS text "
+            "ORDER BY n.pos", id=manifest.release_id, kinds=list(EMBEDDED_KINDS)).data())
+        vectors = embed([r["text"] for r in rows]) if rows else []
+        dims = len(vectors[0]) if vectors else 0
+        if rows and any(len(v) != dims for v in vectors):
+            raise PublishError("the embeddings do not all have the same length")
+        existing = self._vector_dimensions()
+        if rows and existing is not None and existing != dims:
+            raise PublishError(f"the vector index holds {existing}-dimension vectors; {model} gives {dims}")
+        if rows and existing is None:
+            with self.driver.session(database=self.database) as session:
+                # dims is a length we computed, not input, so it is safe to inline.
+                session.run(
+                    f"CREATE VECTOR INDEX {VECTOR_INDEX} IF NOT EXISTS FOR (n:Knowledge) ON n.embedding "
+                    f"OPTIONS {{indexConfig: {{`vector.dimensions`: {int(dims)}, `vector.similarity_function`: 'cosine'}}}}"
+                ).consume()
+
+        def work(tx):
+            tx.run("UNWIND $rows AS row MATCH (n:Knowledge {uid: row.uid}) "
+                   "CALL db.create.setNodeVectorProperty(n, 'embedding', row.vector)",
+                   rows=[{"uid": r["uid"], "vector": v} for r, v in zip(rows, vectors, strict=True)]).consume()
+            tx.run("MATCH (r:Release {release_id: $id}) SET r.embedding_model = $model, r.embedding_dimensions = $dims",
+                   id=manifest.release_id, model=model, dims=dims or None).consume()
+
+        self._run(work)
+        with self.driver.session(database=self.database) as session:
+            session.run("CALL db.awaitIndexes(300)").consume()
+        return "embedded", len(rows)
+
+    def similar(self, text: str, embed, model: str, k: int = 5, kinds: tuple[str, ...] = EMBEDDED_KINDS,
+                release_id: str | None = None) -> list[tuple[str, float]]:
+        """Nodes of one release closest to ``text``: [(node id, cosine score)], best first."""
+        manifest = self.manifest(release_id) if release_id else self.current()
+        if manifest is None:
+            raise PublishError(f"no release {release_id}" if release_id else "nothing is published yet")
+        if manifest.embedding_model is None:
+            raise PublishError(f"{manifest.release_id} has no embeddings; run embed first")
+        if manifest.embedding_model != model:
+            raise PublishError(f"{manifest.release_id} is embedded with {manifest.embedding_model}, not {model}; "
+                               "a query must use the same model")
+        [vector] = embed([text])
+        # The index spans every release; ask for enough neighbours that k survive the filter.
+        wide = min(1000, k * 20 + manifest.nodes)
+        rows = self._read(lambda tx: tx.run(
+            "CALL db.index.vector.queryNodes($index, $wide, $vector) YIELD node, score "
+            "WHERE node.release_id = $id AND node.kind IN $kinds "
+            "RETURN node.id AS id, score ORDER BY score DESC, id LIMIT $k",
+            index=VECTOR_INDEX, wide=wide, vector=vector, id=manifest.release_id, kinds=list(kinds), k=k).data())
+        return [(r["id"], round(float(r["score"]), 4)) for r in rows]
+
     # Read back
 
     def read(self, release_id: str | None = None) -> KnowledgeRelease:
@@ -264,7 +346,9 @@ def connect():
 
 def _show(m: Manifest) -> str:
     since = f", supersedes {m.supersedes}" if m.supersedes else ""
-    return f"{m.release_id} [{m.status}] {m.nodes} nodes, {m.edges} relationships, published {m.published_at}{since}"
+    vectors = f", embedded with {m.embedding_model}" if m.embedding_model else ""
+    return (f"{m.release_id} [{m.status}] {m.nodes} nodes, {m.edges} relationships, "
+            f"published {m.published_at}{since}{vectors}")
 
 
 def main(argv: list[str] | None = None, driver=None) -> int:
@@ -273,6 +357,7 @@ def main(argv: list[str] | None = None, driver=None) -> int:
     sub.add_parser("publish", help="Publish an approved release file.").add_argument("release", type=Path)
     sub.add_parser("rollback", help="Make the previous release current again.")
     sub.add_parser("history", help="List every published release.")
+    sub.add_parser("embed", help="Embed the current release's entry nodes with LLM_EMBED_MODEL.")
     args = parser.parse_args(argv)
     owned = driver is None
     driver = driver or connect()
@@ -282,6 +367,16 @@ def main(argv: list[str] | None = None, driver=None) -> int:
             release = KnowledgeRelease.model_validate_json(args.release.read_text())
             action, manifest = store.publish(release)
             print(("Already published, nothing changed: " if action == "noop" else "Published: ") + _show(manifest))
+        elif args.command == "embed":
+            from app.llm import ChatClient
+            from app.retrieval.vectors import CachedEmbedder
+
+            client = ChatClient.from_env()
+            if not client.embed_model:
+                raise PublishError("set LLM_EMBED_MODEL")
+            action, count = store.embed(CachedEmbedder(client, client.embed_model), client.embed_model)
+            print(f"Embedded {count} nodes with {client.embed_model}" if action == "embedded"
+                  else f"Already embedded with {client.embed_model}; nothing changed")
         elif args.command == "rollback":
             old, now = store.rollback()
             print(f"Rolled back: {_show(old)}\nCurrent: {_show(now)}")

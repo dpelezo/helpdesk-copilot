@@ -253,3 +253,77 @@ def test_every_canonical_issue_can_be_published(store):
     release, _ = rv.apply(draft, "sha", decisions, "release-all")
     store.publish(release, T1)
     assert store.read() == release
+
+
+# ── Vectors in the graph (#30) ─────────────────────────────────────────
+
+
+class Words:
+    """Deterministic stand-in embeddings: each word adds to one of ``dims`` dimensions."""
+
+    def __init__(self, dims=64):
+        self.dims = dims
+
+    def __call__(self, texts):
+        import hashlib
+
+        out = []
+        for text in texts:
+            v = [0.0] * self.dims
+            for w in text.lower().split():
+                v[int(hashlib.md5(w.strip(".,").encode()).hexdigest(), 16) % self.dims] += 1.0
+            v[-1] += 0.01
+            out.append(v)
+        return out
+
+
+def test_entry_nodes_are_embedded_and_found_by_the_vector_index(store):
+    r = build()
+    store.publish(r, T1)
+    action, n = store.embed(Words(), "fake-embed")
+    assert action == "embedded" and n == 3  # issue, symptom, cause
+    assert store.current().embedding_model == "fake-embed" and store.current().embedding_dimensions == 64
+    hits = store.similar("too many failed sign-ins", Words(), "fake-embed", k=2)
+    cause = next(x.id for x in r.nodes if x.kind == "cause")
+    assert hits[0][0] == cause and len(hits) == 2
+    only_symptoms = store.similar("sign-in", Words(), "fake-embed", kinds=("symptom",))
+    assert [x.kind for x in r.nodes if x.id == only_symptoms[0][0]] == ["symptom"]
+    # Vectors are derived data: the release reads back unchanged.
+    assert store.read() == r
+
+
+def test_embedding_twice_is_a_noop_and_another_model_is_refused(store):
+    store.publish(build(), T1)
+    store.embed(Words(), "fake-embed")
+    assert store.embed(Words(), "fake-embed") == ("noop", 0)
+    with pytest.raises(pub.PublishError, match="publish a new release"):
+        store.embed(Words(), "other-embed")
+
+
+def test_a_query_must_use_the_releases_model(store):
+    store.publish(build(), T1)
+    with pytest.raises(pub.PublishError, match="no embeddings"):
+        store.similar("x", Words(), "fake-embed")
+    store.embed(Words(), "fake-embed")
+    with pytest.raises(pub.PublishError, match="a query must use the same model"):
+        store.similar("x", Words(), "other-embed")
+
+
+def test_search_stays_inside_one_release(store):
+    store.publish(build(), T1)
+    store.embed(Words(), "fake-embed")
+    store.publish(build("release-2", supersedes="release-1", extra_cause="The password expired."), T2)
+    store.embed(Words(), "fake-embed")
+    current = store.similar("password expired", Words(), "fake-embed", k=10)
+    old = store.similar("password expired", Words(), "fake-embed", k=10, release_id="release-1")
+    assert len(current) == 4 and len(old) == 3
+    assert any("password" in x.description.lower() for x in store.read().nodes
+               if x.kind == "cause" and x.id == current[0][0])
+
+
+def test_vectors_of_another_length_are_refused(store):
+    store.publish(build(), T1)
+    store.embed(Words(64), "fake-embed")
+    store.publish(build("release-2", supersedes="release-1", extra_cause="The password expired."), T2)
+    with pytest.raises(pub.PublishError, match="64-dimension"):
+        store.embed(Words(32), "small-embed")
