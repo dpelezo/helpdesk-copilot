@@ -48,9 +48,9 @@ _CAUSES = """
 MATCH (i:Issue {release_id: $rid, id: $issue})-[:HAS_POSSIBLE_CAUSE]->(c:Cause {release_id: $rid})
 OPTIONAL MATCH (c)-[:MITIGATED_BY]->(s:Solution {release_id: $rid})
 OPTIONAL MATCH (d:Diagnostic {release_id: $rid})-[:TESTS_FOR]->(c)
-RETURN i.text AS issue, c.id AS id, c.text AS summary, collect(DISTINCT s.text) AS fixes,
+RETURN i.text AS issue, c.id AS id, c.text AS summary, c.pos AS pos, collect(DISTINCT s.text) AS fixes,
        collect(DISTINCT d.data) AS checks
-ORDER BY c.pos
+ORDER BY pos
 """
 _OWNERS = """
 MATCH (i:Issue {release_id: $rid})-[:HAS_POSSIBLE_CAUSE]->(c:Cause {release_id: $rid})
