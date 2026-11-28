@@ -19,26 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: ci  # throwaway, CI-only container
-          POSTGRES_PASSWORD: ci-only
-          POSTGRES_DB: kb_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
-
     env:
-      DATABASE_URL: postgresql+psycopg://ci:ci-only@localhost:5432/kb_test
       TEMPORAL_HOST: localhost:7233
       API_KEYS: test-key-1,test-key-2
-      NOTIFICATION_WEBHOOK_URL: ""
       PYTHONPATH: .
 
     steps:
