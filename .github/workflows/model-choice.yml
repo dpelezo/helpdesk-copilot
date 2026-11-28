@@ -16,6 +16,9 @@ on:
       models:
         description: Comma-separated model ids
         default: zai-org/GLM-5.3-Flash,moonshotai/Kimi-K2.6,zai-org/GLM-5.2
+      extra_body:
+        description: JSON merged into each request (default turns reasoning off, as on voice calls)
+        default: '{"chat_template_kwargs":{"enable_thinking":false}}'
 
 permissions:
   contents: read
@@ -34,6 +37,7 @@ jobs:
     env:
       TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
       MODELS: ${{ inputs.models || 'zai-org/GLM-5.3-Flash,moonshotai/Kimi-K2.6,zai-org/GLM-5.2' }}
+      LLM_EXTRA_BODY: ${{ inputs.extra_body || '{"chat_template_kwargs":{"enable_thinking":false}}' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

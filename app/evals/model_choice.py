@@ -38,21 +38,32 @@ SYSTEM = (
     "You are an IT helpdesk diagnostic assistant for Kestrel Ridge Logistics. "
     "Find the root cause of the employee's problem by running checks with the tools. "
     "Run one check at a time and base your conclusion only on what the checks return. "
-    "When you know the cause, or every relevant check is healthy and you cannot tell, "
-    "call submit_diagnosis. Use outcome 'escalate' when the checks show nothing wrong."
+    "Then call submit_diagnosis with one of two outcomes:\n"
+    "- 'fix': a check shows what is wrong. Use this even when the repair needs a "
+    "technician, a hardware visit, an approval or simply waiting for a service to recover; "
+    "the helpdesk agent handles that once the cause is known.\n"
+    "- 'escalate': you ran the relevant checks and every one came back healthy, so the "
+    "cause is not visible in these systems."
 )
 
 SUBMIT = {
     "type": "function",
     "function": {
         "name": "submit_diagnosis",
-        "description": "Finish: give the root cause, the evidence from your checks, and fix or escalate.",
+        "description": (
+            "Finish. outcome 'fix' when a check shows the cause (even if a technician or approval "
+            "is needed to repair it); 'escalate' only when every relevant check is healthy."
+        ),
         "parameters": {
             "type": "object",
             "properties": {
                 "root_cause": {"type": "string", "description": "The cause, in one sentence."},
                 "evidence": {"type": "string", "description": "Which checks showed it."},
-                "outcome": {"type": "string", "enum": ["fix", "escalate"]},
+                "outcome": {
+                    "type": "string",
+                    "enum": ["fix", "escalate"],
+                    "description": "fix = a check found the cause; escalate = checks found nothing wrong.",
+                },
             },
             "required": ["root_cause", "evidence", "outcome"],
         },

@@ -7,10 +7,12 @@ never logged, printed or included in an error message.
     LLM_BASE_URL   default https://api.telnyx.com/v2/ai/openai
     LLM_MODEL      required
     LLM_API_KEY    or TELNYX_API_KEY
+    LLM_EXTRA_BODY optional JSON merged into each request, e.g. to turn reasoning off
 """
 
 from __future__ import annotations
 
+import json
 import os
 import time
 from dataclasses import dataclass, field
@@ -51,6 +53,9 @@ class ChatClient:
     timeout: float = 60.0
     retries: int = 3
     transport: httpx.BaseTransport | None = field(default=None, repr=False)
+    # Provider-specific fields merged into every request, such as a switch that turns
+    # reasoning off. Set with LLM_EXTRA_BODY (JSON). Never holds secrets.
+    extra_body: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_env(cls, model: str | None = None) -> ChatClient:
@@ -60,7 +65,19 @@ class ChatClient:
             raise LLMError("set LLM_API_KEY or TELNYX_API_KEY")
         if not chosen:
             raise LLMError("set LLM_MODEL")
-        return cls(model=chosen, api_key=key, base_url=os.environ.get("LLM_BASE_URL") or DEFAULT_BASE_URL)
+        extra = os.environ.get("LLM_EXTRA_BODY") or "{}"
+        try:
+            extra_body = json.loads(extra)
+        except ValueError:
+            raise LLMError("LLM_EXTRA_BODY is not valid JSON") from None
+        if not isinstance(extra_body, dict):
+            raise LLMError("LLM_EXTRA_BODY must be a JSON object")
+        return cls(
+            model=chosen,
+            api_key=key,
+            base_url=os.environ.get("LLM_BASE_URL") or DEFAULT_BASE_URL,
+            extra_body=extra_body,
+        )
 
     def complete(
         self,
@@ -71,6 +88,7 @@ class ChatClient:
         max_tokens: int = 1024,
     ) -> Reply:
         body: dict[str, Any] = {
+            **self.extra_body,
             "model": self.model,
             "messages": messages,
             "temperature": temperature,

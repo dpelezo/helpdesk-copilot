@@ -111,3 +111,27 @@ def test_from_env_reads_the_telnyx_key_and_requires_a_model(monkeypatch):
         llm.ChatClient.from_env()
     made = llm.ChatClient.from_env("zai-org/GLM-5.3-Flash")
     assert made.model == "zai-org/GLM-5.3-Flash" and made.base_url == llm.DEFAULT_BASE_URL
+
+
+def test_extra_body_is_merged_but_cannot_override_the_model():
+    seen = {}
+
+    def handler(request):
+        seen.update(json.loads(request.content))
+        return httpx.Response(200, json=ok_body())
+
+    client(handler, extra_body={"chat_template_kwargs": {"enable_thinking": False}, "model": "other"}).complete([])
+    assert seen["chat_template_kwargs"] == {"enable_thinking": False}
+    assert seen["model"] == "m"
+
+
+def test_from_env_parses_and_validates_extra_body(monkeypatch):
+    monkeypatch.setenv("TELNYX_API_KEY", KEY)
+    monkeypatch.setenv("LLM_EXTRA_BODY", '{"chat_template_kwargs": {"enable_thinking": false}}')
+    assert llm.ChatClient.from_env("m").extra_body == {"chat_template_kwargs": {"enable_thinking": False}}
+    monkeypatch.setenv("LLM_EXTRA_BODY", "not json")
+    with pytest.raises(llm.LLMError, match="not valid JSON"):
+        llm.ChatClient.from_env("m")
+    monkeypatch.setenv("LLM_EXTRA_BODY", "[1]")
+    with pytest.raises(llm.LLMError, match="JSON object"):
+        llm.ChatClient.from_env("m")
