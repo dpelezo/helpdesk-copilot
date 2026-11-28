@@ -4,20 +4,18 @@
 
 An assistant for IT helpdesk agents. It walks a troubleshooting procedure step by step, runs one check per step against the company's systems, and recommends a fix with evidence. A human approves any account change before it happens.
 
-> **Status: just started.** This repo began from a proof of concept: a knowledge-base drafting agent with a Temporal approval workflow. The approval workflow, API auth, database layer, Docker setup and CI carry over. The agent is being rewritten for procedure walking.
+> **Status: week 2 of 4.** Knowledge is extracted, resolved and reviewed; publishing to the graph and the diagnosis agent come next. This repo began from a proof of concept (a KB-drafting agent with a Temporal approval workflow); the POC's agent, routes and database table are retired, and its review gate was rebuilt for knowledge releases.
 
-## What carries over
+## How knowledge gets in (Workflow A)
 
-- Temporal workflow with a human review gate (accept, accept with feedback, regenerate, reject).
-- FastAPI with API-key auth, SQLAlchemy and Postgres.
-- Docker, Compose and GitHub Actions CI.
+| Step | Command | Output |
+| --- | --- | --- |
+| Collect sources | `python -m app.knowledge.sources` | `knowledge/sources/manifest.json` (URLs and hashes; no page text) |
+| Extract (paid, on demand) | `extraction` workflow | `evals/results/extraction.json` |
+| Resolve and validate | `make resolve` | `knowledge/draft/release.json`, [`reports/validation.md`](reports/validation.md) |
+| Review (Temporal) | `python -m app.workflows.review_cli start --release-id <id>` | `knowledge/releases/<id>.json` with approval provenance |
 
-## What is being rewritten
-
-- The agent: from drafting a KB article to a supervisor that walks procedures.
-- Error handling: failures surface instead of returning a silent zero score.
-- Duplicate checks: embeddings are cached instead of recomputed per request.
-- LLM output: validated against a schema instead of stripped and parsed by hand.
+A reviewer approves, edits, rejects or sends back each issue, from the CLI or `/api/v1/reviews` (API-key auth). Only approved facts reach the release.
 
 ## Data
 
@@ -62,7 +60,7 @@ cp .env.example .env   # fill in your own values; never commit .env
 docker compose up --build
 ```
 
-`FIREWORKS_API_KEY`, `POSTGRES_USER` and `POSTGRES_PASSWORD` have no defaults and must be set in `.env`. Deployment (CD) is added back once the copilot is ready to ship.
+`TELNYX_API_KEY`, `API_KEYS`, `POSTGRES_USER` and `POSTGRES_PASSWORD` (Temporal's database) have no defaults and must be set in `.env`. The worker runs the review workflow; the Temporal UI is on port 8080. Deployment (CD) is added back once the copilot is ready to ship.
 
 ## Contributing
 

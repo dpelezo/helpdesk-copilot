@@ -32,6 +32,6 @@ These rules apply to any AI assistant (Claude Code, Codex, Cursor and others) an
 
 - Python 3.13, dependencies pinned in `requirements.txt`.
 - Run locally: `cp .env.example .env`, fill in values, `docker compose up --build`.
-- Tests need Postgres; CI starts a throwaway container.
+- Tests need no database. The review workflow tests use Temporal's time-skipping test server, which the SDK downloads; CI requires them (`REQUIRE_TEMPORAL_TESTS=1`).
 - `main` changes only through pull requests with passing checks; merges happen when the owner approves.
 - Decisions are recorded in `docs/adr/`. Read them before proposing a change to the design.
