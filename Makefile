@@ -1,4 +1,4 @@
-.PHONY: company seed lint test conformance tickets
+.PHONY: company seed lint test conformance tickets resolve
 
 # Regenerate the mock company fixture (fixtures/company.json).
 company:
@@ -21,3 +21,7 @@ conformance:
 # Regenerate the eval tickets (eval ground truth: change only in its own PR).
 tickets:
 	python -m app.mock.tickets
+
+# Build the draft knowledge release and its validation report from the committed extraction (no model calls).
+resolve:
+	python -m app.knowledge.resolve
