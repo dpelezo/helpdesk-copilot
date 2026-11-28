@@ -1,0 +1,3302 @@
+{
+  "eval": "retrieval: right cause in the top 5",
+  "split": "heldout",
+  "date": "2026-11-28",
+  "embedding_model": "thenlper/gte-large",
+  "settings": {
+    "top_k": 5,
+    "rrf_k": 60,
+    "hybrid_depth": 20
+  },
+  "tickets": 92,
+  "documents": 59,
+  "hit_at_5": {
+    "bm25": 82.6,
+    "vector": 97.8,
+    "hybrid": 95.7
+  },
+  "mrr": {
+    "bm25": 0.44,
+    "vector": 0.643,
+    "hybrid": 0.593
+  },
+  "per_issue": {
+    "hardware--laptop-overheating": {
+      "tickets": 9,
+      "bm25": 100.0,
+      "vector": 100.0,
+      "hybrid": 100.0
+    },
+    "identity--account-locked": {
+      "tickets": 9,
+      "bm25": 100.0,
+      "vector": 100.0,
+      "hybrid": 100.0
+    },
+    "identity--mfa-lockout": {
+      "tickets": 9,
+      "bm25": 33.3,
+      "vector": 77.8,
+      "hybrid": 55.6
+    },
+    "microsoft-office--outlook-not-sending-emails": {
+      "tickets": 9,
+      "bm25": 100.0,
+      "vector": 100.0,
+      "hybrid": 100.0
+    },
+    "network--vpn-not-connecting": {
+      "tickets": 10,
+      "bm25": 80.0,
+      "vector": 100.0,
+      "hybrid": 100.0
+    },
+    "network--wi-fi-not-connecting": {
+      "tickets": 10,
+      "bm25": 100.0,
+      "vector": 100.0,
+      "hybrid": 100.0
+    },
+    "security--antivirus-not-updating": {
+      "tickets": 9,
+      "bm25": 77.8,
+      "vector": 100.0,
+      "hybrid": 100.0
+    },
+    "security--phishing-email-detected": {
+      "tickets": 9,
+      "bm25": 77.8,
+      "vector": 100.0,
+      "hybrid": 100.0
+    },
+    "software--program-won-t-install": {
+      "tickets": 9,
+      "bm25": 100.0,
+      "vector": 100.0,
+      "hybrid": 100.0
+    },
+    "system--system-running-slow": {
+      "tickets": 9,
+      "bm25": 55.6,
+      "vector": 100.0,
+      "hybrid": 100.0
+    }
+  },
+  "embedded": {
+    "texts": 91,
+    "from_cache": 152
+  },
+  "rows": [
+    {
+      "ticket": "HO-001",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-gateway-outage",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "cause:av-remote-vpn-expired",
+          "policy:vpn-1"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:av-remote-vpn-expired",
+          "cause:vpn-certificate-expired",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "cause:vpn-client-outdated"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-002",
+      "issue": "microsoft-office--outlook-not-sending-emails",
+      "cause": "mailbox-full",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "cause:mailbox-full",
+          "policy:mail-2"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:mailbox-full",
+          "cause:install-catalog-outage",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:mailbox-full",
+          "policy:mail-1",
+          "cause:phishing-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-003",
+      "issue": "software--program-won-t-install",
+      "cause": "install-disk-full",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "policy:sw-1",
+          "policy:dev-4"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "cause:disk-nearly-full",
+          "cause:update-cache-filling-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "policy:sw-1",
+          "cause:slow-pending-updates"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-004",
+      "issue": "security--antivirus-not-updating",
+      "cause": "av-remote-vpn-expired",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:sw-3",
+          "policy:sw-2",
+          "cause:av-definitions-stale",
+          "cause:mfa-not-enrolled",
+          "policy:sw-1"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:av-remote-vpn-expired",
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:vpn-certificate-expired",
+          "cause:app-update-catalog-degraded"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:av-definitions-stale",
+          "policy:sw-3",
+          "cause:av-remote-vpn-expired",
+          "cause:av-low-disk",
+          "cause:phishing-suspicious-sign-ins"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-006",
+      "issue": "security--phishing-email-detected",
+      "cause": "phishing-suspicious-sign-ins",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "policy:mail-2",
+          "cause:email-service-outage",
+          "cause:vpn-gateway-outage",
+          "cause:phishing-suspicious-sign-ins",
+          "policy:dev-4"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "policy:mail-2",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-4",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "policy:mail-2",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:email-service-outage",
+          "cause:phishing-account-locked",
+          "policy:mail-3"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-007",
+      "issue": "software--program-won-t-install",
+      "cause": "install-disk-full",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-008",
+      "issue": "microsoft-office--outlook-not-sending-emails",
+      "cause": "outlook-password-expired",
+      "bm25": {
+        "rank": 5,
+        "top": [
+          "policy:mail-1",
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "cause:outlook-password-expired"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:email-service-outage",
+          "cause:mailbox-full",
+          "cause:outlook-password-expired",
+          "cause:wifi-service-degraded",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:mailbox-full",
+          "cause:outlook-password-expired",
+          "cause:email-service-outage",
+          "cause:install-catalog-outage",
+          "policy:mail-1"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-009",
+      "issue": "system--system-running-slow",
+      "cause": "slow-thermal-throttling",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:dev-4",
+          "policy:mail-4"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:slow-pending-updates",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "cause:app-update-waits-for-os",
+          "cause:app-update-low-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 5,
+        "top": [
+          "cause:slow-pending-updates",
+          "policy:dev-4",
+          "cause:slow-low-disk",
+          "policy:mail-4",
+          "cause:slow-thermal-throttling"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-010",
+      "issue": "microsoft-office--outlook-not-sending-emails",
+      "cause": "outlook-password-expired",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "cause:mailbox-full",
+          "policy:mail-2"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:email-service-outage",
+          "cause:mailbox-full",
+          "cause:outlook-password-expired",
+          "cause:install-catalog-outage",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:mailbox-full",
+          "cause:phishing-account-locked",
+          "cause:phishing-suspicious-sign-ins"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-011",
+      "issue": "security--antivirus-not-updating",
+      "cause": "av-definitions-stale",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "policy:dev-1",
+          "cause:app-update-low-disk"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "policy:sw-3",
+          "cause:app-update-catalog-degraded"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "cause:app-update-low-disk",
+          "policy:sw-3"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-012",
+      "issue": "microsoft-office--outlook-not-sending-emails",
+      "cause": "email-service-outage",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "cause:mailbox-full",
+          "policy:mail-2"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:email-service-outage",
+          "cause:mailbox-full",
+          "cause:outlook-password-expired",
+          "cause:install-catalog-outage",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:mailbox-full",
+          "policy:mail-1",
+          "cause:phishing-suspicious-sign-ins"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-013",
+      "issue": "microsoft-office--outlook-not-sending-emails",
+      "cause": "email-service-outage",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:mailbox-full",
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:dev-4",
+          "policy:mail-1"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:mailbox-full",
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:printing-service-outage",
+          "cause:locked-expired-password"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:mailbox-full",
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "cause:printing-service-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-014",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-service-degraded",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:wifi-service-degraded",
+          "policy:vpn-1",
+          "policy:vpn-4",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:printer-offline",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "policy:vpn-4",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-015",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-account-locked",
+      "bm25": {
+        "rank": 5,
+        "top": [
+          "cause:vpn-client-outdated",
+          "cause:vpn-certificate-expired",
+          "policy:vpn-2",
+          "policy:vpn-3",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "cause:vpn-client-outdated",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 4,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "policy:vpn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-016",
+      "issue": "hardware--laptop-overheating",
+      "cause": "overheating-fan",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "cause:slow-low-disk"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:slow-low-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "policy:dev-3",
+          "cause:overheating-pending-firmware",
+          "cause:slow-thermal-throttling",
+          "cause:slow-low-disk"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-017",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-client-outdated",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:vpn-account-locked",
+          "cause:vpn-gateway-outage",
+          "cause:install-catalog-outage"
+        ]
+      },
+      "vector": {
+        "rank": 4,
+        "top": [
+          "cause:vpn-account-locked",
+          "cause:vpn-certificate-expired",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-client-outdated",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-account-locked",
+          "cause:vpn-client-outdated",
+          "cause:vpn-gateway-outage",
+          "policy:vpn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-018",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-service-degraded",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:wifi-service-degraded",
+          "policy:vpn-1",
+          "policy:vpn-4",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:printing-service-outage",
+          "cause:vpn-gateway-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:install-catalog-outage",
+          "policy:vpn-4"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-019",
+      "issue": "software--program-won-t-install",
+      "cause": "install-device-noncompliant",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "cause:disk-nearly-full"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-020",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-gateway-outage",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "cause:vpn-client-outdated",
+          "cause:vpn-certificate-expired",
+          "policy:vpn-2",
+          "policy:vpn-3",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-gateway-outage",
+          "cause:vpn-certificate-expired",
+          "cause:vpn-account-locked",
+          "cause:vpn-client-outdated",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "policy:vpn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-021",
+      "issue": "hardware--laptop-overheating",
+      "cause": "overheating-pending-firmware",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-4"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:slow-pending-updates"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:overheating-fan",
+          "policy:dev-3",
+          "cause:overheating-pending-firmware",
+          "cause:slow-thermal-throttling",
+          "cause:email-service-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-022",
+      "issue": "identity--account-locked",
+      "cause": "locked-expired-password",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:vpn-account-locked",
+          "cause:phishing-account-locked",
+          "cause:locked-expired-password",
+          "cause:install-device-noncompliant"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "policy:pw-2",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "cause:mfa-sso-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "cause:mfa-locked",
+          "policy:pw-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-023",
+      "issue": "security--phishing-email-detected",
+      "cause": "phishing-suspicious-sign-ins",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "policy:mail-1"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "cause:locked-expired-password",
+          "cause:locked-failed-sign-ins"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "cause:locked-expired-password"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-024",
+      "issue": "hardware--laptop-overheating",
+      "cause": "overheating-fan",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-4"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:slow-pending-updates"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "policy:dev-3",
+          "cause:overheating-pending-firmware",
+          "cause:slow-thermal-throttling",
+          "cause:slow-pending-updates"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-025",
+      "issue": "identity--mfa-lockout",
+      "cause": "mfa-locked",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:dev-4",
+          "cause:locked-failed-sign-ins"
+        ]
+      },
+      "vector": {
+        "rank": 5,
+        "top": [
+          "cause:locked-expired-password",
+          "cause:locked-failed-sign-ins",
+          "cause:wifi-password-expired",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:mfa-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": null,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:install-catalog-outage",
+          "policy:pw-2",
+          "policy:pw-3",
+          "cause:wifi-password-expired"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-026",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-device-noncompliant",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "policy:vpn-1",
+          "policy:vpn-4"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:vpn-account-locked",
+          "cause:vpn-gateway-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:vpn-account-locked",
+          "cause:vpn-certificate-expired"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-027",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-certificate-expired",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:vpn-client-outdated",
+          "cause:vpn-certificate-expired",
+          "policy:vpn-2",
+          "policy:vpn-3",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-client-outdated",
+          "cause:vpn-account-locked",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:vpn-gateway-outage",
+          "policy:vpn-2",
+          "cause:vpn-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-028",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-password-expired",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:wifi-service-degraded",
+          "policy:vpn-4",
+          "policy:vpn-1"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:printer-offline",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:printer-offline",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-029",
+      "issue": "system--system-running-slow",
+      "cause": "slow-pending-updates",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:slow-low-disk",
+          "cause:slow-pending-updates",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:slow-pending-updates",
+          "cause:slow-thermal-throttling",
+          "cause:slow-low-disk",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:slow-pending-updates",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-030",
+      "issue": "security--antivirus-not-updating",
+      "cause": "av-low-disk",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:av-definitions-stale",
+          "policy:sw-3",
+          "cause:av-low-disk",
+          "policy:dev-1",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "policy:sw-3",
+          "policy:dev-1"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "policy:sw-3",
+          "cause:av-remote-vpn-expired",
+          "policy:dev-1"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-031",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-device-noncompliant",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "policy:vpn-1",
+          "policy:vpn-4"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:vpn-account-locked",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:vpn-account-locked",
+          "cause:printer-offline"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-032",
+      "issue": "system--system-running-slow",
+      "cause": "slow-low-disk",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:slow-low-disk",
+          "cause:slow-pending-updates",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:slow-pending-updates",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:slow-low-disk",
+          "cause:slow-pending-updates",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-033",
+      "issue": "security--phishing-email-detected",
+      "cause": "phishing-suspicious-sign-ins",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "policy:mail-2",
+          "cause:email-service-outage",
+          "cause:vpn-gateway-outage",
+          "cause:phishing-suspicious-sign-ins",
+          "policy:mail-3"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "policy:mail-2",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-4",
+          "policy:mail-3"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "policy:mail-2",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-3",
+          "policy:mail-4"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-034",
+      "issue": "hardware--laptop-overheating",
+      "cause": "overheating-fan",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "cause:slow-low-disk"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:slow-pending-updates"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "policy:dev-3",
+          "cause:overheating-pending-firmware",
+          "cause:slow-thermal-throttling",
+          "cause:slow-low-disk"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-035",
+      "issue": "microsoft-office--outlook-not-sending-emails",
+      "cause": "mailbox-full",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "cause:mailbox-full",
+          "policy:mail-2"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:mailbox-full",
+          "cause:install-catalog-outage",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:mailbox-full",
+          "policy:mail-1",
+          "cause:phishing-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-036",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-client-outdated",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-client-outdated",
+          "cause:vpn-certificate-expired",
+          "policy:vpn-2",
+          "policy:vpn-3",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 4,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "cause:vpn-client-outdated",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "policy:vpn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-038",
+      "issue": "identity--mfa-lockout",
+      "cause": "mfa-locked",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:pw-3",
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:dev-4"
+        ]
+      },
+      "vector": {
+        "rank": null,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:wifi-password-expired",
+          "cause:mfa-sso-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": null,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "policy:pw-3",
+          "cause:wifi-password-expired",
+          "cause:mfa-sso-outage",
+          "cause:phishing-suspicious-sign-ins"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-039",
+      "issue": "identity--account-locked",
+      "cause": "locked-failed-sign-ins",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:vpn-account-locked",
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-account-locked",
+          "cause:locked-expired-password",
+          "policy:pw-3"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "policy:pw-2",
+          "cause:mfa-not-enrolled",
+          "cause:phishing-account-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "policy:pw-2",
+          "cause:vpn-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-040",
+      "issue": "hardware--laptop-overheating",
+      "cause": "overheating-fan",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "policy:dev-3",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-4",
+          "cause:slow-thermal-throttling"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:slow-low-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "policy:dev-3",
+          "cause:overheating-pending-firmware",
+          "cause:slow-thermal-throttling",
+          "policy:dev-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-041",
+      "issue": "identity--account-locked",
+      "cause": "locked-failed-sign-ins",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:vpn-account-locked",
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-account-locked",
+          "cause:locked-expired-password",
+          "policy:pw-3"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "policy:pw-2",
+          "cause:mfa-not-enrolled",
+          "cause:phishing-account-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "policy:pw-2",
+          "cause:vpn-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-042",
+      "issue": "identity--account-locked",
+      "cause": "locked-expired-password",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "cause:vpn-account-locked",
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-account-locked",
+          "cause:locked-expired-password",
+          "policy:pw-3"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "policy:pw-2",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "cause:mfa-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "policy:pw-2",
+          "cause:vpn-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-043",
+      "issue": "microsoft-office--outlook-not-sending-emails",
+      "cause": "outlook-password-expired",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:mailbox-full",
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "policy:pw-4"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:mailbox-full",
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "cause:phishing-account-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:mailbox-full",
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "cause:phishing-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-044",
+      "issue": "identity--account-locked",
+      "cause": "locked-failed-sign-ins",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:vpn-account-locked",
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-account-locked",
+          "cause:locked-expired-password",
+          "policy:pw-3"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "policy:pw-2",
+          "cause:phishing-account-locked",
+          "cause:mfa-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "cause:vpn-account-locked",
+          "policy:pw-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-045",
+      "issue": "hardware--laptop-overheating",
+      "cause": "overheating-pending-firmware",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "cause:slow-low-disk"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:slow-pending-updates"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:overheating-fan",
+          "policy:dev-3",
+          "cause:overheating-pending-firmware",
+          "cause:slow-thermal-throttling",
+          "cause:slow-low-disk"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-046",
+      "issue": "security--phishing-email-detected",
+      "cause": "phishing-account-locked",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:mail-2",
+          "cause:email-service-outage",
+          "cause:vpn-gateway-outage",
+          "cause:phishing-suspicious-sign-ins",
+          "policy:dev-4"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "policy:mail-2",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-4",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 4,
+        "top": [
+          "policy:mail-2",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:email-service-outage",
+          "cause:phishing-account-locked",
+          "policy:mail-3"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-048",
+      "issue": "system--system-running-slow",
+      "cause": "slow-pending-updates",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:mail-4"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:slow-pending-updates",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:disk-nearly-full"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:slow-pending-updates",
+          "policy:mail-4",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-049",
+      "issue": "system--system-running-slow",
+      "cause": "slow-thermal-throttling",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:slow-low-disk",
+          "cause:slow-pending-updates",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:slow-thermal-throttling",
+          "cause:slow-pending-updates",
+          "cause:slow-low-disk",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "cause:slow-pending-updates",
+          "cause:overheating-fan",
+          "policy:dev-3"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-050",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-service-degraded",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:wifi-service-degraded",
+          "policy:vpn-4",
+          "policy:vpn-1"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:printing-service-outage",
+          "cause:printer-offline"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:install-catalog-outage",
+          "cause:printer-offline"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-051",
+      "issue": "hardware--laptop-overheating",
+      "cause": "overheating-fan",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "cause:slow-low-disk"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:slow-low-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:overheating-fan",
+          "policy:dev-3",
+          "cause:overheating-pending-firmware",
+          "cause:slow-thermal-throttling",
+          "cause:slow-low-disk"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-052",
+      "issue": "identity--account-locked",
+      "cause": "locked-expired-password",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "cause:vpn-account-locked",
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-account-locked",
+          "cause:locked-expired-password",
+          "policy:pw-3"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "policy:pw-2",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "cause:mfa-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "cause:vpn-account-locked",
+          "policy:pw-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-053",
+      "issue": "security--antivirus-not-updating",
+      "cause": "av-definitions-stale",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:av-definitions-stale",
+          "policy:sw-3",
+          "cause:av-low-disk",
+          "policy:dev-1",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "cause:vpn-certificate-expired",
+          "cause:app-update-catalog-degraded"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "policy:sw-3",
+          "cause:install-device-noncompliant"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-054",
+      "issue": "system--system-running-slow",
+      "cause": "slow-pending-updates",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:slow-low-disk",
+          "cause:slow-pending-updates",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:slow-pending-updates",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "cause:overheating-fan",
+          "policy:dev-3"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:slow-low-disk",
+          "cause:slow-pending-updates",
+          "cause:slow-thermal-throttling",
+          "cause:overheating-fan",
+          "policy:dev-3"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-055",
+      "issue": "security--phishing-email-detected",
+      "cause": "phishing-account-locked",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "policy:mail-1"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "cause:locked-expired-password",
+          "policy:mail-3"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "cause:locked-expired-password"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-056",
+      "issue": "microsoft-office--outlook-not-sending-emails",
+      "cause": "mailbox-full",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:mailbox-full",
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "policy:pw-4"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:mailbox-full",
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:phishing-account-locked",
+          "cause:locked-failed-sign-ins"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:mailbox-full",
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:mfa-not-enrolled",
+          "policy:mail-1"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-057",
+      "issue": "system--system-running-slow",
+      "cause": "slow-thermal-throttling",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:mail-4"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:slow-pending-updates",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      },
+      "hybrid": {
+        "rank": 4,
+        "top": [
+          "cause:slow-pending-updates",
+          "policy:mail-4",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-058",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-service-degraded",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:wifi-service-degraded",
+          "policy:vpn-4",
+          "policy:vpn-1"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-service-degraded",
+          "policy:vpn-4",
+          "cause:printer-offline"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:wifi-service-degraded",
+          "policy:vpn-4",
+          "cause:printer-offline"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-059",
+      "issue": "software--program-won-t-install",
+      "cause": "install-disk-full",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "cause:app-update-catalog-degraded"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-060",
+      "issue": "microsoft-office--outlook-not-sending-emails",
+      "cause": "email-service-outage",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "policy:mail-1",
+          "cause:mailbox-full",
+          "policy:mail-2"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:email-service-outage",
+          "cause:mailbox-full",
+          "cause:outlook-password-expired",
+          "cause:install-catalog-outage",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:email-service-outage",
+          "cause:outlook-password-expired",
+          "cause:mailbox-full",
+          "policy:mail-1",
+          "cause:phishing-suspicious-sign-ins"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-061",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-device-noncompliant",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:wifi-service-degraded",
+          "policy:vpn-4",
+          "policy:vpn-1"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-password-expired",
+          "cause:wifi-service-degraded",
+          "cause:wifi-device-noncompliant",
+          "cause:printer-offline",
+          "cause:printing-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-service-degraded",
+          "cause:printer-offline",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-062",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-certificate-expired",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:vpn-client-outdated",
+          "cause:vpn-certificate-expired",
+          "policy:vpn-2",
+          "policy:vpn-3",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "cause:vpn-client-outdated",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "policy:vpn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-063",
+      "issue": "identity--mfa-lockout",
+      "cause": "mfa-sso-outage",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:pw-3",
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "cause:locked-failed-sign-ins"
+        ]
+      },
+      "vector": {
+        "rank": 4,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:locked-expired-password",
+          "cause:mfa-sso-outage",
+          "cause:phishing-account-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": 4,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "policy:pw-3",
+          "policy:pw-2",
+          "cause:mfa-sso-outage",
+          "cause:phishing-suspicious-sign-ins"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-066",
+      "issue": "software--program-won-t-install",
+      "cause": "install-device-noncompliant",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "cause:app-update-waits-for-os"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-067",
+      "issue": "system--system-running-slow",
+      "cause": "slow-low-disk",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:slow-low-disk",
+          "cause:slow-pending-updates",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:slow-pending-updates",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:slow-low-disk",
+          "cause:slow-pending-updates",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:overheating-fan"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-068",
+      "issue": "software--program-won-t-install",
+      "cause": "install-catalog-outage",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:app-update-waits-for-os",
+          "policy:sw-1",
+          "cause:vpn-account-locked",
+          "cause:install-disk-full"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:install-catalog-outage",
+          "policy:sw-1",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "cause:app-update-catalog-degraded"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:install-catalog-outage",
+          "policy:sw-1",
+          "cause:app-update-waits-for-os",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-069",
+      "issue": "software--program-won-t-install",
+      "cause": "install-catalog-outage",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-070",
+      "issue": "hardware--laptop-overheating",
+      "cause": "overheating-pending-firmware",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:mail-3"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:slow-pending-updates"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:overheating-fan",
+          "policy:dev-3",
+          "cause:overheating-pending-firmware",
+          "cause:slow-thermal-throttling",
+          "cause:email-service-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-071",
+      "issue": "hardware--laptop-overheating",
+      "cause": "overheating-pending-firmware",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "policy:dev-3",
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-4",
+          "cause:slow-thermal-throttling"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:overheating-fan",
+          "cause:overheating-pending-firmware",
+          "policy:dev-3",
+          "cause:slow-thermal-throttling",
+          "cause:slow-low-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:overheating-fan",
+          "policy:dev-3",
+          "cause:overheating-pending-firmware",
+          "cause:slow-thermal-throttling",
+          "policy:dev-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-072",
+      "issue": "security--antivirus-not-updating",
+      "cause": "av-remote-vpn-expired",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "policy:dev-1",
+          "cause:app-update-low-disk"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:av-remote-vpn-expired",
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "policy:sw-3",
+          "cause:app-update-catalog-degraded"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-remote-vpn-expired",
+          "cause:av-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-low-disk"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-073",
+      "issue": "identity--mfa-lockout",
+      "cause": "mfa-not-enrolled",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "policy:pw-3",
+          "cause:mfa-sso-outage",
+          "cause:mfa-locked",
+          "cause:mfa-not-enrolled",
+          "policy:pw-4"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:mfa-not-enrolled",
+          "cause:mfa-locked",
+          "cause:mfa-sso-outage",
+          "policy:pw-3",
+          "cause:locked-failed-sign-ins"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:mfa-not-enrolled",
+          "policy:pw-3",
+          "cause:mfa-locked",
+          "cause:mfa-sso-outage",
+          "policy:pw-4"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-074",
+      "issue": "security--antivirus-not-updating",
+      "cause": "av-low-disk",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:av-definitions-stale",
+          "policy:sw-3",
+          "cause:av-low-disk",
+          "policy:dev-1",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "policy:sw-3",
+          "cause:vpn-certificate-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "policy:sw-3",
+          "cause:av-remote-vpn-expired",
+          "cause:install-device-noncompliant"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-076",
+      "issue": "security--antivirus-not-updating",
+      "cause": "av-remote-vpn-expired",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:sw-3",
+          "policy:sw-2",
+          "cause:av-definitions-stale",
+          "cause:mfa-not-enrolled",
+          "policy:sw-1"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:av-remote-vpn-expired",
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:vpn-certificate-expired",
+          "cause:app-update-catalog-degraded"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:av-definitions-stale",
+          "policy:sw-3",
+          "cause:av-remote-vpn-expired",
+          "cause:av-low-disk",
+          "cause:phishing-suspicious-sign-ins"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-077",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-client-outdated",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-client-outdated",
+          "cause:vpn-certificate-expired",
+          "policy:vpn-2",
+          "policy:vpn-3",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 4,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "cause:vpn-client-outdated",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "policy:vpn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-078",
+      "issue": "identity--account-locked",
+      "cause": "locked-failed-sign-ins",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:locked-failed-sign-ins",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:mfa-sso-outage",
+          "cause:phishing-account-locked",
+          "cause:mfa-not-enrolled"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-account-locked",
+          "cause:locked-expired-password",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:vpn-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-079",
+      "issue": "identity--mfa-lockout",
+      "cause": "mfa-not-enrolled",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "policy:pw-3",
+          "cause:mfa-sso-outage",
+          "cause:mfa-locked",
+          "cause:mfa-not-enrolled",
+          "policy:pw-4"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:mfa-locked",
+          "cause:mfa-not-enrolled",
+          "cause:mfa-sso-outage",
+          "policy:pw-3",
+          "cause:locked-failed-sign-ins"
+        ]
+      },
+      "hybrid": {
+        "rank": 4,
+        "top": [
+          "cause:mfa-locked",
+          "policy:pw-3",
+          "cause:mfa-sso-outage",
+          "cause:mfa-not-enrolled",
+          "policy:pw-4"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-080",
+      "issue": "system--system-running-slow",
+      "cause": "slow-low-disk",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:mail-4"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:slow-pending-updates",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3",
+          "cause:disk-nearly-full"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:slow-pending-updates",
+          "policy:mail-4",
+          "cause:slow-low-disk",
+          "cause:slow-thermal-throttling",
+          "policy:dev-3"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-081",
+      "issue": "security--phishing-email-detected",
+      "cause": "phishing-suspicious-sign-ins",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "policy:mail-1"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "cause:locked-expired-password"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "cause:locked-expired-password"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-082",
+      "issue": "software--program-won-t-install",
+      "cause": "install-device-noncompliant",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "cause:disk-nearly-full"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "cause:app-update-catalog-degraded"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-083",
+      "issue": "security--phishing-email-detected",
+      "cause": "phishing-suspicious-sign-ins",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "policy:mail-1"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "cause:locked-expired-password",
+          "policy:mail-3"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "cause:locked-expired-password"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-084",
+      "issue": "security--antivirus-not-updating",
+      "cause": "av-low-disk",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "policy:dev-1",
+          "cause:app-update-low-disk"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-waits-for-os"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "cause:app-update-low-disk",
+          "cause:app-update-waits-for-os"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-085",
+      "issue": "identity--mfa-lockout",
+      "cause": "mfa-sso-outage",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "policy:pw-3",
+          "cause:mfa-not-enrolled",
+          "cause:mfa-sso-outage",
+          "cause:mfa-locked",
+          "policy:pw-4"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:mfa-locked",
+          "cause:mfa-not-enrolled",
+          "cause:mfa-sso-outage",
+          "policy:pw-3",
+          "cause:locked-failed-sign-ins"
+        ]
+      },
+      "hybrid": {
+        "rank": 4,
+        "top": [
+          "cause:mfa-not-enrolled",
+          "cause:mfa-locked",
+          "policy:pw-3",
+          "cause:mfa-sso-outage",
+          "cause:locked-failed-sign-ins"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-086",
+      "issue": "security--antivirus-not-updating",
+      "cause": "av-definitions-stale",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:av-definitions-stale",
+          "policy:sw-3",
+          "cause:av-low-disk",
+          "policy:dev-1",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "cause:av-remote-vpn-expired",
+          "cause:vpn-certificate-expired",
+          "cause:app-update-catalog-degraded"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:av-definitions-stale",
+          "cause:av-low-disk",
+          "policy:sw-3",
+          "cause:av-remote-vpn-expired",
+          "cause:install-device-noncompliant"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-087",
+      "issue": "identity--mfa-lockout",
+      "cause": "mfa-sso-outage",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:pw-3",
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:dev-4"
+        ]
+      },
+      "vector": {
+        "rank": 5,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:outlook-password-expired",
+          "cause:mfa-sso-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "policy:pw-3",
+          "cause:mfa-sso-outage",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-088",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-certificate-expired",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:vpn-client-outdated",
+          "cause:vpn-certificate-expired",
+          "policy:vpn-2",
+          "policy:vpn-3",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "cause:vpn-client-outdated",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "policy:vpn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-089",
+      "issue": "identity--mfa-lockout",
+      "cause": "mfa-not-enrolled",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:pw-3",
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "cause:locked-failed-sign-ins"
+        ]
+      },
+      "vector": {
+        "rank": null,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "cause:mfa-sso-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": null,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "policy:pw-3",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:mfa-sso-outage",
+          "cause:vpn-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-090",
+      "issue": "identity--account-locked",
+      "cause": "locked-failed-sign-ins",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:locked-failed-sign-ins",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "cause:mfa-sso-outage",
+          "cause:phishing-suspicious-sign-ins"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-account-locked",
+          "cause:locked-expired-password",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:vpn-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-091",
+      "issue": "software--program-won-t-install",
+      "cause": "install-catalog-outage",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-disk-full",
+          "cause:install-device-noncompliant",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:sw-1",
+          "policy:sw-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-092",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-password-expired",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "policy:vpn-1",
+          "policy:vpn-4"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:printing-service-outage",
+          "cause:vpn-gateway-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:wifi-service-degraded",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:vpn-account-locked",
+          "cause:printer-offline"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-093",
+      "issue": "network--vpn-not-connecting",
+      "cause": "vpn-account-locked",
+      "bm25": {
+        "rank": 5,
+        "top": [
+          "cause:vpn-client-outdated",
+          "cause:vpn-certificate-expired",
+          "policy:vpn-2",
+          "policy:vpn-3",
+          "cause:vpn-account-locked"
+        ]
+      },
+      "vector": {
+        "rank": 4,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-client-outdated",
+          "cause:vpn-account-locked",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "hybrid": {
+        "rank": 4,
+        "top": [
+          "cause:vpn-certificate-expired",
+          "cause:vpn-client-outdated",
+          "cause:vpn-gateway-outage",
+          "cause:vpn-account-locked",
+          "policy:vpn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-094",
+      "issue": "security--phishing-email-detected",
+      "cause": "phishing-account-locked",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:mail-2",
+          "cause:email-service-outage",
+          "cause:vpn-gateway-outage",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:mfa-not-enrolled"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-4",
+          "cause:mfa-not-enrolled"
+        ]
+      },
+      "hybrid": {
+        "rank": 4,
+        "top": [
+          "policy:mail-2",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:mfa-not-enrolled",
+          "cause:phishing-account-locked",
+          "cause:email-service-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-096",
+      "issue": "identity--account-locked",
+      "cause": "locked-expired-password",
+      "bm25": {
+        "rank": 4,
+        "top": [
+          "cause:vpn-account-locked",
+          "cause:locked-failed-sign-ins",
+          "cause:phishing-account-locked",
+          "cause:locked-expired-password",
+          "policy:pw-3"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "policy:pw-2",
+          "cause:mfa-not-enrolled",
+          "cause:phishing-account-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-account-locked",
+          "policy:pw-2",
+          "cause:vpn-account-locked"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-097",
+      "issue": "security--phishing-email-detected",
+      "cause": "phishing-account-locked",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "policy:mail-1"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "policy:mail-4"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:phishing-suspicious-sign-ins",
+          "cause:phishing-account-locked",
+          "policy:mail-2",
+          "policy:mail-3",
+          "policy:mail-4"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-099",
+      "issue": "identity--mfa-lockout",
+      "cause": "mfa-locked",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:install-disk-full",
+          "policy:pw-3",
+          "cause:mfa-not-enrolled"
+        ]
+      },
+      "vector": {
+        "rank": 5,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:locked-expired-password",
+          "cause:phishing-suspicious-sign-ins",
+          "cause:wifi-password-expired",
+          "cause:mfa-locked"
+        ]
+      },
+      "hybrid": {
+        "rank": null,
+        "top": [
+          "cause:locked-failed-sign-ins",
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant",
+          "cause:wifi-password-expired",
+          "policy:pw-3"
+        ]
+      }
+    },
+    {
+      "ticket": "HO-100",
+      "issue": "network--wi-fi-not-connecting",
+      "cause": "wifi-password-expired",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:wifi-service-degraded",
+          "policy:vpn-4",
+          "policy:vpn-1"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:wifi-password-expired",
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-service-degraded",
+          "policy:vpn-4",
+          "cause:printer-offline"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:wifi-device-noncompliant",
+          "cause:wifi-password-expired",
+          "cause:wifi-service-degraded",
+          "policy:vpn-4",
+          "cause:printer-offline"
+        ]
+      }
+    }
+  ],
+  "tokens": {
+    "calls": 91,
+    "prompt_tokens": 3071,
+    "completion_tokens": 0,
+    "budget": 50000
+  }
+}

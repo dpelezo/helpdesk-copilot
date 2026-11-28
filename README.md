@@ -34,7 +34,7 @@ No real customer or company data is used. The planned ticket source is a public 
 | B. Graph retrieval | week 2 |
 | C. Graph + live checks | week 3 |
 
-Search alone puts the right cause in front of the model 82.6% of the time and still barely beats chance: without checking systems it cannot tell which cause is real. Details in [evals/results](evals/results/README.md).
+Search alone puts the right cause in front of the model 82.6% of the time and still barely beats chance: without checking systems it cannot tell which cause is real. Vector search raises that to 97.8% (hybrid 95.7%), so retrieval is no longer the bottleneck; telling the planted cause from its siblings is. Details in [evals/results](evals/results/README.md).
 
 ## Mock company and systems
 

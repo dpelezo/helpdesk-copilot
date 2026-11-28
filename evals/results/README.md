@@ -5,6 +5,7 @@ Root-cause accuracy on the **100 held-out tickets** (`evals/tickets/heldout.json
 | Condition | What the model gets | Model | Root-cause accuracy | Right cause retrieved (top 5) | Date |
 | --- | --- | --- | ---: | ---: | --- |
 | A. Keyword search (baseline) | BM25 over causes and handbook, one call, no checks | `zai-org/GLM-5.2` | **29.0%** | 82.6% | 2026-11-28 |
+| *Retrieval only (#30)* | *Hybrid / vectors over the same documents, no model call* | `thenlper/gte-large` | | *95.7% / 97.8%* | 2026-11-28 |
 | B. Graph retrieval | *week 2* | | | | |
 | C. Graph + checks | *week 3* | | | | |
 
@@ -22,6 +23,23 @@ Per issue, from `baseline-bm25-heldout.json`: overheating 66.7%, account locked 
 | 2026-11-28 | A | **29.0%** | Limit raised to 4,096; prompt, documents and scorer unchanged. 3 replies still cut off, scored as wrong. |
 
 Each run: one model call per ticket, temperature 0, `zai-org/GLM-5.2` on Telnyx. The JSON files hold every ticket's retrieved documents, prediction, tokens and latency.
+
+## Retrieval: is the right cause in the top 5? (issue #30)
+
+The baseline's tickets, documents (36 causes, 23 handbook sections) and query, ranked three ways. No chat model; embeddings with `thenlper/gte-large`, chosen before measuring. Hybrid is reciprocal rank fusion (k = 60) of BM25's and vectors' top 20. Escalate tickets have no right cause and are left out. Files: `retrieval-tuning.json`, `retrieval-heldout.json` (every ticket's rank and top 5 per method).
+
+| Split | Tickets | BM25 | Vectors | Hybrid | MRR (BM25 / vectors / hybrid) |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Tuning | 18 | 66.7% | **100.0%** | 83.3% | 0.361 / 0.631 / 0.471 |
+| **Held-out** | 92 | 82.6% | **97.8%** | 95.7% | 0.440 / 0.643 / 0.593 |
+
+**Hybrid beats BM25 by 13.1 points on held-out (95.7% against 82.6%), and vectors alone do better still (97.8%).** Across the 92 tickets: all three find the cause in 76; vectors and hybrid but not BM25 in 12; vectors only in 2; none in 2. BM25 never finds a cause the other two miss.
+
+Why hybrid trails vectors: in the 2 tickets only vectors found (`HO-025`, `HO-099`, both an MFA lock), vectors ranked the cause 5th and BM25 did not rank it at all. Fusion gave BM25's own picks (`install-catalog-outage`, a password policy section) enough weight to push it out. Fusion helps when both lists are good; here BM25 is the weaker list on every issue, so it mostly dilutes. The same order holds on the tuning split (vectors 100%, hybrid 83.3%), which is where a choice for #31 is allowed to come from.
+
+Where everything misses: `identity--mfa-lockout` (vectors 77.8%). An MFA lock is described in words close to an account lock (failed sign-ins, locked out), and every method ranks `locked-failed-sign-ins` first. This is the misdirection the eval is built to show: only a check of the account (`account_status` reports `mfa_locked`) can tell them apart.
+
+Cost: 6,527 embedding tokens for both splits (tuning 3,456 in 20 calls; held-out 3,071 in 91 calls, the documents coming from the cache).
 
 ## Extraction (Workflow A, issue #26)
 
