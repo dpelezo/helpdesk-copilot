@@ -1,17 +1,23 @@
-name: CI — Test & Lint
+name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
     branches: [main]
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
+    name: lint and tests
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     services:
       postgres:
@@ -29,54 +35,45 @@ jobs:
           --health-retries 10
 
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       DATABASE_URL: postgresql+psycopg://ci:ci-only@localhost:5432/kb_test
       TEMPORAL_HOST: localhost:7233
-      FIREWORKS_API_KEY: ${{ secrets.FIREWORKS_API_KEY }}
-      API_KEYS: ${{ vars.TEST_API_KEYS || 'test-key-1,test-key-2' }}
+      API_KEYS: test-key-1,test-key-2
       NOTIFICATION_WEBHOOK_URL: ""
       PYTHONPATH: .
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.2.2    
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5.4.0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
           cache: "pip"
 
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest pytest-asyncio httpx ruff
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
 
-      - name: Lint with Ruff
+      - name: Lint (Ruff)
         run: ruff check app/ tests/ --ignore E501
 
-      - name: Run tests
+      - name: Tests
         run: pytest tests/ -v --tb=short
 
-  docker-build-check:
+  docker:
+    name: docker build
     runs-on: ubuntu-latest
-
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
+    timeout-minutes: 15
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.10.0
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
 
-      - name: Build Docker image (verify it builds)
-        uses: docker/build-push-action@v6.15.0
+      - name: Build the image (no push)
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
           push: false
-          tags: kb-agent:test
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          tags: helpdesk-copilot:test
