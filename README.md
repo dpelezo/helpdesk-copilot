@@ -25,6 +25,17 @@ An assistant for IT helpdesk agents. It walks a troubleshooting procedure step b
 
 No real customer or company data is used. The planned ticket source is a public dataset that is downloaded at build time and not committed to this repo.
 
+## Results so far
+
+| Condition | Root-cause accuracy (100 held-out tickets) |
+| --- | ---: |
+| Chance | 26.9% |
+| **A. Keyword search, no checks (baseline)** | **29.0%** |
+| B. Graph retrieval | week 2 |
+| C. Graph + live checks | week 3 |
+
+Search alone puts the right cause in front of the model 82.6% of the time and still barely beats chance: without checking systems it cannot tell which cause is real. Details in [evals/results](evals/results/README.md).
+
 ## Mock company and systems
 
 A generated company, Kestrel Ridge Logistics (50 employees, `make company`), backs six MCP servers in `app/mock/systems.py`:

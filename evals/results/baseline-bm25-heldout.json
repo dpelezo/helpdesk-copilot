@@ -1,0 +1,1720 @@
+{
+  "condition": "A: BM25 keyword search, no graph, no checks",
+  "model": "zai-org/GLM-5.2",
+  "split": "heldout",
+  "date": "2026-11-28",
+  "top_k": 5,
+  "score": {
+    "tickets": 100,
+    "root_cause_accuracy": 29.0,
+    "answered": 97.0,
+    "per_issue": {
+      "hardware--laptop-overheating": 66.7,
+      "identity--account-locked": 55.6,
+      "identity--mfa-lockout": 10.0,
+      "microsoft-office--outlook-not-sending-emails": 20.0,
+      "network--vpn-not-connecting": 10.0,
+      "network--wi-fi-not-connecting": 20.0,
+      "security--antivirus-not-updating": 40.0,
+      "security--phishing-email-detected": 36.4,
+      "software--program-won-t-install": 30.0,
+      "system--system-running-slow": 9.1
+    },
+    "escalation_precision": 6.5,
+    "escalation_recall": 25.0,
+    "missed_causes": 29,
+    "invented_causes": 5,
+    "errors": 3
+  },
+  "chance_accuracy": 26.9,
+  "retrieval_hit_at_k": 82.6,
+  "seconds_per_ticket": 2.96,
+  "tokens_per_ticket": 1172,
+  "runs": [
+    {
+      "ticket": "HO-001",
+      "expected": "vpn-gateway-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "cause:av-remote-vpn-expired",
+        "policy:vpn-1"
+      ],
+      "retrieval_hit": false,
+      "seconds": 1.1579666300000042,
+      "prompt_tokens": 369,
+      "completion_tokens": 287,
+      "error": null
+    },
+    {
+      "ticket": "HO-002",
+      "expected": "mailbox-full",
+      "predicted": "mailbox-full",
+      "retrieved": [
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-1",
+        "cause:mailbox-full",
+        "policy:mail-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.9397991539999992,
+      "prompt_tokens": 363,
+      "completion_tokens": 554,
+      "error": null
+    },
+    {
+      "ticket": "HO-003",
+      "expected": "install-disk-full",
+      "predicted": "install-disk-full",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-1",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.117867176000004,
+      "prompt_tokens": 341,
+      "completion_tokens": 1159,
+      "error": null
+    },
+    {
+      "ticket": "HO-004",
+      "expected": "av-remote-vpn-expired",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "policy:sw-3",
+        "policy:sw-2",
+        "cause:av-definitions-stale",
+        "cause:mfa-not-enrolled",
+        "policy:sw-1"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.6600007939999983,
+      "prompt_tokens": 393,
+      "completion_tokens": 152,
+      "error": null
+    },
+    {
+      "ticket": "HO-005",
+      "expected": "escalate",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:pw-3",
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": null,
+      "seconds": 1.3797958680000022,
+      "prompt_tokens": 431,
+      "completion_tokens": 363,
+      "error": null
+    },
+    {
+      "ticket": "HO-006",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "policy:mail-2",
+        "cause:email-service-outage",
+        "cause:vpn-gateway-outage",
+        "cause:phishing-suspicious-sign-ins",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.7172529409999981,
+      "prompt_tokens": 372,
+      "completion_tokens": 168,
+      "error": null
+    },
+    {
+      "ticket": "HO-007",
+      "expected": "install-disk-full",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.630702658999994,
+      "prompt_tokens": 338,
+      "completion_tokens": 1354,
+      "error": null
+    },
+    {
+      "ticket": "HO-008",
+      "expected": "outlook-password-expired",
+      "predicted": "outlook-password-expired",
+      "retrieved": [
+        "policy:mail-1",
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "cause:outlook-password-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.6483192009999925,
+      "prompt_tokens": 339,
+      "completion_tokens": 694,
+      "error": null
+    },
+    {
+      "ticket": "HO-009",
+      "expected": "slow-thermal-throttling",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:dev-4",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 2.306450345000002,
+      "prompt_tokens": 245,
+      "completion_tokens": 796,
+      "error": null
+    },
+    {
+      "ticket": "HO-010",
+      "expected": "outlook-password-expired",
+      "predicted": "email-service-outage",
+      "retrieved": [
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-1",
+        "cause:mailbox-full",
+        "policy:mail-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.8740092090000076,
+      "prompt_tokens": 363,
+      "completion_tokens": 1135,
+      "error": null
+    },
+    {
+      "ticket": "HO-011",
+      "expected": "av-definitions-stale",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "policy:dev-1",
+        "cause:app-update-low-disk"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.525897538999999,
+      "prompt_tokens": 340,
+      "completion_tokens": 1511,
+      "error": null
+    },
+    {
+      "ticket": "HO-012",
+      "expected": "email-service-outage",
+      "predicted": "mailbox-full",
+      "retrieved": [
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-1",
+        "cause:mailbox-full",
+        "policy:mail-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.2556181930000037,
+      "prompt_tokens": 348,
+      "completion_tokens": 568,
+      "error": null
+    },
+    {
+      "ticket": "HO-013",
+      "expected": "email-service-outage",
+      "predicted": "mailbox-full",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:dev-4",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.105995782999997,
+      "prompt_tokens": 341,
+      "completion_tokens": 1463,
+      "error": null
+    },
+    {
+      "ticket": "HO-014",
+      "expected": "wifi-service-degraded",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "policy:vpn-1",
+        "policy:vpn-4",
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.5422484899999915,
+      "prompt_tokens": 361,
+      "completion_tokens": 1248,
+      "error": null
+    },
+    {
+      "ticket": "HO-015",
+      "expected": "vpn-account-locked",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-client-outdated",
+        "cause:vpn-certificate-expired",
+        "policy:vpn-2",
+        "policy:vpn-3",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.963037531999987,
+      "prompt_tokens": 382,
+      "completion_tokens": 835,
+      "error": null
+    },
+    {
+      "ticket": "HO-016",
+      "expected": "overheating-fan",
+      "predicted": "overheating-fan",
+      "retrieved": [
+        "policy:dev-3",
+        "cause:slow-thermal-throttling",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.5509347869999885,
+      "prompt_tokens": 365,
+      "completion_tokens": 953,
+      "error": null
+    },
+    {
+      "ticket": "HO-017",
+      "expected": "vpn-client-outdated",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-account-locked",
+        "cause:vpn-gateway-outage",
+        "cause:install-catalog-outage"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.522856002999987,
+      "prompt_tokens": 335,
+      "completion_tokens": 413,
+      "error": null
+    },
+    {
+      "ticket": "HO-018",
+      "expected": "wifi-service-degraded",
+      "predicted": "wifi-device-noncompliant",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "policy:vpn-1",
+        "policy:vpn-4",
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 9.49350728799999,
+      "prompt_tokens": 347,
+      "completion_tokens": 3080,
+      "error": null
+    },
+    {
+      "ticket": "HO-019",
+      "expected": "install-device-noncompliant",
+      "predicted": "install-disk-full",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.375592824999984,
+      "prompt_tokens": 338,
+      "completion_tokens": 901,
+      "error": null
+    },
+    {
+      "ticket": "HO-020",
+      "expected": "vpn-gateway-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:vpn-client-outdated",
+        "cause:vpn-certificate-expired",
+        "policy:vpn-2",
+        "policy:vpn-3",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": false,
+      "seconds": 2.0294150679999916,
+      "prompt_tokens": 367,
+      "completion_tokens": 509,
+      "error": null
+    },
+    {
+      "ticket": "HO-021",
+      "expected": "overheating-pending-firmware",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "policy:dev-3",
+        "cause:slow-thermal-throttling",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.4584458110000185,
+      "prompt_tokens": 376,
+      "completion_tokens": 365,
+      "error": null
+    },
+    {
+      "ticket": "HO-022",
+      "expected": "locked-expired-password",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:locked-failed-sign-ins",
+        "cause:vpn-account-locked",
+        "cause:phishing-account-locked",
+        "cause:locked-expired-password",
+        "cause:install-device-noncompliant"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.425007337000011,
+      "prompt_tokens": 337,
+      "completion_tokens": 321,
+      "error": null
+    },
+    {
+      "ticket": "HO-023",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-account-locked",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:mail-2",
+        "policy:mail-3",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.8577855169999964,
+      "prompt_tokens": 375,
+      "completion_tokens": 499,
+      "error": null
+    },
+    {
+      "ticket": "HO-024",
+      "expected": "overheating-fan",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "policy:dev-3",
+        "cause:slow-thermal-throttling",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.5299921950000055,
+      "prompt_tokens": 376,
+      "completion_tokens": 453,
+      "error": null
+    },
+    {
+      "ticket": "HO-025",
+      "expected": "mfa-locked",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "policy:dev-4",
+        "cause:locked-failed-sign-ins"
+      ],
+      "retrieval_hit": false,
+      "seconds": 1.2793452120000097,
+      "prompt_tokens": 338,
+      "completion_tokens": 340,
+      "error": null
+    },
+    {
+      "ticket": "HO-026",
+      "expected": "wifi-device-noncompliant",
+      "predicted": "wifi-device-noncompliant",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired",
+        "policy:vpn-1",
+        "policy:vpn-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.670357640999981,
+      "prompt_tokens": 363,
+      "completion_tokens": 718,
+      "error": null
+    },
+    {
+      "ticket": "HO-027",
+      "expected": "vpn-certificate-expired",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:vpn-client-outdated",
+        "cause:vpn-certificate-expired",
+        "policy:vpn-2",
+        "policy:vpn-3",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.0810171299999922,
+      "prompt_tokens": 367,
+      "completion_tokens": 274,
+      "error": null
+    },
+    {
+      "ticket": "HO-028",
+      "expected": "wifi-password-expired",
+      "predicted": null,
+      "retrieved": [
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired",
+        "cause:wifi-service-degraded",
+        "policy:vpn-4",
+        "policy:vpn-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 11.901700403999996,
+      "prompt_tokens": 360,
+      "completion_tokens": 4096,
+      "error": "reply cut off at the token limit"
+    },
+    {
+      "ticket": "HO-029",
+      "expected": "slow-pending-updates",
+      "predicted": "slow-pending-updates",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-pending-updates",
+        "cause:slow-thermal-throttling",
+        "policy:dev-3",
+        "cause:overheating-fan"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.7392550940000149,
+      "prompt_tokens": 373,
+      "completion_tokens": 495,
+      "error": null
+    },
+    {
+      "ticket": "HO-030",
+      "expected": "av-low-disk",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "policy:sw-3",
+        "cause:av-low-disk",
+        "policy:dev-1",
+        "cause:av-remote-vpn-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.7000005140000098,
+      "prompt_tokens": 375,
+      "completion_tokens": 85,
+      "error": null
+    },
+    {
+      "ticket": "HO-031",
+      "expected": "wifi-device-noncompliant",
+      "predicted": "wifi-device-noncompliant",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired",
+        "policy:vpn-1",
+        "policy:vpn-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.0638693209999985,
+      "prompt_tokens": 347,
+      "completion_tokens": 1451,
+      "error": null
+    },
+    {
+      "ticket": "HO-032",
+      "expected": "slow-low-disk",
+      "predicted": "slow-pending-updates",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-pending-updates",
+        "cause:slow-thermal-throttling",
+        "policy:dev-3",
+        "cause:overheating-fan"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.265917551999991,
+      "prompt_tokens": 375,
+      "completion_tokens": 1166,
+      "error": null
+    },
+    {
+      "ticket": "HO-033",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "policy:mail-2",
+        "cause:email-service-outage",
+        "cause:vpn-gateway-outage",
+        "cause:phishing-suspicious-sign-ins",
+        "policy:mail-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.0045852670000102,
+      "prompt_tokens": 360,
+      "completion_tokens": 274,
+      "error": null
+    },
+    {
+      "ticket": "HO-034",
+      "expected": "overheating-fan",
+      "predicted": "overheating-fan",
+      "retrieved": [
+        "policy:dev-3",
+        "cause:slow-thermal-throttling",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.7718120849999934,
+      "prompt_tokens": 364,
+      "completion_tokens": 984,
+      "error": null
+    },
+    {
+      "ticket": "HO-035",
+      "expected": "mailbox-full",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-1",
+        "cause:mailbox-full",
+        "policy:mail-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 9.919827491999996,
+      "prompt_tokens": 362,
+      "completion_tokens": 3278,
+      "error": null
+    },
+    {
+      "ticket": "HO-036",
+      "expected": "vpn-client-outdated",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:vpn-client-outdated",
+        "cause:vpn-certificate-expired",
+        "policy:vpn-2",
+        "policy:vpn-3",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": true,
+      "seconds": 8.294113140999997,
+      "prompt_tokens": 368,
+      "completion_tokens": 2083,
+      "error": null
+    },
+    {
+      "ticket": "HO-037",
+      "expected": "escalate",
+      "predicted": null,
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-pending-updates",
+        "cause:slow-thermal-throttling",
+        "policy:dev-3",
+        "cause:overheating-fan"
+      ],
+      "retrieval_hit": null,
+      "seconds": 15.454767275000023,
+      "prompt_tokens": 373,
+      "completion_tokens": 4096,
+      "error": "reply cut off at the token limit"
+    },
+    {
+      "ticket": "HO-038",
+      "expected": "mfa-locked",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:pw-3",
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 3.519387228999989,
+      "prompt_tokens": 431,
+      "completion_tokens": 1020,
+      "error": null
+    },
+    {
+      "ticket": "HO-039",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:vpn-account-locked",
+        "cause:locked-failed-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:locked-expired-password",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.64019423000002,
+      "prompt_tokens": 439,
+      "completion_tokens": 412,
+      "error": null
+    },
+    {
+      "ticket": "HO-040",
+      "expected": "overheating-fan",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "policy:dev-3",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-4",
+        "cause:slow-thermal-throttling"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.4180315940000128,
+      "prompt_tokens": 376,
+      "completion_tokens": 982,
+      "error": null
+    },
+    {
+      "ticket": "HO-041",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:vpn-account-locked",
+        "cause:locked-failed-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:locked-expired-password",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.1337199170000076,
+      "prompt_tokens": 440,
+      "completion_tokens": 286,
+      "error": null
+    },
+    {
+      "ticket": "HO-042",
+      "expected": "locked-expired-password",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:vpn-account-locked",
+        "cause:locked-failed-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:locked-expired-password",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.5304776320000144,
+      "prompt_tokens": 425,
+      "completion_tokens": 370,
+      "error": null
+    },
+    {
+      "ticket": "HO-043",
+      "expected": "outlook-password-expired",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-1",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.9514649700000177,
+      "prompt_tokens": 362,
+      "completion_tokens": 123,
+      "error": null
+    },
+    {
+      "ticket": "HO-044",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:vpn-account-locked",
+        "cause:locked-failed-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:locked-expired-password",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.7452240070000471,
+      "prompt_tokens": 426,
+      "completion_tokens": 136,
+      "error": null
+    },
+    {
+      "ticket": "HO-045",
+      "expected": "overheating-pending-firmware",
+      "predicted": null,
+      "retrieved": [
+        "policy:dev-3",
+        "cause:slow-thermal-throttling",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk"
+      ],
+      "retrieval_hit": true,
+      "seconds": 13.770320073999983,
+      "prompt_tokens": 364,
+      "completion_tokens": 4096,
+      "error": "reply cut off at the token limit"
+    },
+    {
+      "ticket": "HO-046",
+      "expected": "phishing-account-locked",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "policy:mail-2",
+        "cause:email-service-outage",
+        "cause:vpn-gateway-outage",
+        "cause:phishing-suspicious-sign-ins",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.9455383910000137,
+      "prompt_tokens": 373,
+      "completion_tokens": 220,
+      "error": null
+    },
+    {
+      "ticket": "HO-047",
+      "expected": "escalate",
+      "predicted": "outlook-password-expired",
+      "retrieved": [
+        "policy:mail-1",
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "cause:outlook-password-expired"
+      ],
+      "retrieval_hit": null,
+      "seconds": 0.7718804730000102,
+      "prompt_tokens": 338,
+      "completion_tokens": 120,
+      "error": null
+    },
+    {
+      "ticket": "HO-048",
+      "expected": "slow-pending-updates",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:mail-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.7993646310000031,
+      "prompt_tokens": 200,
+      "completion_tokens": 153,
+      "error": null
+    },
+    {
+      "ticket": "HO-049",
+      "expected": "slow-thermal-throttling",
+      "predicted": "slow-pending-updates",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-pending-updates",
+        "cause:slow-thermal-throttling",
+        "policy:dev-3",
+        "cause:overheating-fan"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.29793563100003,
+      "prompt_tokens": 375,
+      "completion_tokens": 820,
+      "error": null
+    },
+    {
+      "ticket": "HO-050",
+      "expected": "wifi-service-degraded",
+      "predicted": "wifi-device-noncompliant",
+      "retrieved": [
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired",
+        "cause:wifi-service-degraded",
+        "policy:vpn-4",
+        "policy:vpn-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.894076757999983,
+      "prompt_tokens": 360,
+      "completion_tokens": 754,
+      "error": null
+    },
+    {
+      "ticket": "HO-051",
+      "expected": "overheating-fan",
+      "predicted": "overheating-fan",
+      "retrieved": [
+        "policy:dev-3",
+        "cause:slow-thermal-throttling",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.733483732000025,
+      "prompt_tokens": 364,
+      "completion_tokens": 1416,
+      "error": null
+    },
+    {
+      "ticket": "HO-052",
+      "expected": "locked-expired-password",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:vpn-account-locked",
+        "cause:locked-failed-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:locked-expired-password",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.2087022910000087,
+      "prompt_tokens": 425,
+      "completion_tokens": 310,
+      "error": null
+    },
+    {
+      "ticket": "HO-053",
+      "expected": "av-definitions-stale",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "policy:sw-3",
+        "cause:av-low-disk",
+        "policy:dev-1",
+        "cause:av-remote-vpn-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.130120799999986,
+      "prompt_tokens": 389,
+      "completion_tokens": 273,
+      "error": null
+    },
+    {
+      "ticket": "HO-054",
+      "expected": "slow-pending-updates",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-pending-updates",
+        "cause:slow-thermal-throttling",
+        "policy:dev-3",
+        "cause:overheating-fan"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.1661921310000025,
+      "prompt_tokens": 360,
+      "completion_tokens": 624,
+      "error": null
+    },
+    {
+      "ticket": "HO-055",
+      "expected": "phishing-account-locked",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:mail-2",
+        "policy:mail-3",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.46397714699998,
+      "prompt_tokens": 373,
+      "completion_tokens": 749,
+      "error": null
+    },
+    {
+      "ticket": "HO-056",
+      "expected": "mailbox-full",
+      "predicted": "email-service-outage",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-1",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.0148501319999923,
+      "prompt_tokens": 376,
+      "completion_tokens": 884,
+      "error": null
+    },
+    {
+      "ticket": "HO-057",
+      "expected": "slow-thermal-throttling",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:mail-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.8656555480000065,
+      "prompt_tokens": 200,
+      "completion_tokens": 183,
+      "error": null
+    },
+    {
+      "ticket": "HO-058",
+      "expected": "wifi-service-degraded",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired",
+        "cause:wifi-service-degraded",
+        "policy:vpn-4",
+        "policy:vpn-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.6170976770000038,
+      "prompt_tokens": 346,
+      "completion_tokens": 386,
+      "error": null
+    },
+    {
+      "ticket": "HO-059",
+      "expected": "install-disk-full",
+      "predicted": "install-catalog-outage",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.9095071929999676,
+      "prompt_tokens": 354,
+      "completion_tokens": 478,
+      "error": null
+    },
+    {
+      "ticket": "HO-060",
+      "expected": "email-service-outage",
+      "predicted": "mailbox-full",
+      "retrieved": [
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-1",
+        "cause:mailbox-full",
+        "policy:mail-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.9154371750000223,
+      "prompt_tokens": 350,
+      "completion_tokens": 874,
+      "error": null
+    },
+    {
+      "ticket": "HO-061",
+      "expected": "wifi-device-noncompliant",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired",
+        "cause:wifi-service-degraded",
+        "policy:vpn-4",
+        "policy:vpn-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.6671402669999793,
+      "prompt_tokens": 360,
+      "completion_tokens": 473,
+      "error": null
+    },
+    {
+      "ticket": "HO-062",
+      "expected": "vpn-certificate-expired",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-client-outdated",
+        "cause:vpn-certificate-expired",
+        "policy:vpn-2",
+        "policy:vpn-3",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.97052177300003,
+      "prompt_tokens": 382,
+      "completion_tokens": 1539,
+      "error": null
+    },
+    {
+      "ticket": "HO-063",
+      "expected": "mfa-sso-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:pw-3",
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "cause:locked-failed-sign-ins"
+      ],
+      "retrieval_hit": false,
+      "seconds": 1.6339295500000048,
+      "prompt_tokens": 417,
+      "completion_tokens": 425,
+      "error": null
+    },
+    {
+      "ticket": "HO-064",
+      "expected": "escalate",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "policy:sw-3",
+        "cause:av-low-disk",
+        "policy:dev-1",
+        "cause:av-remote-vpn-expired"
+      ],
+      "retrieval_hit": null,
+      "seconds": 0.6392070489999924,
+      "prompt_tokens": 375,
+      "completion_tokens": 89,
+      "error": null
+    },
+    {
+      "ticket": "HO-065",
+      "expected": "escalate",
+      "predicted": "phishing-account-locked",
+      "retrieved": [
+        "policy:mail-2",
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:email-service-outage",
+        "policy:mail-3"
+      ],
+      "retrieval_hit": null,
+      "seconds": 3.391027035000036,
+      "prompt_tokens": 380,
+      "completion_tokens": 987,
+      "error": null
+    },
+    {
+      "ticket": "HO-066",
+      "expected": "install-device-noncompliant",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.589058697999974,
+      "prompt_tokens": 354,
+      "completion_tokens": 417,
+      "error": null
+    },
+    {
+      "ticket": "HO-067",
+      "expected": "slow-low-disk",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-pending-updates",
+        "cause:slow-thermal-throttling",
+        "policy:dev-3",
+        "cause:overheating-fan"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.940441958000008,
+      "prompt_tokens": 374,
+      "completion_tokens": 892,
+      "error": null
+    },
+    {
+      "ticket": "HO-068",
+      "expected": "install-catalog-outage",
+      "predicted": "install-catalog-outage",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "cause:vpn-account-locked",
+        "cause:install-disk-full"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.0151179689999594,
+      "prompt_tokens": 326,
+      "completion_tokens": 902,
+      "error": null
+    },
+    {
+      "ticket": "HO-069",
+      "expected": "install-catalog-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.9557787400000279,
+      "prompt_tokens": 353,
+      "completion_tokens": 197,
+      "error": null
+    },
+    {
+      "ticket": "HO-070",
+      "expected": "overheating-pending-firmware",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "policy:dev-3",
+        "cause:slow-thermal-throttling",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:mail-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.58007535400003,
+      "prompt_tokens": 366,
+      "completion_tokens": 504,
+      "error": null
+    },
+    {
+      "ticket": "HO-071",
+      "expected": "overheating-pending-firmware",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "policy:dev-3",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-4",
+        "cause:slow-thermal-throttling"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.077804108999999,
+      "prompt_tokens": 375,
+      "completion_tokens": 1327,
+      "error": null
+    },
+    {
+      "ticket": "HO-072",
+      "expected": "av-remote-vpn-expired",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "policy:dev-1",
+        "cause:app-update-low-disk"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.1494495769999844,
+      "prompt_tokens": 354,
+      "completion_tokens": 268,
+      "error": null
+    },
+    {
+      "ticket": "HO-073",
+      "expected": "mfa-not-enrolled",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:pw-3",
+        "cause:mfa-sso-outage",
+        "cause:mfa-locked",
+        "cause:mfa-not-enrolled",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.374099228000034,
+      "prompt_tokens": 470,
+      "completion_tokens": 553,
+      "error": null
+    },
+    {
+      "ticket": "HO-074",
+      "expected": "av-low-disk",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "policy:sw-3",
+        "cause:av-low-disk",
+        "policy:dev-1",
+        "cause:av-remote-vpn-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.666111376999993,
+      "prompt_tokens": 390,
+      "completion_tokens": 471,
+      "error": null
+    },
+    {
+      "ticket": "HO-075",
+      "expected": "escalate",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "policy:mail-2",
+        "cause:email-service-outage",
+        "cause:vpn-gateway-outage",
+        "cause:phishing-suspicious-sign-ins",
+        "policy:mail-3"
+      ],
+      "retrieval_hit": null,
+      "seconds": 0.8698053919999893,
+      "prompt_tokens": 360,
+      "completion_tokens": 235,
+      "error": null
+    },
+    {
+      "ticket": "HO-076",
+      "expected": "av-remote-vpn-expired",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "policy:sw-3",
+        "policy:sw-2",
+        "cause:av-definitions-stale",
+        "cause:mfa-not-enrolled",
+        "policy:sw-1"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.7066044879999822,
+      "prompt_tokens": 393,
+      "completion_tokens": 152,
+      "error": null
+    },
+    {
+      "ticket": "HO-077",
+      "expected": "vpn-client-outdated",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-client-outdated",
+        "cause:vpn-certificate-expired",
+        "policy:vpn-2",
+        "policy:vpn-3",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": true,
+      "seconds": 8.220953905000044,
+      "prompt_tokens": 367,
+      "completion_tokens": 1923,
+      "error": null
+    },
+    {
+      "ticket": "HO-078",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:locked-failed-sign-ins",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.7383675129999574,
+      "prompt_tokens": 323,
+      "completion_tokens": 120,
+      "error": null
+    },
+    {
+      "ticket": "HO-079",
+      "expected": "mfa-not-enrolled",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:pw-3",
+        "cause:mfa-sso-outage",
+        "cause:mfa-locked",
+        "cause:mfa-not-enrolled",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.234601934000011,
+      "prompt_tokens": 456,
+      "completion_tokens": 456,
+      "error": null
+    },
+    {
+      "ticket": "HO-080",
+      "expected": "slow-low-disk",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:mail-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.7883920319999902,
+      "prompt_tokens": 199,
+      "completion_tokens": 137,
+      "error": null
+    },
+    {
+      "ticket": "HO-081",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:mail-2",
+        "policy:mail-3",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.1685232609999616,
+      "prompt_tokens": 373,
+      "completion_tokens": 568,
+      "error": null
+    },
+    {
+      "ticket": "HO-082",
+      "expected": "install-device-noncompliant",
+      "predicted": "install-catalog-outage",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.4044440160000136,
+      "prompt_tokens": 354,
+      "completion_tokens": 293,
+      "error": null
+    },
+    {
+      "ticket": "HO-083",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:mail-2",
+        "policy:mail-3",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.3394738879999863,
+      "prompt_tokens": 359,
+      "completion_tokens": 780,
+      "error": null
+    },
+    {
+      "ticket": "HO-084",
+      "expected": "av-low-disk",
+      "predicted": "av-low-disk",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "policy:dev-1",
+        "cause:app-update-low-disk"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.819336877000012,
+      "prompt_tokens": 355,
+      "completion_tokens": 1467,
+      "error": null
+    },
+    {
+      "ticket": "HO-085",
+      "expected": "mfa-sso-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:pw-3",
+        "cause:mfa-not-enrolled",
+        "cause:mfa-sso-outage",
+        "cause:mfa-locked",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.508315256000003,
+      "prompt_tokens": 471,
+      "completion_tokens": 452,
+      "error": null
+    },
+    {
+      "ticket": "HO-086",
+      "expected": "av-definitions-stale",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "policy:sw-3",
+        "cause:av-low-disk",
+        "policy:dev-1",
+        "cause:av-remote-vpn-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.073155211000028,
+      "prompt_tokens": 389,
+      "completion_tokens": 620,
+      "error": null
+    },
+    {
+      "ticket": "HO-087",
+      "expected": "mfa-sso-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:pw-3",
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 2.9271040990000188,
+      "prompt_tokens": 431,
+      "completion_tokens": 684,
+      "error": null
+    },
+    {
+      "ticket": "HO-088",
+      "expected": "vpn-certificate-expired",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:vpn-client-outdated",
+        "cause:vpn-certificate-expired",
+        "policy:vpn-2",
+        "policy:vpn-3",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.9516977390000534,
+      "prompt_tokens": 366,
+      "completion_tokens": 379,
+      "error": null
+    },
+    {
+      "ticket": "HO-089",
+      "expected": "mfa-not-enrolled",
+      "predicted": "escalate",
+      "retrieved": [
+        "policy:pw-3",
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "cause:locked-failed-sign-ins"
+      ],
+      "retrieval_hit": false,
+      "seconds": 2.758822821000024,
+      "prompt_tokens": 418,
+      "completion_tokens": 440,
+      "error": null
+    },
+    {
+      "ticket": "HO-090",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:locked-failed-sign-ins",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.0768360659999985,
+      "prompt_tokens": 338,
+      "completion_tokens": 653,
+      "error": null
+    },
+    {
+      "ticket": "HO-091",
+      "expected": "install-catalog-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.5087115669999775,
+      "prompt_tokens": 353,
+      "completion_tokens": 409,
+      "error": null
+    },
+    {
+      "ticket": "HO-092",
+      "expected": "wifi-password-expired",
+      "predicted": "wifi-service-degraded",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired",
+        "policy:vpn-1",
+        "policy:vpn-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.1638567549999834,
+      "prompt_tokens": 362,
+      "completion_tokens": 955,
+      "error": null
+    },
+    {
+      "ticket": "HO-093",
+      "expected": "vpn-account-locked",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-client-outdated",
+        "cause:vpn-certificate-expired",
+        "policy:vpn-2",
+        "policy:vpn-3",
+        "cause:vpn-account-locked"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.169645368999966,
+      "prompt_tokens": 382,
+      "completion_tokens": 1182,
+      "error": null
+    },
+    {
+      "ticket": "HO-094",
+      "expected": "phishing-account-locked",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "policy:mail-2",
+        "cause:email-service-outage",
+        "cause:vpn-gateway-outage",
+        "cause:phishing-suspicious-sign-ins",
+        "cause:mfa-not-enrolled"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.7222730569999953,
+      "prompt_tokens": 383,
+      "completion_tokens": 135,
+      "error": null
+    },
+    {
+      "ticket": "HO-095",
+      "expected": "escalate",
+      "predicted": "slow-pending-updates",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-pending-updates",
+        "cause:slow-thermal-throttling",
+        "policy:dev-3",
+        "cause:overheating-fan"
+      ],
+      "retrieval_hit": null,
+      "seconds": 3.160027527000011,
+      "prompt_tokens": 360,
+      "completion_tokens": 795,
+      "error": null
+    },
+    {
+      "ticket": "HO-096",
+      "expected": "locked-expired-password",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:vpn-account-locked",
+        "cause:locked-failed-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:locked-expired-password",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.8077617149999696,
+      "prompt_tokens": 439,
+      "completion_tokens": 428,
+      "error": null
+    },
+    {
+      "ticket": "HO-097",
+      "expected": "phishing-account-locked",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:mail-2",
+        "policy:mail-3",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.3625124060000076,
+      "prompt_tokens": 361,
+      "completion_tokens": 445,
+      "error": null
+    },
+    {
+      "ticket": "HO-098",
+      "expected": "escalate",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-1",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": null,
+      "seconds": 1.0366537919999814,
+      "prompt_tokens": 341,
+      "completion_tokens": 259,
+      "error": null
+    },
+    {
+      "ticket": "HO-099",
+      "expected": "mfa-locked",
+      "predicted": "mfa-not-enrolled",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-device-noncompliant",
+        "cause:install-disk-full",
+        "policy:pw-3",
+        "cause:mfa-not-enrolled"
+      ],
+      "retrieval_hit": false,
+      "seconds": 4.1278061879999655,
+      "prompt_tokens": 447,
+      "completion_tokens": 1008,
+      "error": null
+    },
+    {
+      "ticket": "HO-100",
+      "expected": "wifi-password-expired",
+      "predicted": "wifi-device-noncompliant",
+      "retrieved": [
+        "cause:wifi-device-noncompliant",
+        "cause:wifi-password-expired",
+        "cause:wifi-service-degraded",
+        "policy:vpn-4",
+        "policy:vpn-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.57749935999999,
+      "prompt_tokens": 347,
+      "completion_tokens": 1649,
+      "error": null
+    }
+  ]
+}

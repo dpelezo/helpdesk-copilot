@@ -33,6 +33,12 @@ class Reply:
     message: dict[str, Any]
     usage: dict[str, Any] = field(default_factory=dict)
     seconds: float = 0.0
+    finish_reason: str | None = None
+
+    @property
+    def truncated(self) -> bool:
+        """True when the reply stopped at the token limit, so its answer may be missing."""
+        return self.finish_reason == "length"
 
     @property
     def tool_calls(self) -> list[dict[str, Any]]:
@@ -118,10 +124,16 @@ class ChatClient:
                     raise LLMError(f"{self.model}: HTTP {response.status_code}: {_safe(response.text)}")
                 data = response.json()
                 try:
-                    message = data["choices"][0]["message"]
+                    choice = data["choices"][0]
+                    message = choice["message"]
                 except (KeyError, IndexError, TypeError):
                     raise LLMError(f"{self.model}: no message in the response") from None
-                return Reply(message=message, usage=data.get("usage") or {}, seconds=seconds)
+                return Reply(
+                    message=message,
+                    usage=data.get("usage") or {},
+                    seconds=seconds,
+                    finish_reason=choice.get("finish_reason"),
+                )
         raise LLMError(f"{self.model}: no response")  # pragma: no cover
 
 

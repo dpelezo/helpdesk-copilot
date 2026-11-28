@@ -1,0 +1,64 @@
+name: baseline
+
+# Issue #9: condition A, BM25 keyword search and one model call, no checks.
+# Scores the tuning tickets, then the held-out tickets once. Uses the
+# TELNYX_API_KEY secret through the environment; it is never printed.
+# Runs when the baseline changes, or on demand.
+
+on:
+  pull_request:
+    paths:
+      - app/evals/baseline.py
+      - app/knowledge/corpus.py
+      - app/retrieval/bm25.py
+      - .github/workflows/baseline.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: baseline-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run:
+    name: baseline (BM25, no checks)
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      LLM_MODEL: zai-org/GLM-5.2
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check the key is set (without printing it)
+        run: test -n "$TELNYX_API_KEY" || { echo "TELNYX_API_KEY secret is missing"; exit 1; }
+
+      - name: Tuning tickets
+        run: python -m app.evals.baseline --split tuning
+
+      - name: Held-out tickets
+        run: python -m app.evals.baseline --split heldout | tee summary.md
+
+      - name: Show results
+        if: always()
+        run: |
+          cat summary.md >> "$GITHUB_STEP_SUMMARY" || true
+          for f in evals/results/baseline-bm25-*.json; do
+            [ -f "$f" ] || continue
+            echo "=== BEGIN $f"
+            cat "$f"
+            echo "=== END $f"
+          done

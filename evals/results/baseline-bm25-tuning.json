@@ -1,0 +1,368 @@
+{
+  "condition": "A: BM25 keyword search, no graph, no checks",
+  "model": "zai-org/GLM-5.2",
+  "split": "tuning",
+  "date": "2026-11-28",
+  "top_k": 5,
+  "score": {
+    "tickets": 20,
+    "root_cause_accuracy": 25.0,
+    "answered": 100.0,
+    "per_issue": {
+      "hardware--printer-not-responding": 16.7,
+      "software--application-not-updating": 14.3,
+      "system--disk-space-running-out": 42.9
+    },
+    "escalation_precision": 0.0,
+    "escalation_recall": 0.0,
+    "missed_causes": 2,
+    "invented_causes": 2,
+    "errors": 0
+  },
+  "chance_accuracy": 27.9,
+  "retrieval_hit_at_k": 66.7,
+  "seconds_per_ticket": 2.26,
+  "tokens_per_ticket": 967,
+  "runs": [
+    {
+      "ticket": "TU-001",
+      "expected": "escalate",
+      "predicted": "disk-nearly-full",
+      "retrieved": [
+        "cause:disk-nearly-full",
+        "policy:dev-2",
+        "cause:slow-low-disk",
+        "cause:install-disk-full",
+        "cause:av-low-disk"
+      ],
+      "retrieval_hit": null,
+      "seconds": 0.627616125000003,
+      "prompt_tokens": 341,
+      "completion_tokens": 93,
+      "error": null
+    },
+    {
+      "ticket": "TU-002",
+      "expected": "app-update-catalog-degraded",
+      "predicted": "app-update-low-disk",
+      "retrieved": [
+        "cause:app-update-low-disk",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-waits-for-os",
+        "cause:update-cache-filling-disk",
+        "cause:av-remote-vpn-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.783186141999998,
+      "prompt_tokens": 351,
+      "completion_tokens": 1750,
+      "error": null
+    },
+    {
+      "ticket": "TU-003",
+      "expected": "disk-nearly-full",
+      "predicted": "disk-nearly-full",
+      "retrieved": [
+        "cause:install-disk-full",
+        "cause:disk-nearly-full",
+        "cause:av-low-disk",
+        "cause:app-update-low-disk",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.9001342650000055,
+      "prompt_tokens": 361,
+      "completion_tokens": 97,
+      "error": null
+    },
+    {
+      "ticket": "TU-004",
+      "expected": "update-cache-filling-disk",
+      "predicted": "disk-nearly-full",
+      "retrieved": [
+        "cause:install-disk-full",
+        "cause:disk-nearly-full",
+        "cause:av-low-disk",
+        "cause:app-update-low-disk",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.8044908220000053,
+      "prompt_tokens": 361,
+      "completion_tokens": 103,
+      "error": null
+    },
+    {
+      "ticket": "TU-005",
+      "expected": "update-cache-filling-disk",
+      "predicted": "disk-nearly-full",
+      "retrieved": [
+        "cause:install-disk-full",
+        "cause:disk-nearly-full",
+        "cause:av-low-disk",
+        "cause:app-update-low-disk",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.8672205660000003,
+      "prompt_tokens": 362,
+      "completion_tokens": 116,
+      "error": null
+    },
+    {
+      "ticket": "TU-006",
+      "expected": "printing-service-outage",
+      "predicted": "printer-offline",
+      "retrieved": [
+        "cause:printer-offline",
+        "cause:printer-paper-jam",
+        "cause:printing-service-outage",
+        "policy:prn-3",
+        "policy:prn-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.327609224999989,
+      "prompt_tokens": 340,
+      "completion_tokens": 1623,
+      "error": null
+    },
+    {
+      "ticket": "TU-007",
+      "expected": "app-update-low-disk",
+      "predicted": "app-update-catalog-degraded",
+      "retrieved": [
+        "cause:app-update-waits-for-os",
+        "policy:pw-3",
+        "cause:app-update-low-disk",
+        "cause:app-update-catalog-degraded",
+        "policy:dev-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.606271917000001,
+      "prompt_tokens": 431,
+      "completion_tokens": 821,
+      "error": null
+    },
+    {
+      "ticket": "TU-008",
+      "expected": "app-update-waits-for-os",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-device-noncompliant",
+        "cause:app-update-waits-for-os",
+        "cause:app-update-low-disk",
+        "cause:app-update-catalog-degraded",
+        "cause:install-catalog-outage"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.902581381999994,
+      "prompt_tokens": 329,
+      "completion_tokens": 803,
+      "error": null
+    },
+    {
+      "ticket": "TU-009",
+      "expected": "app-update-catalog-degraded",
+      "predicted": "app-update-low-disk",
+      "retrieved": [
+        "cause:app-update-low-disk",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-waits-for-os",
+        "cause:update-cache-filling-disk",
+        "cause:av-remote-vpn-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.3502671979999974,
+      "prompt_tokens": 338,
+      "completion_tokens": 341,
+      "error": null
+    },
+    {
+      "ticket": "TU-010",
+      "expected": "app-update-low-disk",
+      "predicted": "app-update-catalog-degraded",
+      "retrieved": [
+        "cause:app-update-low-disk",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-waits-for-os",
+        "cause:update-cache-filling-disk",
+        "cause:av-remote-vpn-expired"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.1852104649999973,
+      "prompt_tokens": 352,
+      "completion_tokens": 630,
+      "error": null
+    },
+    {
+      "ticket": "TU-011",
+      "expected": "printing-service-outage",
+      "predicted": "printing-service-outage",
+      "retrieved": [
+        "cause:printer-offline",
+        "cause:printer-paper-jam",
+        "cause:printing-service-outage",
+        "policy:prn-3",
+        "policy:prn-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.781169859000002,
+      "prompt_tokens": 340,
+      "completion_tokens": 740,
+      "error": null
+    },
+    {
+      "ticket": "TU-012",
+      "expected": "update-cache-filling-disk",
+      "predicted": "disk-nearly-full",
+      "retrieved": [
+        "cause:install-disk-full",
+        "cause:disk-nearly-full",
+        "cause:av-low-disk",
+        "cause:app-update-low-disk",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.7481205800000055,
+      "prompt_tokens": 361,
+      "completion_tokens": 100,
+      "error": null
+    },
+    {
+      "ticket": "TU-013",
+      "expected": "escalate",
+      "predicted": "app-update-waits-for-os",
+      "retrieved": [
+        "cause:install-device-noncompliant",
+        "cause:app-update-waits-for-os",
+        "cause:app-update-low-disk",
+        "cause:app-update-catalog-degraded",
+        "cause:install-catalog-outage"
+      ],
+      "retrieval_hit": null,
+      "seconds": 3.8166810560000073,
+      "prompt_tokens": 345,
+      "completion_tokens": 1195,
+      "error": null
+    },
+    {
+      "ticket": "TU-014",
+      "expected": "printer-paper-jam",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:printer-offline",
+        "cause:printer-paper-jam",
+        "cause:printing-service-outage",
+        "policy:prn-3",
+        "policy:prn-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.1087445520000045,
+      "prompt_tokens": 327,
+      "completion_tokens": 475,
+      "error": null
+    },
+    {
+      "ticket": "TU-015",
+      "expected": "printer-paper-jam",
+      "predicted": "printing-service-outage",
+      "retrieved": [
+        "policy:prn-2",
+        "cause:printing-service-outage",
+        "policy:vpn-4",
+        "policy:prn-1",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 4.502046528000008,
+      "prompt_tokens": 372,
+      "completion_tokens": 1244,
+      "error": null
+    },
+    {
+      "ticket": "TU-016",
+      "expected": "printer-offline",
+      "predicted": "printing-service-outage",
+      "retrieved": [
+        "policy:prn-2",
+        "cause:printing-service-outage",
+        "policy:vpn-4",
+        "policy:prn-1",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 1.6455827719999974,
+      "prompt_tokens": 352,
+      "completion_tokens": 344,
+      "error": null
+    },
+    {
+      "ticket": "TU-017",
+      "expected": "app-update-waits-for-os",
+      "predicted": "app-update-waits-for-os",
+      "retrieved": [
+        "cause:install-device-noncompliant",
+        "cause:app-update-waits-for-os",
+        "cause:app-update-low-disk",
+        "cause:app-update-catalog-degraded",
+        "cause:install-catalog-outage"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.8087058309999975,
+      "prompt_tokens": 331,
+      "completion_tokens": 842,
+      "error": null
+    },
+    {
+      "ticket": "TU-018",
+      "expected": "disk-nearly-full",
+      "predicted": "disk-nearly-full",
+      "retrieved": [
+        "cause:disk-nearly-full",
+        "policy:dev-2",
+        "cause:slow-low-disk",
+        "cause:install-disk-full",
+        "cause:av-low-disk"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.4928095979999938,
+      "prompt_tokens": 356,
+      "completion_tokens": 95,
+      "error": null
+    },
+    {
+      "ticket": "TU-019",
+      "expected": "printer-offline",
+      "predicted": "printing-service-outage",
+      "retrieved": [
+        "policy:prn-2",
+        "cause:printing-service-outage",
+        "policy:vpn-4",
+        "policy:prn-1",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 2.300216624000001,
+      "prompt_tokens": 372,
+      "completion_tokens": 664,
+      "error": null
+    },
+    {
+      "ticket": "TU-020",
+      "expected": "disk-nearly-full",
+      "predicted": "disk-nearly-full",
+      "retrieved": [
+        "cause:install-disk-full",
+        "cause:disk-nearly-full",
+        "cause:av-low-disk",
+        "cause:app-update-low-disk",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.7271702110000007,
+      "prompt_tokens": 362,
+      "completion_tokens": 188,
+      "error": null
+    }
+  ]
+}
