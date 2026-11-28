@@ -1,0 +1,685 @@
+{
+  "eval": "retrieval: right cause in the top 5",
+  "split": "tuning",
+  "date": "2026-11-28",
+  "embedding_model": "thenlper/gte-large",
+  "settings": {
+    "top_k": 5,
+    "rrf_k": 60,
+    "hybrid_depth": 20
+  },
+  "tickets": 18,
+  "documents": 59,
+  "hit_at_5": {
+    "bm25": 66.7,
+    "vector": 100.0,
+    "hybrid": 83.3
+  },
+  "mrr": {
+    "bm25": 0.361,
+    "vector": 0.631,
+    "hybrid": 0.471
+  },
+  "per_issue": {
+    "hardware--printer-not-responding": {
+      "tickets": 6,
+      "bm25": 50.0,
+      "vector": 100.0,
+      "hybrid": 50.0
+    },
+    "software--application-not-updating": {
+      "tickets": 6,
+      "bm25": 100.0,
+      "vector": 100.0,
+      "hybrid": 100.0
+    },
+    "system--disk-space-running-out": {
+      "tickets": 6,
+      "bm25": 50.0,
+      "vector": 100.0,
+      "hybrid": 100.0
+    }
+  },
+  "embedded": {
+    "texts": 77,
+    "from_cache": 18
+  },
+  "rows": [
+    {
+      "ticket": "TU-002",
+      "issue": "software--application-not-updating",
+      "cause": "app-update-catalog-degraded",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-waits-for-os",
+          "cause:update-cache-filling-disk",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:app-update-waits-for-os",
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:install-device-noncompliant",
+          "cause:locked-failed-sign-ins"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:app-update-low-disk",
+          "cause:app-update-waits-for-os",
+          "cause:app-update-catalog-degraded",
+          "cause:update-cache-filling-disk",
+          "cause:av-remote-vpn-expired"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-003",
+      "issue": "system--disk-space-running-out",
+      "cause": "disk-nearly-full",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:install-disk-full",
+          "cause:disk-nearly-full",
+          "cause:av-low-disk",
+          "cause:app-update-low-disk",
+          "policy:dev-2"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:update-cache-filling-disk",
+          "cause:install-disk-full",
+          "policy:dev-2",
+          "cause:app-update-low-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:install-disk-full",
+          "cause:app-update-low-disk",
+          "policy:dev-2",
+          "cause:update-cache-filling-disk"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-004",
+      "issue": "system--disk-space-running-out",
+      "cause": "update-cache-filling-disk",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "cause:install-disk-full",
+          "cause:disk-nearly-full",
+          "cause:av-low-disk",
+          "cause:app-update-low-disk",
+          "policy:dev-2"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:update-cache-filling-disk",
+          "cause:install-disk-full",
+          "policy:dev-2",
+          "cause:app-update-low-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 5,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:install-disk-full",
+          "cause:app-update-low-disk",
+          "policy:dev-2",
+          "cause:update-cache-filling-disk"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-005",
+      "issue": "system--disk-space-running-out",
+      "cause": "update-cache-filling-disk",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "cause:install-disk-full",
+          "cause:disk-nearly-full",
+          "cause:av-low-disk",
+          "cause:app-update-low-disk",
+          "policy:dev-2"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:update-cache-filling-disk",
+          "cause:install-disk-full",
+          "policy:dev-2",
+          "cause:app-update-low-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 5,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:install-disk-full",
+          "cause:app-update-low-disk",
+          "policy:dev-2",
+          "cause:update-cache-filling-disk"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-006",
+      "issue": "hardware--printer-not-responding",
+      "cause": "printing-service-outage",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:printer-offline",
+          "cause:printer-paper-jam",
+          "cause:printing-service-outage",
+          "policy:prn-3",
+          "policy:prn-2"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:printing-service-outage",
+          "cause:printer-paper-jam",
+          "cause:printer-offline",
+          "policy:prn-3",
+          "cause:email-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:printer-offline",
+          "cause:printing-service-outage",
+          "cause:printer-paper-jam",
+          "policy:prn-3",
+          "policy:prn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-007",
+      "issue": "software--application-not-updating",
+      "cause": "app-update-low-disk",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:app-update-waits-for-os",
+          "policy:pw-3",
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "policy:dev-1"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:app-update-waits-for-os",
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-low-disk",
+          "cause:av-definitions-stale",
+          "cause:install-device-noncompliant"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:app-update-waits-for-os",
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-low-disk",
+          "cause:install-device-noncompliant",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-008",
+      "issue": "software--application-not-updating",
+      "cause": "app-update-waits-for-os",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:install-device-noncompliant",
+          "cause:app-update-waits-for-os",
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:install-catalog-outage"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:app-update-waits-for-os",
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:install-device-noncompliant",
+          "cause:av-definitions-stale"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:app-update-waits-for-os",
+          "cause:install-device-noncompliant",
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-009",
+      "issue": "software--application-not-updating",
+      "cause": "app-update-catalog-degraded",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-waits-for-os",
+          "cause:update-cache-filling-disk",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:app-update-waits-for-os",
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-low-disk",
+          "cause:install-device-noncompliant",
+          "cause:install-catalog-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:app-update-low-disk",
+          "cause:app-update-waits-for-os",
+          "cause:app-update-catalog-degraded",
+          "cause:update-cache-filling-disk",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-010",
+      "issue": "software--application-not-updating",
+      "cause": "app-update-low-disk",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-waits-for-os",
+          "cause:update-cache-filling-disk",
+          "cause:av-remote-vpn-expired"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-waits-for-os",
+          "cause:app-update-low-disk",
+          "cause:locked-failed-sign-ins",
+          "cause:install-device-noncompliant"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:app-update-catalog-degraded",
+          "cause:app-update-low-disk",
+          "cause:app-update-waits-for-os",
+          "cause:update-cache-filling-disk",
+          "cause:av-remote-vpn-expired"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-011",
+      "issue": "hardware--printer-not-responding",
+      "cause": "printing-service-outage",
+      "bm25": {
+        "rank": 3,
+        "top": [
+          "cause:printer-offline",
+          "cause:printer-paper-jam",
+          "cause:printing-service-outage",
+          "policy:prn-3",
+          "policy:prn-2"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:printer-offline",
+          "cause:printing-service-outage",
+          "cause:printer-paper-jam",
+          "policy:prn-3",
+          "cause:email-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 3,
+        "top": [
+          "cause:printer-offline",
+          "cause:printer-paper-jam",
+          "cause:printing-service-outage",
+          "policy:prn-3",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-012",
+      "issue": "system--disk-space-running-out",
+      "cause": "update-cache-filling-disk",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "cause:install-disk-full",
+          "cause:disk-nearly-full",
+          "cause:av-low-disk",
+          "cause:app-update-low-disk",
+          "policy:dev-2"
+        ]
+      },
+      "vector": {
+        "rank": 2,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:update-cache-filling-disk",
+          "cause:install-disk-full",
+          "cause:app-update-low-disk",
+          "policy:dev-2"
+        ]
+      },
+      "hybrid": {
+        "rank": 4,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:install-disk-full",
+          "cause:app-update-low-disk",
+          "cause:update-cache-filling-disk",
+          "policy:dev-2"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-014",
+      "issue": "hardware--printer-not-responding",
+      "cause": "printer-paper-jam",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:printer-offline",
+          "cause:printer-paper-jam",
+          "cause:printing-service-outage",
+          "policy:prn-3",
+          "policy:prn-2"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:printer-offline",
+          "cause:printing-service-outage",
+          "cause:printer-paper-jam",
+          "policy:prn-3",
+          "cause:email-service-outage"
+        ]
+      },
+      "hybrid": {
+        "rank": 2,
+        "top": [
+          "cause:printer-offline",
+          "cause:printer-paper-jam",
+          "cause:printing-service-outage",
+          "policy:prn-3",
+          "policy:prn-2"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-015",
+      "issue": "hardware--printer-not-responding",
+      "cause": "printer-paper-jam",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:prn-2",
+          "cause:printing-service-outage",
+          "policy:vpn-4",
+          "policy:prn-1",
+          "policy:pw-4"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:printer-paper-jam",
+          "policy:prn-2",
+          "cause:printing-service-outage",
+          "policy:prn-1",
+          "policy:prn-3"
+        ]
+      },
+      "hybrid": {
+        "rank": null,
+        "top": [
+          "policy:prn-2",
+          "cause:printing-service-outage",
+          "policy:prn-1",
+          "policy:vpn-4",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-016",
+      "issue": "hardware--printer-not-responding",
+      "cause": "printer-offline",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:prn-2",
+          "cause:printing-service-outage",
+          "policy:vpn-4",
+          "policy:prn-1",
+          "policy:dev-4"
+        ]
+      },
+      "vector": {
+        "rank": 3,
+        "top": [
+          "cause:printer-paper-jam",
+          "cause:printing-service-outage",
+          "cause:printer-offline",
+          "policy:prn-2",
+          "policy:prn-3"
+        ]
+      },
+      "hybrid": {
+        "rank": null,
+        "top": [
+          "cause:printing-service-outage",
+          "policy:prn-2",
+          "policy:prn-1",
+          "cause:install-catalog-outage",
+          "cause:install-device-noncompliant"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-017",
+      "issue": "software--application-not-updating",
+      "cause": "app-update-waits-for-os",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:install-device-noncompliant",
+          "cause:app-update-waits-for-os",
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:install-catalog-outage"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:app-update-waits-for-os",
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:install-device-noncompliant",
+          "cause:av-definitions-stale"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:app-update-waits-for-os",
+          "cause:install-device-noncompliant",
+          "cause:app-update-low-disk",
+          "cause:app-update-catalog-degraded",
+          "cause:install-catalog-outage"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-018",
+      "issue": "system--disk-space-running-out",
+      "cause": "disk-nearly-full",
+      "bm25": {
+        "rank": 1,
+        "top": [
+          "cause:disk-nearly-full",
+          "policy:dev-2",
+          "cause:slow-low-disk",
+          "cause:install-disk-full",
+          "cause:av-low-disk"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:update-cache-filling-disk",
+          "cause:slow-low-disk",
+          "cause:install-disk-full",
+          "policy:dev-2"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:slow-low-disk",
+          "policy:dev-2",
+          "cause:install-disk-full",
+          "cause:update-cache-filling-disk"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-019",
+      "issue": "hardware--printer-not-responding",
+      "cause": "printer-offline",
+      "bm25": {
+        "rank": null,
+        "top": [
+          "policy:prn-2",
+          "cause:printing-service-outage",
+          "policy:vpn-4",
+          "policy:prn-1",
+          "policy:pw-4"
+        ]
+      },
+      "vector": {
+        "rank": 5,
+        "top": [
+          "cause:printer-paper-jam",
+          "cause:printing-service-outage",
+          "policy:prn-2",
+          "policy:prn-3",
+          "cause:printer-offline"
+        ]
+      },
+      "hybrid": {
+        "rank": null,
+        "top": [
+          "policy:prn-2",
+          "cause:printing-service-outage",
+          "policy:prn-1",
+          "cause:install-catalog-outage",
+          "policy:vpn-4"
+        ]
+      }
+    },
+    {
+      "ticket": "TU-020",
+      "issue": "system--disk-space-running-out",
+      "cause": "disk-nearly-full",
+      "bm25": {
+        "rank": 2,
+        "top": [
+          "cause:install-disk-full",
+          "cause:disk-nearly-full",
+          "cause:av-low-disk",
+          "cause:app-update-low-disk",
+          "policy:dev-2"
+        ]
+      },
+      "vector": {
+        "rank": 1,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:update-cache-filling-disk",
+          "cause:install-disk-full",
+          "cause:app-update-low-disk",
+          "cause:slow-low-disk"
+        ]
+      },
+      "hybrid": {
+        "rank": 1,
+        "top": [
+          "cause:disk-nearly-full",
+          "cause:install-disk-full",
+          "cause:app-update-low-disk",
+          "cause:update-cache-filling-disk",
+          "cause:av-low-disk"
+        ]
+      }
+    }
+  ],
+  "tokens": {
+    "calls": 20,
+    "prompt_tokens": 3456,
+    "completion_tokens": 0,
+    "budget": 50000
+  }
+}
