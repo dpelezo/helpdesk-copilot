@@ -34,7 +34,9 @@ from app.llm import ChatClient, LLMError, Reply
 from app.mock.faults import ISSUES
 
 MAX_SOURCE_CHARS = 40_000
-MAX_TOKENS = 8192  # room for reasoning, which Telnyx cannot switch off (ADR 0003, #9)
+# Room for reasoning, which Telnyx cannot switch off (ADR 0003, #9). 8,192 cut off 5 of 22
+# calls in the first run, including the two most relevant printer and phishing articles.
+MAX_TOKENS = 16384
 RESULTS = Path("evals/results/extraction.json")
 
 Kind = Literal["symptom", "cause", "diagnostic", "solution"]
@@ -46,8 +48,10 @@ SYSTEM = (
     "causes (why the problem happens, not how to fix it), diagnostics (checks that tell causes "
     "apart), and solutions (how to fix a cause). Every item has 'text' (one sentence in your own "
     "words) and 'evidence' (an exact quote of at most 30 words copied character for character "
-    "from the documentation, supporting the item). Leave a list empty rather than guess. Give at "
-    "most 8 items per list. Reply with the JSON object only."
+    "from the documentation, supporting the item). Each item names exactly one thing: when the "
+    "text lists several causes in one sentence (for example 'low paper, an open cover or a paper "
+    "jam'), make a separate item for each, each with its own quote. Leave a list empty rather "
+    "than guess. Give at most 12 items per list. Reply with the JSON object only."
 )
 
 _JSON = re.compile(r"\{.*\}", re.DOTALL)
