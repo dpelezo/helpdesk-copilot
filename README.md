@@ -1,5 +1,7 @@
 # helpdesk-copilot
 
+[![CI](https://github.com/dpelezo/helpdesk-copilot/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/dpelezo/helpdesk-copilot/actions/workflows/ci.yml) [![security](https://github.com/dpelezo/helpdesk-copilot/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/dpelezo/helpdesk-copilot/actions/workflows/security.yml)
+
 An assistant for IT helpdesk agents. It walks a troubleshooting procedure step by step, runs one check per step against the company's systems, and recommends a fix with evidence. A human approves any account change before it happens.
 
 > **Status: just started.** This repo began from a proof of concept: a knowledge-base drafting agent with a Temporal approval workflow. The approval workflow, API auth, database layer, Docker setup and CI carry over. The agent is being rewritten for procedure walking.
@@ -29,3 +31,7 @@ docker compose up --build
 ```
 
 `FIREWORKS_API_KEY`, `POSTGRES_USER` and `POSTGRES_PASSWORD` have no defaults and must be set in `.env`. Deployment (CD) is added back once the copilot is ready to ship.
+
+## Contributing
+
+Working rules for people and AI coding agents are in [AGENTS.md](AGENTS.md).
