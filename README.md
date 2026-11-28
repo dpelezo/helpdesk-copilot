@@ -14,6 +14,7 @@ An assistant for IT helpdesk agents. It walks a troubleshooting procedure step b
 | Extract (paid, on demand) | `extraction` workflow | `evals/results/extraction.json` |
 | Resolve and validate | `make resolve` | `knowledge/draft/release.json`, [`reports/validation.md`](reports/validation.md) |
 | Review (Temporal) | `python -m app.workflows.review_cli start --release-id <id>` | `knowledge/releases/<id>.json` with approval provenance |
+| Publish (Neo4j) | `make publish RELEASE=knowledge/releases/<id>.json` | A versioned release in the graph; `python -m app.knowledge.publish history` / `rollback` |
 
 A reviewer approves, edits, rejects or sends back each issue, from the CLI or `/api/v1/reviews` (API-key auth). Only approved facts reach the release.
 
@@ -60,7 +61,7 @@ cp .env.example .env   # fill in your own values; never commit .env
 docker compose up --build
 ```
 
-`TELNYX_API_KEY`, `API_KEYS`, `POSTGRES_USER` and `POSTGRES_PASSWORD` (Temporal's database) have no defaults and must be set in `.env`. The worker runs the review workflow; the Temporal UI is on port 8080. Deployment (CD) is added back once the copilot is ready to ship.
+`TELNYX_API_KEY`, `API_KEYS`, `NEO4J_PASSWORD`, `POSTGRES_USER` and `POSTGRES_PASSWORD` (Temporal's database) have no defaults and must be set in `.env`. The worker runs the review workflow; the Temporal UI is on port 8080. Deployment (CD) is added back once the copilot is ready to ship.
 
 ## Contributing
 

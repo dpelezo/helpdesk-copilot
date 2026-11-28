@@ -19,7 +19,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
+    services:
+      neo4j:
+        image: neo4j:5.26-community
+        env:
+          NEO4J_AUTH: neo4j/ci-only-neo4j  # throwaway, CI-only container
+        ports:
+          - 7687:7687
+        options: >-
+          --health-cmd "cypher-shell -u neo4j -p ci-only-neo4j 'RETURN 1'"
+          --health-interval 5s
+          --health-timeout 10s
+          --health-retries 20
+
     env:
+      NEO4J_URI: bolt://localhost:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: ci-only-neo4j
       TEMPORAL_HOST: localhost:7233
       API_KEYS: test-key-1,test-key-2
       PYTHONPATH: .
@@ -41,9 +57,10 @@ jobs:
         run: ruff check app/ tests/ --ignore E501
 
       - name: Tests
-        # The review workflow tests need Temporal's test server; here a skip is a failure.
+        # The review workflow and graph tests need Temporal's test server and Neo4j; here a skip is a failure.
         env:
           REQUIRE_TEMPORAL_TESTS: "1"
+          REQUIRE_NEO4J_TESTS: "1"
         run: pytest tests/ -v --tb=short
 
   docker:
