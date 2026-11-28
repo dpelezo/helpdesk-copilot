@@ -159,3 +159,49 @@ def test_manifest_round_trips(rows, tmp_path):
 def test_main_needs_the_seed_first(tmp_path, capsys):
     assert sources.main(["--seed", str(tmp_path / "missing.csv")]) == 1
     assert "run `python -m app.knowledge.seed` first" in capsys.readouterr().err
+
+
+# ── Curated sources ────────────────────────────────────────────────────
+
+
+def write_yaml(path, text):
+    path.write_text(text)
+    return path
+
+
+def test_the_committed_curated_list_is_valid_and_covers_the_gaps():
+    curated = sources.load_curated()
+    covered = {i for c in curated for i in c.issues}
+    assert {"system--disk-space-running-out", "system--system-running-slow", "hardware--laptop-overheating",
+            "software--program-won-t-install", "software--application-not-updating",
+            "hardware--printer-not-responding", "microsoft-office--outlook-not-sending-emails"} <= covered
+
+
+@pytest.mark.parametrize(("entry", "problem"), [
+    ("- url: https://random-blog.example/fix\n  issues: [network--vpn-not-connecting]\n  reason: r\n",
+     "not an https URL on"),
+    ("- url: http://support.microsoft.com/x\n  issues: [network--vpn-not-connecting]\n  reason: r\n",
+     "not an https URL on"),
+    ("- url: https://support.microsoft.com/x\n  issues: [identity--mfa-lockout]\n  reason: r\n",
+     "out-of-scope issues"),
+    ("- url: https://support.microsoft.com/x\n  issues: [network--vpn-not-connecting]\n  reason: ' '\n",
+     "no reason given"),
+    ("- url: https://support.microsoft.com/x\n  issues: [network--vpn-not-connecting]\n  reason: r\n"
+     "- url: https://support.microsoft.com/x\n  issues: [network--vpn-not-connecting]\n  reason: r\n",
+     "listed twice"),
+])
+def test_bad_curated_entries_are_rejected(tmp_path, entry, problem):
+    with pytest.raises(ValueError, match=problem):
+        sources.load_curated(write_yaml(tmp_path / "c.yml", entry))
+
+
+def test_collect_adds_curated_sources_with_origin_and_reason(rows, tmp_path):
+    article = "https://support.microsoft.com/en-us/printer-offline"
+    pages = {**PAGES, article: "<html><title>Printer offline</title><body><p>" + "Restart the print spooler. " * 30
+             + "</p></body></html>"}
+    curated = [sources.Curated(article, ("hardware--printer-not-responding",), "Specific printer article.")]
+    with web(pages) as client:
+        found = {s.url: s for s in sources.collect(rows, client, cache=tmp_path, delay=0, curated=curated)}
+    assert found[article].origin == "curated" and found[article].reason == "Specific printer article."
+    assert found[article].status == "ok" and found[article].relevant_to == ["hardware--printer-not-responding"]
+    assert found[VPN].origin == "seed" and found[VPN].reason is None

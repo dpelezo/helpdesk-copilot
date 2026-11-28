@@ -8,6 +8,7 @@ on:
   pull_request:
     paths:
       - app/knowledge/sources.py
+      - knowledge/sources/curated.yml
       - .github/workflows/sources.yml
   workflow_dispatch:
 

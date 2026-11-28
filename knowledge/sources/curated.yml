@@ -1,0 +1,42 @@
+# Curated sources for issues the seed's links do not cover (issue #25).
+#
+# The seed links to home pages (support.apple.com/, support.hp.com/) or to the
+# wrong article for 7 of the 11 in-scope seed issues; see the manifest. Each entry
+# below is a specific official troubleshooting article, chosen because the mock
+# company runs Windows 11 and macOS 15. Only official vendor domains are allowed
+# here (CURATED_VENDORS in app/knowledge/sources.py). The fetcher checks each URL
+# live; the seed's own links stay in the manifest as found.
+
+- url: https://support.microsoft.com/en-us/outlook/i-can-t-send-or-receive-messages-in-outlook
+  issues: [microsoft-office--outlook-not-sending-emails]
+  reason: Microsoft's main article for messages stuck in the Outbox; covers full mailbox storage and large attachments.
+- url: https://support.microsoft.com/en-us/outlook/outlook-email-stuck
+  issues: [microsoft-office--outlook-not-sending-emails]
+  reason: Step-by-step fix for email stuck in the Outbox.
+- url: https://support.microsoft.com/en-us/windows/free-up-drive-space-in-windows-85529ccb-c365-490d-b548-831022bc9b32
+  issues: [system--disk-space-running-out, system--system-running-slow]
+  reason: Windows 11 low disk space; Storage Sense and cleanup recommendations.
+- url: https://support.apple.com/en-us/102624
+  issues: [system--disk-space-running-out]
+  reason: macOS equivalent, for the Mac users in the mock company.
+- url: https://support.microsoft.com/en-us/windows/experience/performance-optimization/tips-to-improve-pc-performance-in-windows
+  issues: [system--system-running-slow]
+  reason: Windows 11 performance troubleshooting; covers low disk space, updates and background apps.
+- url: https://support.apple.com/en-us/101576
+  issues: [hardware--laptop-overheating]
+  reason: Apple on fans, temperature, blocked vents and heavy fan use.
+- url: https://support.microsoft.com/en-us/windows/deployment/install-upgrade/fix-problems-that-block-programs-from-being-installed-or-removed
+  issues: [software--program-won-t-install, software--application-not-updating]
+  reason: Windows 11 programs that cannot be installed, uninstalled or updated.
+- url: https://support.microsoft.com/en-us/account-billing/fix-problems-with-apps-from-microsoft-store-93ed0bcf-9c12-3df6-6dda-92ec5d0415ac
+  issues: [software--application-not-updating, software--program-won-t-install]
+  reason: Store apps that will not install or update; starts with keeping Windows up to date.
+- url: https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/troubleshoot-problems-updating-windows
+  issues: [software--application-not-updating, system--system-running-slow]
+  reason: Pending and failing Windows updates, which block app updates in the mock world.
+- url: https://support.microsoft.com/en-us/windows/hardware/printer/troubleshooting-offline-printer-problems-in-windows
+  issues: [hardware--printer-not-responding]
+  reason: Printer shows as offline; print queue and spooler.
+- url: https://support.microsoft.com/en-us/windows/hardware/printer/fix-printer-connection-and-printing-problems-in-windows
+  issues: [hardware--printer-not-responding]
+  reason: General printer troubleshooting, including power-cycling.

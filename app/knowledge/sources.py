@@ -1,7 +1,8 @@
 """Collect the sources Workflow A extracts from (issue #25).
 
 For each in-scope seed issue, fetch the documentation pages the seed links to,
-clean them to text, and record them in a manifest. Only the manifest is
+plus the curated official articles in ``knowledge/sources/curated.yml`` for issues
+the seed's links do not cover, clean them to text, and record them in a manifest. Only the manifest is
 committed (``knowledge/sources/manifest.json``); the cleaned text is cached in
 ``/data/`` and never committed, because vendor pages are not ours to
 redistribute (ADR 0005, AGENTS.md). The IT policy handbook is a local source.
@@ -27,12 +28,16 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import httpx
+import yaml
 
 from app.knowledge.policy import HANDBOOK
 from app.knowledge.seed import DATA_DIR, canonicalize, load_rows
 from app.mock.faults import ISSUES
 
 MANIFEST = Path("knowledge/sources/manifest.json")
+CURATED = Path("knowledge/sources/curated.yml")
+# Curated sources may come only from these official vendor domains.
+CURATED_VENDORS = frozenset({"microsoft.com", "apple.com"})
 CACHE = Path("data/sources")
 USER_AGENT = "helpdesk-copilot-sources/0.1 (+https://github.com/dpelezo/helpdesk-copilot)"
 DELAY_SECONDS = 1.0
@@ -143,6 +148,8 @@ class Source:
     chars: int = 0
     relevant_to: list[str] = field(default_factory=list)
     licence: str = LICENCE_NOTE
+    origin: str = "seed"  # "seed", "curated" or "local"
+    reason: str | None = None  # why a curated source was chosen
 
 
 def _source_id(url: str) -> str:
@@ -197,24 +204,56 @@ def handbook_source(today: str) -> Source:
         chars=len(text),
         relevant_to=list(HANDBOOK_ISSUES),
         licence="Written for this repo (fictional company).",
+        origin="local",
     )
 
 
+@dataclass(frozen=True)
+class Curated:
+    url: str
+    issues: tuple[str, ...]
+    reason: str
+
+
+def load_curated(path: Path = CURATED) -> list[Curated]:
+    """The curated list, checked: known issues, official vendors, a reason, no repeats."""
+    entries = [Curated(e["url"], tuple(e["issues"]), e["reason"]) for e in yaml.safe_load(path.read_text())]
+    problems = []
+    for e in entries:
+        if vendor(urlparse(e.url).hostname) not in CURATED_VENDORS or urlparse(e.url).scheme != "https":
+            problems.append(f"{e.url}: not an https URL on {sorted(CURATED_VENDORS)}")
+        if unknown := [i for i in e.issues if i not in SEED_ISSUES]:
+            problems.append(f"{e.url}: unknown or out-of-scope issues {unknown}")
+        if not e.reason.strip():
+            problems.append(f"{e.url}: no reason given")
+    if len({e.url for e in entries}) != len(entries):
+        problems.append("a curated URL is listed twice")
+    if problems:
+        raise ValueError("; ".join(problems))
+    return entries
+
+
 def collect(rows: list[dict[str, str]], client: httpx.Client, cache: Path = CACHE,
-            today: str | None = None, delay: float = DELAY_SECONDS) -> list[Source]:
+            today: str | None = None, delay: float = DELAY_SECONDS,
+            curated: list[Curated] | None = None) -> list[Source]:
     today = today or date.today().isoformat()
     links = seed_links(rows)
-    hosts = allowed_hosts(links)
-    by_url: dict[str, list[str]] = {}
+    curated = curated or []
+    hosts = allowed_hosts(links) | {vendor(urlparse(c.url).hostname) for c in curated}
+    planned: dict[str, tuple[set[str], str, str | None]] = {}
     for issue, urls in links.items():
         for url in urls:
-            by_url.setdefault(url, []).append(issue)
+            planned.setdefault(url, (set(), "seed", None))[0].add(issue)
+    for c in curated:
+        issues, origin, reason = planned.get(c.url, (set(), "curated", c.reason))
+        planned[c.url] = (issues | set(c.issues), origin, reason)
     cache.mkdir(parents=True, exist_ok=True)
     sources = [handbook_source(today)]
-    for n, (url, issues) in enumerate(sorted(by_url.items())):
+    for n, (url, (issues, origin, reason)) in enumerate(sorted(planned.items())):
         if n and delay:
             time.sleep(delay)
         entry, text = fetch(url, sorted(issues), hosts, client, today)
+        entry.origin, entry.reason = origin, reason
         if text:
             (cache / f"{entry.id}.txt").write_text(text)
         sources.append(entry)
@@ -249,7 +288,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     headers = {"User-Agent": USER_AGENT, "Accept": "text/html"}
     with httpx.Client(timeout=30, follow_redirects=True, headers=headers, max_redirects=5) as client:
-        sources = collect(load_rows(args.seed), client)
+        sources = collect(load_rows(args.seed), client, curated=load_curated())
     write_manifest(sources)
     usable = coverage(sources)
     for issue, ids in usable.items():
