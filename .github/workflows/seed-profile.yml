@@ -1,0 +1,49 @@
+name: seed profile
+
+# Downloads the pinned seed dataset and writes reports/seed_profile.md
+# (ADR 0005). Runs when the profiler changes, or on demand. The report is
+# uploaded as an artifact; the data itself is never committed.
+
+on:
+  pull_request:
+    paths:
+      - app/knowledge/seed.py
+      - .github/workflows/seed-profile.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  profile:
+    name: seed profile
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download and profile the seed
+        run: python -m app.knowledge.seed
+
+      - name: Show the report
+        run: |
+          cat reports/seed_profile.md
+          cat reports/seed_profile.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: seed-profile
+          path: |
+            reports/seed_profile.md
+            data/seed/canonical_issues.json
+          retention-days: 14
