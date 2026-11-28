@@ -135,3 +135,10 @@ def test_from_env_parses_and_validates_extra_body(monkeypatch):
     monkeypatch.setenv("LLM_EXTRA_BODY", "[1]")
     with pytest.raises(llm.LLMError, match="JSON object"):
         llm.ChatClient.from_env("m")
+
+
+def test_finish_reason_marks_a_truncated_reply():
+    body = {"choices": [{"message": {"content": ""}, "finish_reason": "length"}], "usage": {}}
+    reply = client(lambda r: httpx.Response(200, json=body)).complete([])
+    assert reply.finish_reason == "length" and reply.truncated
+    assert not client(lambda r: httpx.Response(200, json=ok_body())).complete([]).truncated

@@ -30,6 +30,9 @@ from app.mock.faults import BY_ID, ESCALATE
 from app.retrieval.bm25 import BM25
 
 TOP_K = 5
+# Reasoning cannot be switched off at Telnyx (ADR 0003), and it counts against this
+# limit; 1,024 cut off 21 of 100 held-out replies before the answer (first run).
+MAX_TOKENS = 4096
 OUT_DIR = Path("evals/results")
 
 SYSTEM = (
@@ -47,7 +50,9 @@ _JSON = re.compile(r"\{.*\}", re.DOTALL)
 class Model(Protocol):
     model: str
 
-    def complete(self, messages: list[dict[str, Any]], tools: list[dict[str, Any]] | None = None) -> Reply: ...
+    def complete(
+        self, messages: list[dict[str, Any]], tools: list[dict[str, Any]] | None = None, *, max_tokens: int = ...
+    ) -> Reply: ...
 
 
 def parse_cause(text: str | None) -> str | None:
@@ -95,7 +100,7 @@ def run_ticket(model: Model, index: BM25, ticket: ticket_set.Ticket) -> Run:
         {"role": "user", "content": f"Subject: {ticket.subject}\n\n{ticket.message}\n\nDocuments:\n{docs}"},
     ]
     try:
-        reply = model.complete(messages)
+        reply = model.complete(messages, max_tokens=MAX_TOKENS)
     except LLMError as error:
         run.error = str(error)
         return run
@@ -104,7 +109,7 @@ def run_ticket(model: Model, index: BM25, ticket: ticket_set.Ticket) -> Run:
     run.completion_tokens = int(reply.usage.get("completion_tokens") or 0)
     run.predicted = parse_cause(reply.message.get("content"))
     if run.predicted is None:
-        run.error = "no valid cause id in the reply"
+        run.error = "reply cut off at the token limit" if reply.truncated else "no valid cause id in the reply"
     return run
 
 

@@ -73,8 +73,9 @@ class Fixed:
         self.answer = answer
         self.seen = []
 
-    def complete(self, messages, tools=None):
+    def complete(self, messages, tools=None, max_tokens=None):
         assert tools is None  # the baseline never offers tools
+        assert max_tokens == bl.MAX_TOKENS
         self.seen.append(messages)
         cause = self.answer(messages) if callable(self.answer) else self.answer
         return Reply({"role": "assistant", "content": json.dumps({"cause": cause, "reason": "r"})},
@@ -100,7 +101,7 @@ def test_a_model_error_is_recorded():
     class Broken:
         model = "broken"
 
-        def complete(self, messages, tools=None):
+        def complete(self, messages, tools=None, max_tokens=None):
             raise LLMError("broken: HTTP 503: busy")
 
     run = bl.run_ticket(Broken(), BM25(documents()), TUNING[0])
@@ -123,3 +124,15 @@ def test_evaluate_scores_an_oracle_at_100_and_reports_retrieval():
 def test_always_escalate_scores_only_the_escalation_tickets():
     result = bl.evaluate(Fixed("escalate"), "tuning")
     assert result["score"]["root_cause_accuracy"] == 10.0  # 2 of 20
+
+
+def test_a_reply_cut_off_at_the_token_limit_is_named_as_such():
+    class Truncated:
+        model = "t"
+
+        def complete(self, messages, tools=None, max_tokens=None):
+            return Reply({"role": "assistant", "content": ""}, {"completion_tokens": max_tokens},
+                         finish_reason="length")
+
+    run = bl.run_ticket(Truncated(), BM25(documents()), TUNING[0])
+    assert run.predicted is None and run.error == "reply cut off at the token limit"
