@@ -159,13 +159,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", type=Path, default=OUT_DIR)
     args = parser.parse_args(argv)
     try:
-        result = evaluate(ChatClient.from_env(), args.split)
+        client = ChatClient.from_env()
+        result = evaluate(client, args.split)
     except LLMError as error:
         print(f"baseline: {error}", file=sys.stderr)
         return 1
+    result["tokens"] = client.usage_report()
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / f"baseline-bm25-{args.split}.json").write_text(json.dumps(result, indent=2) + "\n")
     print(summary(result))
+    print(f"\nTokens: {client.used:,} in {client.calls} calls")
+    if client.exhausted:
+        print("INCOMPLETE: the token budget ran out, so some tickets were not scored. Raise LLM_TOKEN_BUDGET.")
+        return 1
     return 0
 
 

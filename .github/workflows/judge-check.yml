@@ -6,6 +6,10 @@ name: judge check
 
 on:
   workflow_dispatch:
+    inputs:
+      token_budget:
+        description: "Token budget for the 24 label checks"
+        default: "60000"
 
 permissions:
   contents: read
@@ -17,6 +21,7 @@ jobs:
     timeout-minutes: 20
     env:
       TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      LLM_TOKEN_BUDGET: ${{ inputs.token_budget || '60000' }}
       LLM_MODEL: zai-org/GLM-5.2
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
