@@ -13,6 +13,7 @@ from pathlib import Path
 
 import pytest
 from temporalio.client import WorkflowFailureError, WorkflowUpdateFailedError
+from temporalio.service import RPCError
 from temporalio.contrib.pydantic import pydantic_data_converter
 from temporalio.testing import WorkflowEnvironment
 from temporalio.worker import Worker
@@ -110,7 +111,8 @@ async def test_a_decision_can_change_until_the_review_is_finished(started):
     await handle.execute_update(wf.ReviewWorkflow.finish)
     result = await handle.result()
     assert result.status == "nothing_approved" and result.nodes == 0
-    with pytest.raises(WorkflowUpdateFailedError):
+    # Once the workflow has completed, Temporal refuses updates as "not found" (the API says 409).
+    with pytest.raises(RPCError, match="not found"):
         await decide(handle, decision(VPN))
 
 

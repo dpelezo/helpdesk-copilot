@@ -79,6 +79,16 @@ async def _update(release_id: str, client: Client, update, *args):
         reason = getattr(error.cause, "message", None) or str(error.cause or error)
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, reason) from error
     except RPCError as error:
+        # A completed workflow takes no updates, and Temporal says "not found" for the update.
+        # Tell that apart from a review that never existed.
+        if error.status is RPCStatusCode.NOT_FOUND:
+            try:
+                described = await handle.describe()
+            except RPCError:
+                described = None
+            if described is not None and described.status and described.status.name != "RUNNING":
+                raise HTTPException(status.HTTP_409_CONFLICT,
+                                    f"the review of {release_id} is finished; decisions can no longer change") from error
         raise _not_found(error, release_id) from error
 
 

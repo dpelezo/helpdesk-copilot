@@ -40,7 +40,11 @@ class Handle:
         return self.fake.result
 
     async def execute_update(self, update, *args):
-        self.fake.check()
+        self.fake.updating = True
+        try:
+            self.fake.check()
+        finally:
+            self.fake.updating = False
         self.fake.updates.append((update.__name__, args))
         if self.fake.refuse:
             raise WorkflowUpdateFailedError(ApplicationError(self.fake.refuse))
@@ -55,9 +59,11 @@ class Fake:
         self.started, self.updates = [], []
         self.state, self.result, self.temporal_status = state(), None, "RUNNING"
         self.refuse = self.missing = None
-        self.exists = False
+        self.exists = self.updating = False
 
     def check(self):
+        if self.temporal_status == "COMPLETED" and self.updates is not None and self.updating:
+            raise RPCError("update not found", RPCStatusCode.NOT_FOUND, b"")
         if self.missing:
             raise RPCError("not found", RPCStatusCode.NOT_FOUND, b"")
 
@@ -142,6 +148,12 @@ def test_a_refused_decision_returns_the_workflows_reason(api, fake):
     fake.refuse = "edit: x is not part of network--vpn-not-connecting"
     r = api.post("/api/v1/reviews/release-x/decisions", json=DECISION, headers=AUTH)
     assert r.status_code == 422 and r.json()["detail"] == fake.refuse
+
+
+def test_a_decision_on_a_completed_review_is_a_conflict_not_a_404(api, fake):
+    fake.temporal_status = "COMPLETED"
+    r = api.post("/api/v1/reviews/release-x/decisions", json=DECISION, headers=AUTH)
+    assert r.status_code == 409 and "is finished" in r.json()["detail"]
 
 
 def test_finish_closes_the_review(api, fake):
