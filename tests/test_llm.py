@@ -142,3 +142,39 @@ def test_finish_reason_marks_a_truncated_reply():
     reply = client(lambda r: httpx.Response(200, json=body)).complete([])
     assert reply.finish_reason == "length" and reply.truncated
     assert not client(lambda r: httpx.Response(200, json=ok_body())).complete([]).truncated
+
+
+def test_the_client_counts_every_token():
+    c = client(lambda r: httpx.Response(200, json=ok_body(usage={"prompt_tokens": 30, "completion_tokens": 70})))
+    c.complete([])
+    c.complete([])
+    assert (c.calls, c.prompt_tokens, c.completion_tokens, c.used) == (2, 60, 140, 200)
+    assert c.usage_report() == {"calls": 2, "prompt_tokens": 60, "completion_tokens": 140, "budget": None}
+
+
+def test_a_spent_budget_refuses_further_calls_without_sending_them():
+    sent = []
+
+    def handler(request):
+        sent.append(1)
+        return httpx.Response(200, json=ok_body(usage={"prompt_tokens": 60, "completion_tokens": 60}))
+
+    c = client(handler, budget=100)
+    c.complete([])  # 120 used: the call in flight may overshoot
+    assert c.exhausted
+    with pytest.raises(llm.BudgetExceeded, match="token budget of 100 spent"):
+        c.complete([])
+    assert len(sent) == 1
+    assert isinstance(llm.BudgetExceeded("x"), llm.LLMError)
+
+
+def test_from_env_reads_the_budget(monkeypatch):
+    monkeypatch.setenv("TELNYX_API_KEY", KEY)
+    monkeypatch.delenv("LLM_EXTRA_BODY", raising=False)
+    monkeypatch.setenv("LLM_TOKEN_BUDGET", "500000")
+    assert llm.ChatClient.from_env("m").budget == 500_000
+    monkeypatch.setenv("LLM_TOKEN_BUDGET", "lots")
+    with pytest.raises(llm.LLMError, match="whole number"):
+        llm.ChatClient.from_env("m")
+    monkeypatch.delenv("LLM_TOKEN_BUDGET")
+    assert llm.ChatClient.from_env("m").budget is None

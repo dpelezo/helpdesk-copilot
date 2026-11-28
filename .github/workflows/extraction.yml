@@ -8,6 +8,14 @@ name: extraction
 
 on:
   workflow_dispatch:
+    inputs:
+      no_cache:
+        description: Call the model for every source, ignoring cached replies (for run-to-run variance)
+        type: boolean
+        default: false
+      token_budget:
+        description: "Token budget per client (extraction and judge each). Runs measured: ~230k extraction tokens"
+        default: "400000"
 
 permissions:
   contents: read
@@ -19,6 +27,7 @@ jobs:
     timeout-minutes: 60
     env:
       TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      LLM_TOKEN_BUDGET: ${{ inputs.token_budget || '400000' }}
       LLM_MODEL: zai-org/GLM-5.2
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -41,8 +50,24 @@ jobs:
           python -m app.knowledge.seed
           python -m app.knowledge.sources
 
+      - name: Restore cached extraction replies
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/cache/extraction
+          key: extraction-replies-${{ github.run_id }}
+          restore-keys: extraction-replies-
+
       - name: Extract and score
-        run: python -m app.knowledge.extract
+        env:
+          NO_CACHE: ${{ inputs.no_cache && '--no-cache' || '' }}
+        run: python -m app.knowledge.extract $NO_CACHE
+
+      - name: Save extraction replies for the next run
+        if: always()
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/cache/extraction
+          key: extraction-replies-${{ github.run_id }}
 
       - name: Show results
         if: always()

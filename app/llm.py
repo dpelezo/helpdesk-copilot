@@ -8,6 +8,11 @@ never logged, printed or included in an error message.
     LLM_MODEL      required
     LLM_API_KEY    or TELNYX_API_KEY
     LLM_EXTRA_BODY optional JSON merged into each request, e.g. to turn reasoning off
+    LLM_TOKEN_BUDGET optional hard limit on prompt + completion tokens for this client
+
+Every client counts the tokens it uses. With a budget, a call is refused once the
+budget is spent (the call in flight can overshoot by at most its own size), so a
+run stops paying instead of running up a bill.
 """
 
 from __future__ import annotations
@@ -26,6 +31,10 @@ RETRY_STATUS = {429, 500, 502, 503, 504}
 
 class LLMError(Exception):
     """A model call failed. The message never contains the API key."""
+
+
+class BudgetExceeded(LLMError):
+    """The client's token budget is spent; no further calls are made."""
 
 
 @dataclass
@@ -62,6 +71,22 @@ class ChatClient:
     # Provider-specific fields merged into every request, such as a switch that turns
     # reasoning off. Set with LLM_EXTRA_BODY (JSON). Never holds secrets.
     extra_body: dict[str, Any] = field(default_factory=dict)
+    budget: int | None = None
+    prompt_tokens: int = field(default=0, init=False)
+    completion_tokens: int = field(default=0, init=False)
+    calls: int = field(default=0, init=False)
+
+    @property
+    def used(self) -> int:
+        return self.prompt_tokens + self.completion_tokens
+
+    @property
+    def exhausted(self) -> bool:
+        return self.budget is not None and self.used >= self.budget
+
+    def usage_report(self) -> dict[str, int | None]:
+        return {"calls": self.calls, "prompt_tokens": self.prompt_tokens,
+                "completion_tokens": self.completion_tokens, "budget": self.budget}
 
     @classmethod
     def from_env(cls, model: str | None = None) -> ChatClient:
@@ -78,11 +103,15 @@ class ChatClient:
             raise LLMError("LLM_EXTRA_BODY is not valid JSON") from None
         if not isinstance(extra_body, dict):
             raise LLMError("LLM_EXTRA_BODY must be a JSON object")
+        raw_budget = os.environ.get("LLM_TOKEN_BUDGET") or ""
+        if raw_budget and not raw_budget.isdigit():
+            raise LLMError("LLM_TOKEN_BUDGET must be a whole number of tokens")
         return cls(
             model=chosen,
             api_key=key,
             base_url=os.environ.get("LLM_BASE_URL") or DEFAULT_BASE_URL,
             extra_body=extra_body,
+            budget=int(raw_budget) if raw_budget else None,
         )
 
     def complete(
@@ -93,6 +122,8 @@ class ChatClient:
         temperature: float = 0.0,
         max_tokens: int = 1024,
     ) -> Reply:
+        if self.exhausted:
+            raise BudgetExceeded(f"{self.model}: token budget of {self.budget:,} spent ({self.used:,} used)")
         body: dict[str, Any] = {
             **self.extra_body,
             "model": self.model,
@@ -128,9 +159,13 @@ class ChatClient:
                     message = choice["message"]
                 except (KeyError, IndexError, TypeError):
                     raise LLMError(f"{self.model}: no message in the response") from None
+                usage = data.get("usage") or {}
+                self.calls += 1
+                self.prompt_tokens += int(usage.get("prompt_tokens") or 0)
+                self.completion_tokens += int(usage.get("completion_tokens") or 0)
                 return Reply(
                     message=message,
-                    usage=data.get("usage") or {},
+                    usage=usage,
                     seconds=seconds,
                     finish_reason=choice.get("finish_reason"),
                 )

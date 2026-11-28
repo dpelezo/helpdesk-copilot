@@ -111,5 +111,45 @@ def test_summary_reports_counts_recall_and_misses(tmp_path):
              "per_issue_recall": {OUTLOOK: 33.3}, "per_issue_extracted": {OUTLOOK: 3},
              "missed": ["email-service-outage", "outlook-password-expired"]}
     text = ex.summary(run, score)
-    assert "1 calls, 6 items extracted, 5 kept (1 rejected" in text
+    assert "1 calls (0 from cache), 6 items extracted, 5 kept (1 rejected" in text
     assert "| 33.3% | 2 | 66.7% | 0 |" in text and "`outlook-password-expired`" in text
+
+
+# ── Cost controls ──────────────────────────────────────────────────────
+
+
+def test_a_good_reply_is_cached_and_reused_without_a_call(tmp_path):
+    cache = tmp_path / "replies"
+    first = Scripted(reply_json(GOOD))
+    items, call = ex.extract_one(first, OUTLOOK, source(), TEXT, cache)
+    assert not call.cached and len(list(cache.iterdir())) == 1
+    second = Scripted()  # no replies scripted: any call would fail
+    again, call2 = ex.extract_one(second, OUTLOOK, source(), TEXT, cache)
+    assert call2.cached and second.seen == [] and again == items
+
+
+def test_the_cache_key_changes_with_the_source_text_or_the_model(tmp_path):
+    cache = tmp_path / "replies"
+    ex.extract_one(Scripted(reply_json(GOOD)), OUTLOOK, source(), TEXT, cache)
+    changed = Scripted(reply_json(GOOD))
+    ex.extract_one(changed, OUTLOOK, source(), TEXT + " New paragraph.", cache)
+    assert len(changed.seen) == 1
+    other = Scripted(reply_json(GOOD))
+    other.model = "another-model"
+    ex.extract_one(other, OUTLOOK, source(), TEXT, cache)
+    assert len(other.seen) == 1 and len(list(cache.iterdir())) == 3
+
+
+def test_failed_replies_are_not_cached_so_they_are_retried(tmp_path):
+    cache = tmp_path / "replies"
+    ex.extract_one(Scripted(Reply({"content": ""}, finish_reason="length")), OUTLOOK, source(), TEXT, cache)
+    assert not cache.exists() or not list(cache.iterdir())
+
+
+def test_a_budget_stop_is_marked_on_the_call():
+    from app.llm import BudgetExceeded
+
+    _, call = ex.extract_one(Scripted(BudgetExceeded("m: token budget of 10 spent")), OUTLOOK, source(), TEXT)
+    assert call.stopped_by_budget and call.error.startswith("m: token budget")
+    _, other = ex.extract_one(Scripted(LLMError("m: HTTP 503")), OUTLOOK, source(), TEXT)
+    assert not other.stopped_by_budget

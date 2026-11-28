@@ -7,6 +7,10 @@ name: baseline
 
 on:
   workflow_dispatch:
+    inputs:
+      token_budget:
+        description: "Token budget per split run. Held-out measured: ~117k tokens"
+        default: "250000"
 
 permissions:
   contents: read
@@ -22,6 +26,7 @@ jobs:
     timeout-minutes: 45
     env:
       TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      LLM_TOKEN_BUDGET: ${{ inputs.token_budget || '250000' }}
       LLM_MODEL: zai-org/GLM-5.2
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

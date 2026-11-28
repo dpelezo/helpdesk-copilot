@@ -8,6 +8,9 @@ name: model choice
 on:
   workflow_dispatch:
     inputs:
+      token_budget:
+        description: "Token budget per model. Measured: ~110k tokens per model"
+        default: "200000"
       models:
         description: Comma-separated model ids
         default: zai-org/GLM-5.3-Flash,moonshotai/Kimi-K2.6,zai-org/GLM-5.2
@@ -29,6 +32,7 @@ jobs:
     timeout-minutes: 45
     env:
       TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      LLM_TOKEN_BUDGET: ${{ inputs.token_budget || '200000' }}
       MODELS: ${{ inputs.models || 'zai-org/GLM-5.3-Flash,moonshotai/Kimi-K2.6,zai-org/GLM-5.2' }}
       LLM_EXTRA_BODY: ${{ inputs.extra_body || '{"chat_template_kwargs":{"enable_thinking":false}}' }}
     steps:
