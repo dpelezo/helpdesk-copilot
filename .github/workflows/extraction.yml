@@ -50,24 +50,24 @@ jobs:
           python -m app.knowledge.seed
           python -m app.knowledge.sources
 
-      - name: Restore cached extraction replies
+      - name: Restore cached model replies (extraction and judge)
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: data/cache/extraction
-          key: extraction-replies-${{ github.run_id }}
-          restore-keys: extraction-replies-
+          path: data/cache
+          key: model-replies-${{ github.run_id }}
+          restore-keys: model-replies-
 
       - name: Extract and score
         env:
           NO_CACHE: ${{ inputs.no_cache && '--no-cache' || '' }}
         run: python -m app.knowledge.extract $NO_CACHE
 
-      - name: Save extraction replies for the next run
+      - name: Save model replies for the next run
         if: always()
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: data/cache/extraction
-          key: extraction-replies-${{ github.run_id }}
+          path: data/cache
+          key: model-replies-${{ github.run_id }}
 
       - name: Show results
         if: always()

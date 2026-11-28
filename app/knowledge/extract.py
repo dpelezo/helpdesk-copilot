@@ -28,7 +28,7 @@ from typing import Any, Literal, Protocol
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from app.evals.extraction_score import ExtractedCause, LLMJudge, evidence_found, score_extraction
+from app.evals.extraction_score import JUDGE_CACHE, ExtractedCause, LLMJudge, evidence_found, score_extraction
 from app.knowledge.policy import HANDBOOK
 from app.knowledge.sources import CACHE, Source, load_manifest
 from app.llm import BudgetExceeded, ChatClient, LLMError, Reply
@@ -237,13 +237,14 @@ def main(argv: list[str] | None = None) -> int:
         extractor = ChatClient.from_env()
         judge_client = ChatClient.from_env()
         run = extract_all(extractor, load_manifest(), reply_cache=None if args.no_cache else REPLY_CACHE)
-        judge = LLMJudge(judge_client)
+        judge = LLMJudge(judge_client, cache=None if args.no_cache else JUDGE_CACHE)
         texts = {s.id: source_text(s) for s in load_manifest() if s.status == "ok"}
         score = asdict(score_extraction(causes_for_scoring(run), judge, texts.__getitem__))
     except (LLMError, FileNotFoundError) as error:
         print(f"extract: {error}", file=sys.stderr)
         return 1
     score["judge_unparsed"] = judge.unparsed
+    score["judge_cached"] = judge.cached
     tokens = {"extraction": extractor.usage_report(), "judge": judge_client.usage_report()}
     # A judge that ran out of budget answered "no" to the rest, so the score would be wrong.
     complete = not judge_client.exhausted and not any(c.stopped_by_budget for c in run.calls)

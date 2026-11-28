@@ -3,8 +3,12 @@
 Extraction reads real vendor documentation, so it describes causes in its own
 words. A separate judge decides whether an extracted cause is the same thing as a
 catalog cause (``app/mock/faults.py``); extraction never labels its own output.
-The judge answers one narrow yes/no question per pair, and is trusted only after
-it agrees with the hand labels in ``evals/extraction/judge_labels.jsonl``.
+The judge sees one extracted cause and the 2 to 4 catalog causes of its issue, and
+names the ones that are the same cause (usually one, or none): one call per
+extracted cause, not one per pair. Answers are cached, so the same question is
+never paid for twice. It is trusted only after it agrees with the hand labels in
+``evals/extraction/judge_labels.jsonl``, each judged with all of its issue's causes
+in view, as in real use.
 
 Metrics:
 
@@ -20,6 +24,7 @@ This is eval ground truth: change it only in its own pull request (AGENTS.md).
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from collections.abc import Callable
@@ -35,11 +40,13 @@ MIN_JUDGE_AGREEMENT = 90.0
 JUDGE_MAX_TOKENS = 2048  # reasoning cannot be switched off at Telnyx (ADR 0003)
 
 JUDGE_SYSTEM = (
-    "You compare two descriptions of why an IT problem happens. Answer only yes or no. "
-    "Answer yes when both name the same underlying cause, even in different words or with "
-    "different detail. Answer no when they name different causes, even if they concern the "
-    "same symptom or the same product."
+    "You compare descriptions of why an IT problem happens. You get one description A and a "
+    "numbered list of known causes. Name every known cause that is the same underlying cause as "
+    "A, even in different words or with different detail. A cause that only shares the symptom or "
+    "the product is not the same. Usually one matches, or none. End your reply with a final line "
+    "holding only the matching numbers separated by commas, or the word none."
 )
+JUDGE_CACHE = Path("data/cache/judge")
 
 
 # ── Inputs ─────────────────────────────────────────────────────────────
@@ -54,7 +61,9 @@ class ExtractedCause:
 
 
 class Judge(Protocol):
-    def same_cause(self, extracted: str, reference: str) -> bool: ...
+    def match(self, extracted: str, references: list[str]) -> list[int]:
+        """Indexes into ``references`` of the causes that are the same as ``extracted``."""
+        ...
 
 
 # ── Evidence ───────────────────────────────────────────────────────────
@@ -110,11 +119,9 @@ def score_extraction(
     for item in considered:
         if evidence_found(item.evidence, source_text(item.source_id)):
             valid += 1
-        hits = []
-        for cause in causes_for(item.issue):
-            calls += 1
-            if judge.same_cause(item.text, cause.summary):
-                hits.append(cause.id)
+        candidates = causes_for(item.issue)
+        calls += 1
+        hits = [candidates[i].id for i in judge.match(item.text, [c.summary for c in candidates])]
         if not hits:
             extra += 1
         if len(hits) > 1:
@@ -150,32 +157,54 @@ class Model(Protocol):
                  max_tokens: int = ...) -> Reply: ...
 
 
-def parse_yes_no(text: str | None) -> bool | None:
-    """yes -> True, no -> False, anything else -> None. Looks at the last word given."""
-    words = re.findall(r"\b(yes|no)\b", (text or "").lower())
-    return {"yes": True, "no": False}[words[-1]] if words else None
+def parse_choice(text: str | None, count: int) -> list[int] | None:
+    """The judge's final line: '2' or '1, 3' -> 0-based indexes; 'none' -> []; else None."""
+    lines = [line.strip().lower() for line in (text or "").strip().splitlines() if line.strip()]
+    if not lines:
+        return None
+    last = lines[-1].strip(" .*`")
+    if last == "none":
+        return []
+    if not re.fullmatch(r"\d+(\s*,\s*\d+)*", last):
+        return None
+    picked = sorted({int(n) - 1 for n in re.findall(r"\d+", last)})
+    return picked if all(0 <= i < count for i in picked) else None
 
 
 @dataclass
 class LLMJudge:
     model: Model
+    cache: Path | None = None
     unparsed: int = 0
+    cached: int = 0
 
-    def same_cause(self, extracted: str, reference: str) -> bool:
+    def _key(self, extracted: str, references: list[str]) -> str:
+        blob = json.dumps({"model": self.model.model, "system": JUDGE_SYSTEM, "a": extracted, "refs": references})
+        return hashlib.sha256(blob.encode()).hexdigest()
+
+    def match(self, extracted: str, references: list[str]) -> list[int]:
+        path = self.cache / f"{self._key(extracted, references)}.json" if self.cache else None
+        if path and path.exists():
+            self.cached += 1
+            return json.loads(path.read_text())
+        listed = "\n".join(f"{n}. {ref}" for n, ref in enumerate(references, start=1))
         messages = [
             {"role": "system", "content": JUDGE_SYSTEM},
-            {"role": "user", "content": f"A: {extracted}\nB: {reference}\nSame cause? Answer yes or no."},
+            {"role": "user", "content": f"A: {extracted}\n\nKnown causes:\n{listed}"},
         ]
         try:
             reply = self.model.complete(messages, max_tokens=JUDGE_MAX_TOKENS)
         except LLMError:
             self.unparsed += 1
-            return False
-        answer = parse_yes_no(reply.message.get("content"))
-        if answer is None:
+            return []
+        picked = parse_choice(reply.message.get("content"), len(references))
+        if picked is None:
             self.unparsed += 1
-            return False
-        return answer
+            return []
+        if path:  # only clean answers are cached
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(picked))
+        return picked
 
 
 @dataclass(frozen=True)
@@ -205,10 +234,17 @@ class Agreement:
 
 
 def judge_agreement(judge: Judge, labels: list[Label]) -> Agreement:
+    """Each label is judged as in real use: the extracted text against all its issue's causes."""
     by_id = {c.id: c for c in CAUSES}
+    answers: dict[tuple[str, str], list[str]] = {}
     false_yes, false_no = [], []
     for lab in labels:
-        said = judge.same_cause(lab.extracted, by_id[lab.cause].summary)
+        issue = by_id[lab.cause].issue
+        if (lab.extracted, issue) not in answers:
+            candidates = causes_for(issue)
+            picked = judge.match(lab.extracted, [c.summary for c in candidates])
+            answers[(lab.extracted, issue)] = [candidates[i].id for i in picked]
+        said = lab.cause in answers[(lab.extracted, issue)]
         if said and not lab.same:
             false_yes.append(f"{lab.cause}: {lab.extracted}")
         elif lab.same and not said:
@@ -226,13 +262,15 @@ def main(argv: list[str] | None = None) -> int:
 
     argparse.ArgumentParser(description="Check the cause-matching judge against the hand labels.").parse_args(argv)
     try:
-        judge = LLMJudge(ChatClient.from_env())
+        client = ChatClient.from_env()
+        judge = LLMJudge(client)
         result = judge_agreement(judge, load_labels())
     except LLMError as error:
         print(f"judge check: {error}", file=sys.stderr)
         return 1
     print(f"Judge agreement: {result.agreement}% on {result.labels} labels "
-          f"(needs {MIN_JUDGE_AGREEMENT}%); unparsed replies: {judge.unparsed}")
+          f"(needs {MIN_JUDGE_AGREEMENT}%); unparsed replies: {judge.unparsed}; "
+          f"tokens: {client.used:,} in {client.calls} calls")
     for wrong in result.false_yes:
         print(f"  said same, label says different: {wrong}")
     for wrong in result.false_no:
