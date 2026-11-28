@@ -40,3 +40,12 @@
 - url: https://support.microsoft.com/en-us/windows/hardware/printer/fix-printer-connection-and-printing-problems-in-windows
   issues: [hardware--printer-not-responding]
   reason: General printer troubleshooting, including power-cycling.
+- url: https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/troubleshoot-always-on-vpn
+  issues: [network--vpn-not-connecting]
+  reason: The seed's VPN link is a Wi-Fi article (one cause extracted); this is Microsoft's VPN connection troubleshooting, including certificate and server-reachability checks.
+- url: https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-security-intelligence-not-updated
+  issues: [security--antivirus-not-updating]
+  reason: The antivirus source was a general security page (no causes extracted); this covers definition updates that fail.
+- url: https://learn.microsoft.com/en-us/defender-endpoint/security-intelligence-update-tshoot
+  issues: [security--antivirus-not-updating]
+  reason: Security intelligence updates that fail from Microsoft Update, step by step.
