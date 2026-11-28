@@ -1,0 +1,52 @@
+name: extraction
+
+# Issue #26: fetch the sources into the runner's cache, extract typed knowledge
+# with GLM-5.2, score the causes against the catalog with the trusted judge,
+# and print the results. Page text never leaves the runner (ADR 0005); the
+# results hold only short evidence quotes with their source ids.
+# Manual only (Actions > extraction > Run workflow): every run spends Telnyx credit.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    name: extraction (sources to typed knowledge)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      LLM_MODEL: zai-org/GLM-5.2
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check the key is set (without printing it)
+        run: test -n "$TELNYX_API_KEY" || { echo "TELNYX_API_KEY secret is missing"; exit 1; }
+
+      - name: Fetch the sources into the local cache
+        run: |
+          python -m app.knowledge.seed
+          python -m app.knowledge.sources
+
+      - name: Extract and score
+        run: python -m app.knowledge.extract
+
+      - name: Show results
+        if: always()
+        run: |
+          echo "=== BEGIN evals/results/extraction.json"
+          cat evals/results/extraction.json || true
+          echo "=== END evals/results/extraction.json"
