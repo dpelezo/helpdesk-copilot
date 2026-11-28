@@ -38,6 +38,7 @@ MAX_SOURCE_CHARS = 40_000
 # Room for reasoning, which Telnyx cannot switch off (ADR 0003, #9). 8,192 cut off 5 of 22
 # calls in the first run, including the two most relevant printer and phishing articles.
 MAX_TOKENS = 16384
+MAX_ATTEMPTS = 2  # a cut-off reply is retried once
 RESULTS = Path("evals/results/extraction.json")
 # Successful replies, keyed by everything that shapes them, so a re-run only pays for what
 # changed. Kept between workflow runs with actions/cache; never committed (it holds quotes).
@@ -106,6 +107,7 @@ class Call:
     seconds: float = 0.0
     cached: bool = False
     stopped_by_budget: bool = False
+    attempts: int = 0
 
 
 def parse(text: str | None) -> Extraction | None:
@@ -145,17 +147,27 @@ def extract_one(model: Model, issue: str, source: Source, text: str,
         saved = json.loads(cached_path.read_text())
         reply = Reply({"role": "assistant", "content": saved["content"]}, saved["usage"])
         call.cached = True
+        result = parse(reply.message.get("content"))
     else:
-        try:
-            reply = model.complete(messages, max_tokens=MAX_TOKENS)
-        except LLMError as error:
-            call.error = str(error)
-            call.stopped_by_budget = isinstance(error, BudgetExceeded)
-            return [], call
-    call.prompt_tokens = int(reply.usage.get("prompt_tokens") or 0)
-    call.completion_tokens = int(reply.usage.get("completion_tokens") or 0)
-    call.seconds = reply.seconds
-    result = parse(reply.message.get("content"))
+        # A reply cut off at the token limit is reasoning that never converged; the same call
+        # usually finishes on a second try (run 4b: 4 of 5). Retry those once, never other errors.
+        while True:
+            call.attempts += 1
+            try:
+                reply = model.complete(messages, max_tokens=MAX_TOKENS)
+            except LLMError as error:
+                call.error = str(error)
+                call.stopped_by_budget = isinstance(error, BudgetExceeded)
+                return [], call
+            call.prompt_tokens += int(reply.usage.get("prompt_tokens") or 0)
+            call.completion_tokens += int(reply.usage.get("completion_tokens") or 0)
+            call.seconds += reply.seconds
+            result = parse(reply.message.get("content"))
+            if result is not None or not reply.truncated or call.attempts >= MAX_ATTEMPTS:
+                break
+    if call.cached:
+        call.prompt_tokens = int(reply.usage.get("prompt_tokens") or 0)
+        call.completion_tokens = int(reply.usage.get("completion_tokens") or 0)
     if result is None:
         call.error = "reply cut off at the token limit" if reply.truncated else "no valid JSON in the reply"
         return [], call
@@ -210,7 +222,8 @@ def summary(run: Run, score: dict[str, Any]) -> str:
     lines = [
         f"### Extraction ({run.model}, {run.date})",
         "",
-        f"{len(run.calls)} calls ({sum(c.cached for c in run.calls)} from cache), {len(run.items)} items extracted, {len(run.kept)} kept "
+        f"{len(run.calls)} calls ({sum(c.cached for c in run.calls)} from cache, "
+        f"{sum(c.attempts > 1 for c in run.calls)} retried), {len(run.items)} items extracted, {len(run.kept)} kept "
         f"({len(run.items) - len(run.kept)} rejected: evidence not found in the source), "
         f"{sum(c.error is not None for c in run.calls)} failed calls.",
         f"Kept by kind: {', '.join(f'{n} {k}s' for k, n in kinds.items())}.",

@@ -34,6 +34,9 @@ GOOD = {
 }
 
 
+CUT = Reply({"content": ""}, {"prompt_tokens": 900, "completion_tokens": 16384}, finish_reason="length")
+
+
 class Scripted:
     model = "fake"
 
@@ -77,8 +80,7 @@ def test_long_sources_are_cut_to_the_limit(monkeypatch):
 
 
 def test_failures_are_recorded_not_raised():
-    model = Scripted(Reply({"content": "sorry"}), Reply({"content": ""}, finish_reason="length"),
-                     LLMError("fake: HTTP 503: busy"))
+    model = Scripted(Reply({"content": "sorry"}), CUT, CUT, LLMError("fake: HTTP 503: busy"))
     errors = [ex.extract_one(model, OUTLOOK, source(), TEXT)[1].error for _ in range(3)]
     assert errors == ["no valid JSON in the reply", "reply cut off at the token limit", "fake: HTTP 503: busy"]
 
@@ -111,7 +113,7 @@ def test_summary_reports_counts_recall_and_misses(tmp_path):
              "per_issue_recall": {OUTLOOK: 33.3}, "per_issue_extracted": {OUTLOOK: 3},
              "missed": ["email-service-outage", "outlook-password-expired"]}
     text = ex.summary(run, score)
-    assert "1 calls (0 from cache), 6 items extracted, 5 kept (1 rejected" in text
+    assert "1 calls (0 from cache, 0 retried), 6 items extracted, 5 kept (1 rejected" in text
     assert "| 33.3% | 2 | 66.7% | 0 |" in text and "`outlook-password-expired`" in text
 
 
@@ -142,7 +144,7 @@ def test_the_cache_key_changes_with_the_source_text_or_the_model(tmp_path):
 
 def test_failed_replies_are_not_cached_so_they_are_retried(tmp_path):
     cache = tmp_path / "replies"
-    ex.extract_one(Scripted(Reply({"content": ""}, finish_reason="length")), OUTLOOK, source(), TEXT, cache)
+    ex.extract_one(Scripted(CUT, CUT), OUTLOOK, source(), TEXT, cache)
     assert not cache.exists() or not list(cache.iterdir())
 
 
@@ -153,3 +155,30 @@ def test_a_budget_stop_is_marked_on_the_call():
     assert call.stopped_by_budget and call.error.startswith("m: token budget")
     _, other = ex.extract_one(Scripted(LLMError("m: HTTP 503")), OUTLOOK, source(), TEXT)
     assert not other.stopped_by_budget
+
+
+def test_a_cut_off_reply_is_retried_once_and_both_attempts_are_counted():
+    model = Scripted(CUT, reply_json(GOOD))
+    items, call = ex.extract_one(model, OUTLOOK, source(), TEXT)
+    assert len(model.seen) == 2 and call.attempts == 2 and call.error is None and len(items) == 6
+    assert call.completion_tokens == 16384 + int(reply_json(GOOD).usage["completion_tokens"])
+
+
+def test_a_second_cut_off_gives_up():
+    model = Scripted(CUT, CUT)
+    _, call = ex.extract_one(model, OUTLOOK, source(), TEXT)
+    assert call.attempts == 2 and call.error == "reply cut off at the token limit"
+    assert call.completion_tokens == 2 * 16384
+
+
+def test_other_failures_are_not_retried():
+    model = Scripted(Reply({"content": "sorry"}))
+    _, call = ex.extract_one(model, OUTLOOK, source(), TEXT)
+    assert call.attempts == 1 and call.error == "no valid JSON in the reply"
+
+
+def test_a_cached_reply_makes_no_attempt(tmp_path):
+    cache = tmp_path / "replies"
+    ex.extract_one(Scripted(reply_json(GOOD)), OUTLOOK, source(), TEXT, cache)
+    _, call = ex.extract_one(Scripted(), OUTLOOK, source(), TEXT, cache)
+    assert call.cached and call.attempts == 0
