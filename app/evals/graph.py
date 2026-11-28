@@ -49,8 +49,9 @@ _CAUSES = """
 MATCH (i:Issue {release_id: $rid, id: $issue})-[:HAS_POSSIBLE_CAUSE]->(c:Cause {release_id: $rid})
 OPTIONAL MATCH (c)-[:MITIGATED_BY]->(s:Solution {release_id: $rid})
 OPTIONAL MATCH (d:Diagnostic {release_id: $rid})-[:TESTS_FOR]->(c)
+OPTIONAL MATCH (s)-[:IMPLEMENTED_BY]->(r:Runbook {release_id: $rid})
 RETURN i.text AS issue, c.id AS id, c.text AS summary, c.pos AS pos, collect(DISTINCT s.text) AS fixes,
-       collect(DISTINCT d.data) AS checks, c.data AS data
+       collect(DISTINCT d.data) AS checks, c.data AS data, collect(DISTINCT r.data) AS runbooks
 ORDER BY pos
 """
 _OWNERS = """
@@ -67,6 +68,15 @@ def issues_for(entry: list[str], owner: dict[str, str], limit: int = MAX_ISSUES)
         if issue not in out:
             out.append(issue)
     return out[:limit]
+
+
+def account_change(runbooks: list[str]) -> str | None:
+    """The account-changing tool a fix's runbook names, if any."""
+    for raw in runbooks:
+        for step in json.loads(raw)["steps"]:
+            if step.get("changes_account"):
+                return step["tool"]
+    return None
 
 
 @dataclass
@@ -100,7 +110,8 @@ class GraphRetriever:
                 sources = tuple(dict.fromkeys(p["source_url"] for p in json.loads(c["data"])["provenance"]))
                 hypotheses.append(Hypothesis(
                     cause=c["id"], issue=c["issue"], summary=c["summary"], fix=" ".join(c["fixes"]),
-                    checks=tuple(sorted(json.loads(d)["tool"] for d in c["checks"])), sources=sources))
+                    checks=tuple(sorted(json.loads(d)["tool"] for d in c["checks"])), sources=sources,
+                    action=account_change(c["runbooks"])))
         lines = [h.line() for h in hypotheses]
         shown = [f"{CAUSE_PREFIX}{h.cause}" for h in hypotheses]
         policy = []
