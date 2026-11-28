@@ -31,8 +31,13 @@ GLM-5.2 read the 17 usable sources (`knowledge/sources/manifest.json`) and extra
 | --- | ---: | ---: | ---: | ---: | ---: |
 | 1 (2026-11-28) | 5 of 22, cut off at 8,192 tokens | 286 | 98.7% | 25.0% | 64 |
 | 2 (2026-11-28) | 2 of 22, cut off at 16,384 tokens | 438 | 99.1% | **38.9%** | 98 |
+| 3 (2026-11-28) | 3 of 25, cut off at 16,384 tokens | 476 | 100.0% | **38.9%** | 99 |
 
-Between the runs only the extraction changed: a 16,384-token budget and one cause per item (run 1 bundled causes, such as "low paper or ink, the cover is open, or the paper is jammed"). Scorer, judge and labels did not change.
+Run 3 added three official Microsoft sources (Always On VPN troubleshooting, two Defender update articles) for the two issues at 0%. VPN rose from 0% to 25% (the expired certificate is now found) and antivirus from 0 to 9 extracted causes, but overall recall stayed at 38.9%.
+
+**Run-to-run variation is large per issue.** With unchanged sources, Wi-Fi went from 12 extracted causes to 0 (a call cut off at the token limit), app updates from 66.7% to 33.3%, phishing from 100% to 50%, and printer from 33.3% to 66.7%. Reasoning varies at temperature 0 and some calls never finish. A single run is not a reliable per-issue number: the next step is to run extraction several times and report the minimum and mean, and to keep the union of what every run found as the draft for review.
+
+Between runs 1 and 2 only the extraction changed: a 16,384-token budget and one cause per item (run 1 bundled causes, such as "low paper or ink, the cover is open, or the paper is jammed"). Scorer, judge and labels did not change.
 
 ### Why recall is 38.9%
 
@@ -41,7 +46,7 @@ Between the runs only the extraction changed: a 16,384-token budget and one caus
 | Misdirection by design | `vpn-account-locked`, `av-remote-vpn-expired`, `wifi-password-expired`, `wifi-device-noncompliant` | No vendor article says "your VPN fails because your account is locked". Only live checks (week 3) can find these. |
 | Company-specific state | `vpn-gateway-outage`, `email-service-outage`, `install-catalog-outage`, `app-update-catalog-degraded`, `printing-service-outage`, `wifi-service-degraded` | Our own services being down is not in public docs. The status page check covers them. |
 | Weak sources | All four VPN causes, all three antivirus causes | The seed's VPN link is a Wi-Fi article (1 cause extracted); the antivirus source is a general Windows security page (0 causes). Fixable with better sources. |
-| Catalog states, not causes | `printer-offline` | Microsoft's offline-printer article treats "offline" as the symptom and lists its causes (network, queue, spooler, the Use Printer Offline setting). The judge correctly did not match them. |
+| Catalog states, not causes | `printer-offline`, `av-definitions-stale` | Microsoft treats "printer offline" and "definitions out of date" as symptoms and lists their causes (network, queue, spooler; blocked update URLs, stopped services, a third-party antivirus). The judge correctly did not match them. |
 | Calls that never finished | `slow-*`, `install-*` partly | 2 calls hit 16,384 tokens; reasoning did not converge. |
 
 Per-issue recall (run 2): disk space, phishing, MFA 100%; app updates 66.7%; overheating, account locked 50%; Outlook, slow system, printer 33.3%; VPN, Wi-Fi, install, antivirus 0%.
