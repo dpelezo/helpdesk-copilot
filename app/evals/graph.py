@@ -23,12 +23,13 @@ import argparse
 import json
 import statistics
 import sys
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import date
 from pathlib import Path
 from typing import Any, Literal
 
 from app.evals.baseline import MAX_TOKENS, SYSTEM, Model, Run, parse_cause
+from app.diagnosis.hypotheses import Hypothesis
 from app.evals.score import Prediction, chance_accuracy, score
 from app.knowledge import catalog_graph
 from app.knowledge.corpus import CAUSE_PREFIX, POLICY_PREFIX, documents
@@ -49,7 +50,7 @@ MATCH (i:Issue {release_id: $rid, id: $issue})-[:HAS_POSSIBLE_CAUSE]->(c:Cause {
 OPTIONAL MATCH (c)-[:MITIGATED_BY]->(s:Solution {release_id: $rid})
 OPTIONAL MATCH (d:Diagnostic {release_id: $rid})-[:TESTS_FOR]->(c)
 RETURN i.text AS issue, c.id AS id, c.text AS summary, c.pos AS pos, collect(DISTINCT s.text) AS fixes,
-       collect(DISTINCT d.data) AS checks
+       collect(DISTINCT d.data) AS checks, c.data AS data
 ORDER BY pos
 """
 _OWNERS = """
@@ -74,6 +75,8 @@ class Retrieved:
     issues: list[str]
     shown: list[str]  # document ids shown to the model: cause:<id>, policy:<id>
     text: str
+    hypotheses: list[Hypothesis] = field(default_factory=list)
+    policy: list[str] = field(default_factory=list)  # handbook section texts shown
 
 
 class GraphRetriever:
@@ -91,18 +94,21 @@ class GraphRetriever:
         entry = [node for node, _ in self.store.similar(query, self.embed, self.model, k=ENTRY_K,
                                                          kinds=("issue", "cause"), release_id=self.release_id)]
         issues = issues_for(entry, self.owner)
-        lines, shown = [], []
+        hypotheses = []
         for issue in issues:
             for c in self.causes(issue):
-                tools = sorted(json.loads(d)["tool"] for d in c["checks"])
-                fix = " ".join(c["fixes"])
-                lines.append(f"- Issue: {c['issue']}. Possible cause ({c['id']}): {c['summary']} Fix: {fix} "
-                             f"Revealed by: {', '.join(tools) or 'no check'}.")
-                shown.append(f"{CAUSE_PREFIX}{c['id']}")
+                sources = tuple(dict.fromkeys(p["source_url"] for p in json.loads(c["data"])["provenance"]))
+                hypotheses.append(Hypothesis(
+                    cause=c["id"], issue=c["issue"], summary=c["summary"], fix=" ".join(c["fixes"]),
+                    checks=tuple(sorted(json.loads(d)["tool"] for d in c["checks"])), sources=sources))
+        lines = [h.line() for h in hypotheses]
+        shown = [f"{CAUSE_PREFIX}{h.cause}" for h in hypotheses]
+        policy = []
         for hit in self.policy.search(query, POLICY_K):
-            lines.append(f"- {next(d.text for d in self.policy.documents if d.id == hit.id)}")
+            policy.append(next(d.text for d in self.policy.documents if d.id == hit.id))
+            lines.append(f"- {policy[-1]}")
             shown.append(hit.id)
-        return Retrieved(entry, issues, shown, "\n".join(lines) or "(no documents matched)")
+        return Retrieved(entry, issues, shown, "\n".join(lines) or "(no documents matched)", hypotheses, policy)
 
 
 @dataclass
