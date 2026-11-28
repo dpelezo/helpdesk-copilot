@@ -2,6 +2,8 @@ import pytest
 from httpx import AsyncClient, ASGITransport
 from app.main import app
 
+pytestmark = pytest.mark.usefixtures("database")
+
 VALID_KEY = "Bearer test-key-1"
 HEADERS = {"Authorization": VALID_KEY}
 
