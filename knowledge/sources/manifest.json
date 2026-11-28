@@ -1,0 +1,374 @@
+[
+  {
+    "id": "handbook-it-policy",
+    "url": "repo:knowledge/handbook/it-policy.md",
+    "issues": [
+      "identity--account-locked",
+      "identity--mfa-lockout"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Kestrel Ridge Logistics: IT policy handbook",
+    "sha256": "10f2ba2368b145a88871deb0d9d1494cd8061483ca321c29df5bab27bd74101b",
+    "chars": 6135,
+    "relevant_to": [
+      "identity--account-locked",
+      "identity--mfa-lockout"
+    ],
+    "licence": "Written for this repo (fictional company).",
+    "origin": "local",
+    "reason": null
+  },
+  {
+    "id": "answers-microsoft-com-en-us",
+    "url": "https://answers.microsoft.com/en-us/",
+    "issues": [
+      "microsoft-office--outlook-not-sending-emails",
+      "security--antivirus-not-updating",
+      "security--phishing-email-detected"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": "https://learn.microsoft.com/en-us/answers/",
+    "title": "Microsoft Q&A | Microsoft Learn",
+    "sha256": "9b35dc1bdbcb8b872e079171c295bae32c84bec7558ff179b2473d2c6fc54144",
+    "chars": 3214,
+    "relevant_to": [
+      "microsoft-office--outlook-not-sending-emails"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "seed",
+    "reason": null
+  },
+  {
+    "id": "support-apple-com",
+    "url": "https://support.apple.com/",
+    "issues": [
+      "system--disk-space-running-out",
+      "system--system-running-slow"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Official Apple Support",
+    "sha256": "0a9402778efc61e38a2bcb16368983ed17bb853dc54cf4f4bcdb76753061a4ce",
+    "chars": 2348,
+    "relevant_to": [],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "seed",
+    "reason": null
+  },
+  {
+    "id": "support-apple-com-en-us-101576",
+    "url": "https://support.apple.com/en-us/101576",
+    "issues": [
+      "hardware--laptop-overheating"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "About fans and fan noise in your Apple product - Apple Support",
+    "sha256": "cbbe40775edb443e128fa0f3968a571b9a5c55c01dab480176dff5103ad42764",
+    "chars": 2569,
+    "relevant_to": [
+      "hardware--laptop-overheating"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Apple on fans, temperature, blocked vents and heavy fan use."
+  },
+  {
+    "id": "support-apple-com-en-us-102624",
+    "url": "https://support.apple.com/en-us/102624",
+    "issues": [
+      "system--disk-space-running-out"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Free up storage space on Mac - Apple Support",
+    "sha256": "785736b42f18cb15a584f62aabc32324f75dd96d4a3c73b48ae79e690c54f221",
+    "chars": 3989,
+    "relevant_to": [
+      "system--disk-space-running-out"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "macOS equivalent, for the Mac users in the mock company."
+  },
+  {
+    "id": "support-hp-com-us-en",
+    "url": "https://support.hp.com/us-en",
+    "issues": [
+      "hardware--laptop-overheating",
+      "hardware--printer-not-responding"
+    ],
+    "fetched": "2026-11-28",
+    "status": "failed: only 0 characters of text (bot challenge, cookie wall or script-only page)",
+    "final_url": null,
+    "title": null,
+    "sha256": null,
+    "chars": 0,
+    "relevant_to": [],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "seed",
+    "reason": null
+  },
+  {
+    "id": "support-microsoft-com-en-us-account-billing-fix-problems-with-apps-from-microsoft-store-93ed0bcf-9c1",
+    "url": "https://support.microsoft.com/en-us/account-billing/fix-problems-with-apps-from-microsoft-store-93ed0bcf-9c12-3df6-6dda-92ec5d0415ac",
+    "issues": [
+      "software--application-not-updating",
+      "software--program-won-t-install"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": "https://support.microsoft.com/en-us/accounts-billing/fix-problems-with-apps-from-microsoft-store",
+    "title": "Fix problems with apps from Microsoft Store | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "6342d18850f1b96a90cde7ae794555c462db49d9f3b3f0af19b5bb1cc83aec80",
+    "chars": 7317,
+    "relevant_to": [
+      "software--application-not-updating",
+      "software--program-won-t-install"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Store apps that will not install or update; starts with keeping Windows up to date."
+  },
+  {
+    "id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+    "url": "https://support.microsoft.com/en-us/help/10741/windows-fix-network-connection-issues",
+    "issues": [
+      "network--vpn-not-connecting",
+      "network--wi-fi-not-connecting"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": "https://support.microsoft.com/en-us/windows/experience/connectivity-networking/fix-wi-fi-connection-issues-in-windows",
+    "title": "Fix Wi-Fi connection issues in Windows | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "7e2278935e2c9f85b0bc6bef9d0ae1e3f84568be204b7a6dee56ad66f4a4c0a5",
+    "chars": 20667,
+    "relevant_to": [
+      "network--vpn-not-connecting",
+      "network--wi-fi-not-connecting"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "seed",
+    "reason": null
+  },
+  {
+    "id": "support-microsoft-com-en-us-outlook-i-can-t-send-or-receive-messages-in-outlook",
+    "url": "https://support.microsoft.com/en-us/outlook/i-can-t-send-or-receive-messages-in-outlook",
+    "issues": [
+      "microsoft-office--outlook-not-sending-emails"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "I can't send or receive messages in Outlook | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "e96cdeef95cf11fbf4a041f066f62d14f67428a6d67d84afffaafe7ba09fc6ac",
+    "chars": 9699,
+    "relevant_to": [
+      "microsoft-office--outlook-not-sending-emails"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Microsoft's main article for messages stuck in the Outbox; covers full mailbox storage and large attachments."
+  },
+  {
+    "id": "support-microsoft-com-en-us-outlook-outlook-email-stuck",
+    "url": "https://support.microsoft.com/en-us/outlook/outlook-email-stuck",
+    "issues": [
+      "microsoft-office--outlook-not-sending-emails"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Outlook email stuck | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "50b84f1953f2dfd69c22c7b9eabc763baa7a7c718df09e966d3ad65db34b5544",
+    "chars": 8362,
+    "relevant_to": [
+      "microsoft-office--outlook-not-sending-emails"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Step-by-step fix for email stuck in the Outbox."
+  },
+  {
+    "id": "support-microsoft-com-en-us-windows-deployment-install-upgrade-fix-problems-that-block-programs-from",
+    "url": "https://support.microsoft.com/en-us/windows/deployment/install-upgrade/fix-problems-that-block-programs-from-being-installed-or-removed",
+    "issues": [
+      "software--application-not-updating",
+      "software--program-won-t-install"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Fix problems that block programs from being installed or removed | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "9cbed2e7767a9a7e7100530595e8adeaaeddf17ef71e84a1c4bf705c15d13113",
+    "chars": 5359,
+    "relevant_to": [
+      "software--application-not-updating",
+      "software--program-won-t-install"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Windows 11 programs that cannot be installed, uninstalled or updated."
+  },
+  {
+    "id": "support-microsoft-com-en-us-windows-deployment-updates-lifecycle-troubleshoot-problems-updating-wind",
+    "url": "https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/troubleshoot-problems-updating-windows",
+    "issues": [
+      "software--application-not-updating",
+      "system--system-running-slow"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Troubleshoot problems updating Windows | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "d9f004c47225b9975600fc6fa16ff450ce5cc67c6e5fe74a18a9766f85483942",
+    "chars": 36677,
+    "relevant_to": [
+      "software--application-not-updating",
+      "system--system-running-slow"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Pending and failing Windows updates, which block app updates in the mock world."
+  },
+  {
+    "id": "support-microsoft-com-en-us-windows-experience-performance-optimization-tips-to-improve-pc-performan",
+    "url": "https://support.microsoft.com/en-us/windows/experience/performance-optimization/tips-to-improve-pc-performance-in-windows",
+    "issues": [
+      "system--system-running-slow"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Tips to improve PC performance in Windows | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "625dc183c9a75184f794490c1700253b98bfeded2cd6e797cbb42f12a6f450dc",
+    "chars": 13846,
+    "relevant_to": [
+      "system--system-running-slow"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Windows 11 performance troubleshooting; covers low disk space, updates and background apps."
+  },
+  {
+    "id": "support-microsoft-com-en-us-windows-free-up-drive-space-in-windows-85529ccb-c365-490d-b548-831022bc9",
+    "url": "https://support.microsoft.com/en-us/windows/free-up-drive-space-in-windows-85529ccb-c365-490d-b548-831022bc9b32",
+    "issues": [
+      "system--disk-space-running-out",
+      "system--system-running-slow"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": "https://support.microsoft.com/en-us/windows/experience/storage-filemanagement/free-up-drive-space-in-windows",
+    "title": "Free up drive space in Windows | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "9781f053d8caf3971ef06820c3420e95d0aaf3d03616b3c71e996c2a4f0161f9",
+    "chars": 15633,
+    "relevant_to": [
+      "system--disk-space-running-out",
+      "system--system-running-slow"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Windows 11 low disk space; Storage Sense and cleanup recommendations."
+  },
+  {
+    "id": "support-microsoft-com-en-us-windows-hardware-printer-fix-printer-connection-and-printing-problems-in",
+    "url": "https://support.microsoft.com/en-us/windows/hardware/printer/fix-printer-connection-and-printing-problems-in-windows",
+    "issues": [
+      "hardware--printer-not-responding"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Fix printer connection and printing problems in Windows | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "f7ae8f680ce0c302f9ef0f8208d986defbb36ef971e9a60973fd80a30e46bd0e",
+    "chars": 22336,
+    "relevant_to": [
+      "hardware--printer-not-responding"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "General printer troubleshooting, including power-cycling."
+  },
+  {
+    "id": "support-microsoft-com-en-us-windows-hardware-printer-troubleshooting-offline-printer-problems-in-win",
+    "url": "https://support.microsoft.com/en-us/windows/hardware/printer/troubleshooting-offline-printer-problems-in-windows",
+    "issues": [
+      "hardware--printer-not-responding"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Troubleshooting offline printer problems in Windows | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "82d2f1e22dac2f89a0dbe4402b3be2de60b3d23608938cac4b4215307b93b0b9",
+    "chars": 11569,
+    "relevant_to": [
+      "hardware--printer-not-responding"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Printer shows as offline; print queue and spooler."
+  },
+  {
+    "id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+    "url": "https://support.microsoft.com/en-us/windows/protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860a44",
+    "issues": [
+      "security--phishing-email-detected"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": "https://learn.microsoft.com/en-us/defender-endpoint/malware/phishing",
+    "title": "How to protect against phishing attacks - Microsoft Defender for Endpoint | Microsoft Learn",
+    "sha256": "6bccac96128b2ce5ef85f37f6296f9f1d5e13e6a42212e9f1e9caecc4832a8c2",
+    "chars": 7405,
+    "relevant_to": [
+      "security--phishing-email-detected"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "seed",
+    "reason": null
+  },
+  {
+    "id": "support-microsoft-com-en-us-windows-troubleshooting-update-issues-for-microsoft-security-essentials-",
+    "url": "https://support.microsoft.com/en-us/windows/troubleshooting-update-issues-for-microsoft-security-essentials-859d3fc8-b920-77f5-7d14-6d9e0c4ceaaf",
+    "issues": [
+      "security--antivirus-not-updating"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": "https://support.microsoft.com/en-us/windows/security/security-safety-and-privacy",
+    "title": "Security, safety, and privacy | Microsoft SupportYour Privacy Choices Opt-Out IconYour Privacy Choices Opt-Out Icon",
+    "sha256": "3a378c39963c341e07217352a6df9977d75658b81ceab7ffb7f605e927fb98b3",
+    "chars": 3094,
+    "relevant_to": [
+      "security--antivirus-not-updating"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "seed",
+    "reason": null
+  },
+  {
+    "id": "support-mozilla-org-en-us-kb-firefox-cant-load-websites-other-browsers-can",
+    "url": "https://support.mozilla.org/en-US/kb/firefox-cant-load-websites-other-browsers-can",
+    "issues": [
+      "software--application-not-updating",
+      "software--program-won-t-install"
+    ],
+    "fetched": "2026-11-28",
+    "status": "failed: only 209 characters of text (bot challenge, cookie wall or script-only page)",
+    "final_url": null,
+    "title": null,
+    "sha256": null,
+    "chars": 0,
+    "relevant_to": [],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "seed",
+    "reason": null
+  }
+]

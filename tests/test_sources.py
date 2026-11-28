@@ -205,3 +205,14 @@ def test_collect_adds_curated_sources_with_origin_and_reason(rows, tmp_path):
     assert found[article].origin == "curated" and found[article].reason == "Specific printer article."
     assert found[article].status == "ok" and found[article].relevant_to == ["hardware--printer-not-responding"]
     assert found[VPN].origin == "seed" and found[VPN].reason is None
+
+
+def test_the_committed_manifest_gives_every_issue_a_usable_source():
+    """Done-when of #25: each in-scope issue has at least one fetched source about it."""
+    manifest = sources.load_manifest()
+    assert {i: ids for i, ids in sources.coverage(manifest).items() if not ids} == {}
+    for s in manifest:
+        assert s.status == "ok" or s.status.startswith(("failed:", "skipped:")), s.status
+        assert s.origin in ("seed", "curated", "local")
+        if s.origin == "curated":
+            assert s.reason
