@@ -4,24 +4,24 @@
   "complete": true,
   "tokens": {
     "extraction": {
-      "calls": 25,
-      "prompt_tokens": 69458,
-      "completion_tokens": 178479,
-      "budget": 400000
+      "calls": 5,
+      "prompt_tokens": 20491,
+      "completion_tokens": 52863,
+      "budget": 150000
     },
     "judge": {
-      "calls": 101,
-      "prompt_tokens": 15040,
-      "completion_tokens": 25979,
-      "budget": 400000
+      "calls": 34,
+      "prompt_tokens": 5413,
+      "completion_tokens": 10304,
+      "budget": 150000
     }
   },
   "score": {
-    "extracted": 101,
-    "recall": 41.7,
+    "extracted": 135,
+    "recall": 50.0,
     "per_issue_recall": {
-      "network--vpn-not-connecting": 0.0,
-      "network--wi-fi-not-connecting": 0.0,
+      "network--vpn-not-connecting": 25.0,
+      "network--wi-fi-not-connecting": 33.3,
       "microsoft-office--outlook-not-sending-emails": 66.7,
       "system--disk-space-running-out": 100.0,
       "system--system-running-slow": 66.7,
@@ -29,12 +29,18 @@
       "software--program-won-t-install": 0.0,
       "software--application-not-updating": 66.7,
       "security--antivirus-not-updating": 0.0,
-      "security--phishing-email-detected": 0.0,
+      "security--phishing-email-detected": 50.0,
       "hardware--printer-not-responding": 66.7,
       "identity--account-locked": 50.0,
       "identity--mfa-lockout": 100.0
     },
     "matched": {
+      "vpn-certificate-expired": [
+        "An invalid VPN certificate prevents connection."
+      ],
+      "wifi-service-degraded": [
+        "The Wi-Fi router is the source of the connection problem."
+      ],
       "mailbox-full": [
         "Microsoft cloud storage is full.",
         "The Inbox is full."
@@ -71,6 +77,10 @@
       "app-update-waits-for-os": [
         "Windows is not up to date."
       ],
+      "phishing-suspicious-sign-ins": [
+        "Stolen information is used for malicious purposes such as hacking, identity theft, or stealing money.",
+        "Social engineering attacks take advantage of a user's possible lapse in decision-making."
+      ],
       "printer-paper-jam": [
         "There is a paper jam in the printer."
       ],
@@ -105,38 +115,35 @@
       "locked-expired-password",
       "overheating-pending-firmware",
       "phishing-account-locked",
-      "phishing-suspicious-sign-ins",
       "printer-offline",
       "slow-thermal-throttling",
       "vpn-account-locked",
-      "vpn-certificate-expired",
       "vpn-client-outdated",
       "vpn-gateway-outage",
       "wifi-device-noncompliant",
-      "wifi-password-expired",
-      "wifi-service-degraded"
+      "wifi-password-expired"
     ],
-    "extra_causes": 74,
+    "extra_causes": 104,
     "evidence_valid": 100.0,
     "ambiguous": 0,
-    "judge_calls": 101,
+    "judge_calls": 135,
     "per_issue_extracted": {
-      "network--vpn-not-connecting": 1,
-      "network--wi-fi-not-connecting": 0,
+      "network--vpn-not-connecting": 13,
+      "network--wi-fi-not-connecting": 12,
       "microsoft-office--outlook-not-sending-emails": 18,
       "system--disk-space-running-out": 15,
       "system--system-running-slow": 16,
       "hardware--laptop-overheating": 6,
       "software--program-won-t-install": 6,
       "software--application-not-updating": 8,
-      "security--antivirus-not-updating": 5,
-      "security--phishing-email-detected": 0,
+      "security--antivirus-not-updating": 10,
+      "security--phishing-email-detected": 5,
       "hardware--printer-not-responding": 21,
       "identity--account-locked": 2,
       "identity--mfa-lockout": 3
     },
     "judge_unparsed": 0,
-    "judge_cached": 0
+    "judge_cached": 101
   },
   "calls": [
     {
@@ -147,8 +154,8 @@
       "error": null,
       "prompt_tokens": 1591,
       "completion_tokens": 2240,
-      "seconds": 8.576497270000004,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -159,8 +166,8 @@
       "error": null,
       "prompt_tokens": 1593,
       "completion_tokens": 4319,
-      "seconds": 11.15819390899999,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -171,19 +178,19 @@
       "error": null,
       "prompt_tokens": 793,
       "completion_tokens": 228,
-      "seconds": 1.0596574709999942,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
       "issue": "security--antivirus-not-updating",
       "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
-      "items": 0,
+      "items": 21,
       "rejected": 0,
-      "error": "reply cut off at the token limit",
+      "error": null,
       "prompt_tokens": 841,
-      "completion_tokens": 16384,
-      "seconds": 46.74878564399998,
+      "completion_tokens": 1579,
+      "seconds": 4.345152029000019,
       "cached": false,
       "stopped_by_budget": false
     },
@@ -195,19 +202,19 @@
       "error": null,
       "prompt_tokens": 946,
       "completion_tokens": 13297,
-      "seconds": 33.922912559999986,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
       "issue": "network--vpn-not-connecting",
       "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
-      "items": 0,
+      "items": 48,
       "rejected": 0,
-      "error": "reply cut off at the token limit",
+      "error": null,
       "prompt_tokens": 5335,
-      "completion_tokens": 16384,
-      "seconds": 52.085692099,
+      "completion_tokens": 13990,
+      "seconds": 40.49514122300002,
       "cached": false,
       "stopped_by_budget": false
     },
@@ -219,8 +226,8 @@
       "error": null,
       "prompt_tokens": 745,
       "completion_tokens": 7516,
-      "seconds": 23.091554078,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -231,8 +238,8 @@
       "error": null,
       "prompt_tokens": 1043,
       "completion_tokens": 2641,
-      "seconds": 6.591063678000012,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -243,8 +250,8 @@
       "error": null,
       "prompt_tokens": 1830,
       "completion_tokens": 1359,
-      "seconds": 4.792864386000019,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -255,8 +262,8 @@
       "error": null,
       "prompt_tokens": 1831,
       "completion_tokens": 5224,
-      "seconds": 15.796147695000002,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -267,19 +274,19 @@
       "error": null,
       "prompt_tokens": 4736,
       "completion_tokens": 1288,
-      "seconds": 4.167650596000044,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
       "issue": "network--wi-fi-not-connecting",
       "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
-      "items": 0,
+      "items": 40,
       "rejected": 0,
-      "error": "reply cut off at the token limit",
+      "error": null,
       "prompt_tokens": 4737,
-      "completion_tokens": 16384,
-      "seconds": 41.031544639,
+      "completion_tokens": 10916,
+      "seconds": 31.397558005999997,
       "cached": false,
       "stopped_by_budget": false
     },
@@ -291,8 +298,8 @@
       "error": null,
       "prompt_tokens": 2296,
       "completion_tokens": 14574,
-      "seconds": 44.04590379299998,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -303,8 +310,8 @@
       "error": null,
       "prompt_tokens": 2083,
       "completion_tokens": 2614,
-      "seconds": 7.867504597999982,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -315,8 +322,8 @@
       "error": null,
       "prompt_tokens": 1367,
       "completion_tokens": 7976,
-      "seconds": 19.450524515999973,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -327,8 +334,8 @@
       "error": null,
       "prompt_tokens": 1368,
       "completion_tokens": 1270,
-      "seconds": 3.5808218689999762,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -339,7 +346,7 @@
       "error": "reply cut off at the token limit",
       "prompt_tokens": 8001,
       "completion_tokens": 16384,
-      "seconds": 51.04839905799997,
+      "seconds": 48.30936569200003,
       "cached": false,
       "stopped_by_budget": false
     },
@@ -351,8 +358,8 @@
       "error": null,
       "prompt_tokens": 8001,
       "completion_tokens": 359,
-      "seconds": 1.464458331000003,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -363,8 +370,8 @@
       "error": null,
       "prompt_tokens": 3015,
       "completion_tokens": 8964,
-      "seconds": 22.117406340000002,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -375,8 +382,8 @@
       "error": null,
       "prompt_tokens": 3618,
       "completion_tokens": 9045,
-      "seconds": 27.06577225999996,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -387,8 +394,8 @@
       "error": null,
       "prompt_tokens": 3617,
       "completion_tokens": 2251,
-      "seconds": 7.039379182999937,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -399,8 +406,8 @@
       "error": null,
       "prompt_tokens": 4925,
       "completion_tokens": 8961,
-      "seconds": 25.395346078999978,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
@@ -411,19 +418,19 @@
       "error": null,
       "prompt_tokens": 2696,
       "completion_tokens": 1832,
-      "seconds": 4.909988731999988,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     },
     {
       "issue": "security--phishing-email-detected",
       "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
-      "items": 0,
+      "items": 32,
       "rejected": 0,
-      "error": "reply cut off at the token limit",
+      "error": null,
       "prompt_tokens": 1577,
-      "completion_tokens": 16384,
-      "seconds": 41.04474788699997,
+      "completion_tokens": 9994,
+      "seconds": 24.781771315000015,
       "cached": false,
       "stopped_by_budget": false
     },
@@ -435,8 +442,8 @@
       "error": null,
       "prompt_tokens": 873,
       "completion_tokens": 601,
-      "seconds": 2.1929339900000286,
-      "cached": false,
+      "seconds": 0.0,
+      "cached": true,
       "stopped_by_budget": false
     }
   ],
@@ -583,6 +590,174 @@
       "kind": "solution",
       "text": "Identity verification is done by phone callback to the directory number or written manager confirmation, never by email or chat alone.",
       "evidence": "Verification never happens by replying to an email or chat message alone",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "symptom",
+      "text": "Event log shows Windows Defender Event ID 2001 indicating an error trying to update security intelligence.",
+      "evidence": "Source: Windows Defender\nEvent ID: 2001\nMicrosoft Defender Antivirus has encountered an error trying to update security intelligence.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "symptom",
+      "text": "Error code 0x80072ee7 appears with the description that the server name or address could not be resolved.",
+      "evidence": "Error code: 0x80072ee7\nError description: The server name or address could not be resolved.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "cause",
+      "text": "Required URLs for security intelligence updates are blocked by a firewall or proxy.",
+      "evidence": "Make sure that the URLs needed for security intelligence updates are allowed thru the firewall or proxy.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "cause",
+      "text": "The required URLs are being SSL inspected.",
+      "evidence": "Make sure that the URLs you reviewed during the previous step aren't SSL inspected.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "cause",
+      "text": "The Windows Update service is not running.",
+      "evidence": "Make sure that the services needed for Windows Update are started. These services include:\nWindows Update service",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "cause",
+      "text": "The Background Intelligence Transfer Service (BITS) is not running.",
+      "evidence": "Background Intelligence Transfer Service (BITS)",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "cause",
+      "text": "Microsoft Update is not set as the first item in the Fallback order policy list.",
+      "evidence": "If you're using a Fallback order policy, make sure that Microsoft Update (MicrosoftUpdateServer) is the first item in the list.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "diagnostic",
+      "text": "Check the Defender for Endpoint URL spreadsheets to verify connectivity to required URLs.",
+      "evidence": "See the Defender for Endpoint URL spreadsheets in Configure your network environment to ensure connectivity with Defender for Endpoint service.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "diagnostic",
+      "text": "Review the event log for error code 0x80072ee7 to determine if SSL inspection is causing the issue.",
+      "evidence": "Otherwise, you might see the following error in the event log:\nSource: Windows Defender\nEvent ID: 2001",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "diagnostic",
+      "text": "Verify that the Windows Update service and BITS are both started.",
+      "evidence": "Make sure that the services needed for Windows Update are started.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "diagnostic",
+      "text": "Check the Fallback order policy to confirm Microsoft Update is listed first.",
+      "evidence": "If you're using a Fallback order policy, make sure that Microsoft Update (MicrosoftUpdateServer) is the first item in the list.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "diagnostic",
+      "text": "Gather diagnostic data using the Microsoft Defender for Endpoint Client Analyzer tool.",
+      "evidence": "Gather diagnostic data from the Microsoft Defender for Endpoint Client Analyzer tool.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "diagnostic",
+      "text": "Convert WindowsUpdate.etl logs into a readable format using the Get-WindowsUpdateLog PowerShell command.",
+      "evidence": "convert the WindowsUpdate.etl logs into a human readable format by using the PowerShell command, Get-WindowsUpdateLog.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "solution",
+      "text": "Allow the required URLs for security intelligence updates through the firewall or proxy.",
+      "evidence": "Make sure that the URLs needed for security intelligence updates are allowed thru the firewall or proxy.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "solution",
+      "text": "Ensure the required URLs are not subject to SSL inspection.",
+      "evidence": "Make sure that the URLs you reviewed during the previous step aren't SSL inspected.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "solution",
+      "text": "Start the Windows Update service.",
+      "evidence": "Make sure that the services needed for Windows Update are started. These services include:\nWindows Update service",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "solution",
+      "text": "Start the Background Intelligence Transfer Service (BITS).",
+      "evidence": "Background Intelligence Transfer Service (BITS)",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "solution",
+      "text": "Set Microsoft Update (MicrosoftUpdateServer) as the first item in the Fallback order policy list.",
+      "evidence": "make sure that Microsoft Update (MicrosoftUpdateServer) is the first item in the list.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "solution",
+      "text": "Use Live Response to gather diagnostic data remotely if you have Defender for Endpoint Plan 2.",
+      "evidence": "If you have Microsoft Defender for Endpoint Plan 2 and access to Live Response, you can gather the diagnostic data remotely.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "solution",
+      "text": "Run the client analyzer on Windows to gather diagnostic data if you have Plan 1 or only Microsoft Defender Antivirus.",
+      "evidence": "If you have Microsoft Defender for Endpoint Plan 1 or only Microsoft Defender Antivirus, you can gather the diagnostic data using the client analyzer on Windows.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--antivirus-not-updating",
+      "source_id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+      "kind": "solution",
+      "text": "Use Microsoft Defender Antivirus diagnostic data collection if other diagnostic methods do not work.",
+      "evidence": "If either method doesn't work for you, use Microsoft Defender Antivirus diagnostic data collection.",
       "evidence_ok": true
     },
     {
@@ -799,6 +974,390 @@
       "kind": "solution",
       "text": "Troubleshoot Windows Update service issues using the provided guidance.",
       "evidence": "Review Guidance for troubleshooting Windows Update issues and Troubleshoot problems updating Windows.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "Always On VPN fails to connect clients to the internal network.",
+      "evidence": "If your Always On Virtual Private Network (VPN) setup isn't connecting clients to your internal network",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "Error 800 appears indicating the remote connection could not be established.",
+      "evidence": "Error 800: the remote connection couldn't connect",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "Error 809 appears indicating a connection cannot be established between the local machine and VPN server.",
+      "evidence": "Error 809: can't establish a connection between local machine and VPN server",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "Error 812 appears indicating the connection to Always On VPN failed.",
+      "evidence": "Error 812: can't connect to Always On VPN",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "Error 13806 appears indicating IKE cannot find a valid machine certificate.",
+      "evidence": "Error 13806: IKE can't find a valid machine certificate",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "Error 13801 appears indicating IKE authentication credentials are invalid.",
+      "evidence": "Error 13801: the IKE authentication credentials are invalid",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "Error 0x80070040 appears indicating the server certificate lacks Server Authentication in its usage entries.",
+      "evidence": "Error 0x80070040: server certificate doesn't have Server Authentication in its usage entries",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "Error 0x800B0109 appears indicating a certificate chain terminated in an untrusted root certificate.",
+      "evidence": "Error 0x800B0109: a certificate chain processed but terminated in a root certificate",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "An error message says 'Oops, you can't get to this yet' and blocks the VPN connection.",
+      "evidence": "Error: Oops, you can't get to this yet",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "The VPN connects but the user has no internet or local network access.",
+      "evidence": "If you can connect but don't have internet or local network access",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "Certificates cannot be deleted from the VPN connectivity tab.",
+      "evidence": "This issue is when you can't delete certificates on the VPN connectivity tab.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "symptom",
+      "text": "The VPN_Profile.ps1 script fails to run properly when manually executed.",
+      "evidence": "The most common issues when manually running the VPN_Profile.ps1 script include:",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "An invalid VPN certificate prevents connection.",
+      "evidence": "The VPN certificate is invalid.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "Incorrect Network Policy Server policies prevent VPN connection.",
+      "evidence": "The Network Policy Server (NPS) policies are incorrect.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "Problems with client deployment scripts or Routing and Remote Access prevent VPN connection.",
+      "evidence": "Issues with client deployment scripts or Routing and Remote Access.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "The Remote Access server or VPN server name cannot resolve to an IP address through DNS.",
+      "evidence": "the Remote Access server or VPN server being unable to resolve to an IP address is likely the cause of the issue.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "The VPN server is inaccessible from the remote client.",
+      "evidence": "your VPN server being inaccessible is probably causing the issue.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "UDP 500 and 4500 ports are not open from the client to the VPN server external interface.",
+      "evidence": "the ports not being open from the client to the VPN server external interface is causing the issue.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "The NPS server lacks a Server Authentication certificate that can service IKE requests.",
+      "evidence": "Make sure the NPS server has a Server Authentication certificate that can service IKE requests.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "The authentication method used by the server does not match the authentication method configured in the connection profile.",
+      "evidence": "The authentication method the server used to verify your user name and password didn't match the authentication method configured in your connection profile.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "The VPN server does not have the required machine or root machine certificate.",
+      "evidence": "You usually encounter this error when the VPN server doesn't have the required machine or root machine certificate.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "The machine certificate used for IKEv2 validation on the RAS server does not have Server Authentication enabled under Enhanced Key Usage.",
+      "evidence": "The machine certificate used for IKEv2 validation on the RAS server doesn't have Server Authentication enabled under Enhanced Key Usage.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "The machine certificate on the RAS server has expired.",
+      "evidence": "The machine certificate on the RAS server expired.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "cause",
+      "text": "The client machine does not have the root certificate for validating the RAS server certificate.",
+      "evidence": "The client machine doesn't have the root certificate for validating the RAS server certificate.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Run a whatismyip scan to check if the template machine has a public IP address.",
+      "evidence": "Run a whatismyip scan to make sure your template machine isn't externally connected.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Check the VPN Profile properties General tab to verify the value can publicly resolve through DNS.",
+      "evidence": "check to make sure the value in the General tab can publicly resolve through DNS",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Open ICMP to the external interface and ping the VPN server from the remote client.",
+      "evidence": "Open the Internet Control Message Protocol (ICMP) to the external interface and ping the VPN server from the remote client.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Check the configuration of the internal and external NICs on the VPN server.",
+      "evidence": "Check the configuration for the internal and external NICs on your VPN server.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Check the client, server, and hardware firewalls to verify they allow UDP 500 and 4500 port activity.",
+      "evidence": "Check the client firewall, server firewall, and any hardware firewalls to make sure they allow UDP 500 and 4500 port activity through.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Verify the NPS server has a Server Authentication certificate that can service IKE requests.",
+      "evidence": "Make sure the NPS server has a Server Authentication certificate that can service IKE requests.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Check the NPS event log for authentication issues.",
+      "evidence": "You can check for authentication issues in the NPS event log.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Look for events labeled RasClient in the application logs on client machines.",
+      "evidence": "look for events labeled RasClient",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Check the NPS logs to diagnose policy-related issues.",
+      "evidence": "The NPS logs can help you diagnose policy-related issues.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Use Event Viewer to find error 812 marked as event log 20276.",
+      "evidence": "you can find this issue marked as event log 20276",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Run the Get-WmiObject cmdlet to dump the VPN profile configuration.",
+      "evidence": "run the Get-WmiObject cmdlet to dump the VPN profile configuration",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "diagnostic",
+      "text": "Run the Certutil command to check for valid certificates in the user's certificate store.",
+      "evidence": "run the Certutil command to determine if there are valid certificates in the user's certificate store",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Change the public IP address to a private one.",
+      "evidence": "you should change the IP to a private one.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Set the VPN tunnel type to a specific tunnel type on the VPN client side.",
+      "evidence": "set the type of VPN to that particular tunnel type on the VPN client side.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Ensure the IKE ports on UDP 500 and 4500 are not blocked.",
+      "evidence": "Make sure the Internet Key Exchange (IKE) ports on User Datagram Protocol (UDP) ports 500 and 4500 aren't blocked.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Ensure both the client and server have correct certificates for IKE.",
+      "evidence": "Make sure both the client and server have correct certificates for IKE.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Allow UDP 500 and 4500 ports through the firewalls on devices between the local machine and remote server.",
+      "evidence": "make sure the firewalls for that device allow the UDP 500 and 4500 ports through.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Make the authentication requirements for the client and NPS server match.",
+      "evidence": "make sure the authentication requirements for your client and the NPS server match.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Install the required certificates on both the client machine and the VPN server.",
+      "evidence": "make sure the required certificates are installed on both the client machine and the VPN server.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Ensure the RAS server certificate includes Server Authentication under Enhanced Key Usage.",
+      "evidence": "make sure the certificate includes Server Authentication under Enhanced Key Usage.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Install a valid certificate if the RAS machine certificate has expired.",
+      "evidence": "make sure it's still valid. If it isn't, install a valid certificate.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Install a valid root certificate if the client machine is missing one.",
+      "evidence": "install a valid root certificate.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Make the VPN client connect using the same FQDN as the VPN server certificate.",
+      "evidence": "make sure the VPN client connects by using the same fully qualified domain name (FQDN) that the VPN server certificate uses.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--vpn-not-connecting",
+      "source_id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+      "kind": "solution",
+      "text": "Install an appropriate root certificate in the client machine's Trusted Root Certification Authorities store.",
+      "evidence": "make sure the client machine has a trusted root certificate installed in its Trusted Root Certification Authorities store. If not, install an appropriate root certificate.",
       "evidence_ok": true
     },
     {
@@ -1399,6 +1958,326 @@
       "kind": "solution",
       "text": "Reinstall and set up VPN client software after a network reset is performed.",
       "evidence": "After using network reset, you might need to reinstall and set up other networking software you might be using, such as VPN client software",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "symptom",
+      "text": "You are unable to access email, browse the web, or stream music.",
+      "evidence": "If you're unable to access email, browse the web, or stream music, it's likely you're not connected to your network and can't access the Internet.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "symptom",
+      "text": "The Wi-Fi toggle option is missing or not visible in settings.",
+      "evidence": "If the Wi-Fi toggle option is missing or not visible in settings, follow the below troubleshooting steps.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "symptom",
+      "text": "The Wi-Fi connection drops frequently, disrupting work or streaming.",
+      "evidence": "If the Wi-Fi connection drops frequently, disrupting work or streaming, follow the below steps.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "symptom",
+      "text": "Your PC is connected to the local network but lacks an Internet connection.",
+      "evidence": "Your Windows PC is connected to your local network but isn\u2019t connected to the Internet.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "symptom",
+      "text": "You cannot connect to Wi-Fi due to incorrect password errors despite entering the correct credentials.",
+      "evidence": "If you're unable to connect to Wi-Fi due to incorrect password errors despite entering the correct credentials, follow the below troubleshooting steps.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "symptom",
+      "text": "The wireless network adapter is recognized, but no Wi-Fi networks are found.",
+      "evidence": "Your wireless network adapter is recognized, but no Wi-Fi networks are found and you\u2019re not connected to Wi-Fi",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "symptom",
+      "text": "No network adapters are detected or enabled.",
+      "evidence": "No network adapters are detected or enabled",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "symptom",
+      "text": "The No Internet connection icon appears when you are in range of Wi-Fi networks.",
+      "evidence": "If you see the No Internet connection icon when you\u2019re in range of Wi-Fi networks, it could mean one of the following:",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "A specific app, website, or firewall is blocking your Internet connection.",
+      "evidence": "the problem might be with a specific app or website or a firewall blocking your Internet connection.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "Airplane mode is turned on.",
+      "evidence": "Ensure Airplane mode is turned off.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "The physical Wi-Fi switch on your laptop or tablet is turned off.",
+      "evidence": "The physical Wi-Fi switch on your laptop or tablet is turned off. Make sure it\u2019s turned on.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "Wi-Fi is turned off in the Wi-Fi settings.",
+      "evidence": "Wi-Fi is turned off in Wi-Fi settings. Open Settings, then select Network & internet. Make sure Wi-Fi is turned on.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "Your network adapter does not support the frequency that your network is broadcasting on.",
+      "evidence": "Your adapter doesn\u2019t support the frequency that your network is broadcasting on.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "The wireless network adapter driver is filtering out the supported network frequency.",
+      "evidence": "Your adapter supports your network frequency, but the wireless network adapter driver is filtering it out.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "The network connection stopped working properly after a recent update.",
+      "evidence": "Consider this approach if your network connection stopped working properly after a recent update.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "There is a problem with your modem or Internet Service Provider.",
+      "evidence": "you have a connection to your Wi-Fi router, so there might be a problem with your modem or ISP.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "The Wi-Fi router is the source of the connection problem.",
+      "evidence": "If you can connect to the Internet using an Ethernet cable, it confirms the connection problem is due to the Wi-Fi router.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "Windows could not get an IP address from the router.",
+      "evidence": "If your IP address looks like this, it means that Windows couldn\u2019t get an IP address from your router.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "DHCP is not enabled on the router.",
+      "evidence": "If you\u2019re not using static IP addresses on your network, then check to make sure DHCP is enabled on your router.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "cause",
+      "text": "The wireless network adapter is disabled in Device Manager.",
+      "evidence": "Make sure that the wireless network adapter isn\u2019t disabled in Device Manager.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "diagnostic",
+      "text": "Check if your network name shows Connected below it on the taskbar.",
+      "evidence": "Check if your network name shows Connected below it. If it displays a status other than Connected, select a Wi-Fi network you recognize",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "diagnostic",
+      "text": "Try connecting to the same network on a different device to determine if your device is the problem.",
+      "evidence": "On another laptop or phone, try to connect to the same network. If you can connect, the source of the problem is likely due to your device.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "diagnostic",
+      "text": "Use a ping test to check if there is a problem with the connection to your Wi-Fi router.",
+      "evidence": "Check to see if there is a problem with the connection to your Wi-Fi router. Do this by using a ping test.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "diagnostic",
+      "text": "Connect your PC directly to the modem using an Ethernet cable to confirm if the Wi-Fi router is the problem.",
+      "evidence": "If you can connect to the Internet using an Ethernet cable, it confirms the connection problem is due to the Wi-Fi router.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "diagnostic",
+      "text": "Check your IP address to see if it starts with 169.254.x.x.",
+      "evidence": "Find your IP address and make sure it's not something like this \u2014169.254.x.x. If your IP address looks like this, it means that Windows couldn\u2019t get an IP address",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "diagnostic",
+      "text": "Verify that you have a DNS server listed and that you can ping it.",
+      "evidence": "Check your DNS server. Verify that you have a DNS server listed and that you can ping it.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "diagnostic",
+      "text": "Check the wireless network report for a Problem number to find out why the driver did not load.",
+      "evidence": "find your wireless adapter in the Network Adapters section, and then check to see if a Problem number is listed there.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "diagnostic",
+      "text": "Check the Driver Version and Driver Date to see if they match the latest versions on the manufacturer's website.",
+      "evidence": "check the Driver Version and Driver Date to see if they match the latest driver versions listed on your device manufacturer\u2019s website.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Run the automated Network and Internet troubleshooter in the Get Help app.",
+      "evidence": "start by running the automated Network and Internet troubleshooter in the Get Help app. It will automatically run diagnostics and attempt to fix most of the problems.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Forget and reconnect to the Wi-Fi network by selecting it and entering the password.",
+      "evidence": "Select your Wi-Fi network and click Forget. Reconnect to the network by selecting it and entering the password.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Restart your modem and wireless router by unplugging them for 30 seconds and plugging them back in.",
+      "evidence": "Unplug the power cable for the router from the power source. Unplug the power cable for the modem from the power source.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Try connecting to a network on a different frequency band, such as 2.4 GHz or 5 GHz.",
+      "evidence": "Try connecting to a network on a different frequency band. Many consumer Wi-Fi routers broadcast at two different network frequency bands: 2.4 GHz and 5 GHz.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Run network commands to manually reset the TCP/IP stack, release and renew the IP address, and flush the DNS cache.",
+      "evidence": "Try running these network commands to manually reset the TCP/IP stack, release and renew the IP address, and flush and reset the DNS client resolver cache",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Uninstall the network adapter driver and restart your computer so Windows can automatically install the latest driver.",
+      "evidence": "try to uninstall the network adapter driver, and then restart your computer. Windows will automatically install the latest driver.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Disable power saving for the Wi-Fi adapter by unchecking the option to allow the computer to turn off the device.",
+      "evidence": "Uncheck Allow the computer to turn off this device to save power.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Use network reset to remove and reinstall network adapters and set their settings to defaults.",
+      "evidence": "Network reset removes any network adapters you have installed and the settings for them. After your PC restarts, any network adapters are reinstalled",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Turn off any manual proxy settings in the Network and Internet settings.",
+      "evidence": "Go to Settings > Network & Internet > Proxy. Turn off any manual proxy settings.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Change your DNS server to a different address if you cannot ping your current one.",
+      "evidence": "If you have a valid IP address but can\u2019t ping your DNS server, you can change your DNS server to a different address and then try to ping the new address.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Enable the Wi-Fi adapter in Device Manager.",
+      "evidence": "Open Device Manager and expand Network adapters. Right-click your Wi-Fi adapter and select Enable device.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "network--wi-fi-not-connecting",
+      "source_id": "support-microsoft-com-en-us-help-10741-windows-fix-network-connection-issues",
+      "kind": "solution",
+      "text": "Restart the WLAN AutoConfig service.",
+      "evidence": "Find WLAN AutoConfig, right-click, and select Restart.",
       "evidence_ok": true
     },
     {
@@ -3447,6 +4326,262 @@
       "kind": "solution",
       "text": "Clear the Pause Printing and Use Printer Offline options in the printer queue on Windows 10.",
       "evidence": "Select Printer, then select Set As Default Printer, and clear Pause Printing and Use Printer Offline if they are selected.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "Links or URLs in emails point to incorrect locations or third-party sites not affiliated with the sender.",
+      "evidence": "The links or URLs provided in emails are not pointing to the correct location or are pointing to a third-party site not affiliated with the sender of the email.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "The email requests personal information such as social security numbers or bank or financial information.",
+      "evidence": "There's a request for personal information such as social security numbers or bank or financial information.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "The email address has added numbers or changed letters to appear similar to a legitimate email address.",
+      "evidence": "Items in the email address will be changed so that it's similar enough to a legitimate email address, but has added numbers or changed letters.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "The message is unexpected and unsolicited, coming from an entity or person you rarely deal with.",
+      "evidence": "The message is unexpected and unsolicited. If you suddenly receive an email from an entity or a person you rarely deal with, consider this email suspect.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "The message or attachment asks you to enable macros, adjust security settings, or install applications.",
+      "evidence": "The message or the attachment asks you to enable macros, adjust security settings, or install applications.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "The message contains typographic or grammatical errors or wrong information.",
+      "evidence": "The message contains errors. Legitimate corporate messages are less likely to have typographic or grammatical errors or contain wrong information.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "The sender address doesn't match the signature on the message.",
+      "evidence": "The sender address doesn't match the signature on the message itself.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "There are multiple recipients in the 'To' field with random addresses.",
+      "evidence": "There are multiple recipients in the \"To\" field and they appear to be random addresses.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "The greeting doesn't personally address you or misuses your name.",
+      "evidence": "The greeting on the message itself doesn't personally address you.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "The website looks familiar but has inconsistencies like outdated logos, typos, or asks for additional information.",
+      "evidence": "The website looks familiar but there are inconsistencies or things that aren't quite right.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "symptom",
+      "text": "The page that opens is an image designed to look like the familiar site, with a pop-up requesting credentials.",
+      "evidence": "The page that opens is not a live page, but rather an image that is designed to look like the site you're familiar with.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "cause",
+      "text": "Cybercriminals attempt to steal usernames, passwords, credit card details, bank account information, or other credentials.",
+      "evidence": "Cybercriminals often attempt to steal usernames, passwords, credit card details, bank account information, or other credentials.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "cause",
+      "text": "Stolen information is used for malicious purposes such as hacking, identity theft, or stealing money.",
+      "evidence": "They use stolen information for malicious purposes, such as hacking, identity theft, or stealing money directly from bank accounts and credit cards.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "cause",
+      "text": "The stolen information can be sold in cybercriminal underground markets.",
+      "evidence": "The information can also be sold in cybercriminal underground markets.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "cause",
+      "text": "Social engineering attacks take advantage of a user's possible lapse in decision-making.",
+      "evidence": "Social engineering attacks are designed to take advantage of a user's possible lapse in decision-making.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "cause",
+      "text": "Phishing emails are designed to appear legitimate.",
+      "evidence": "Remember, phishing emails are designed to appear legitimate.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "diagnostic",
+      "text": "Verify if the displayed URL matches the actual destination URL.",
+      "evidence": "the displayed URL doesn't match the actual destination URL.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "diagnostic",
+      "text": "Contact the business by known channels to verify if suspicious emails are legitimate.",
+      "evidence": "If in doubt, contact the business by known channels to verify if any suspicious emails are in fact legitimate.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "diagnostic",
+      "text": "Check if the email is from an entity or person you rarely deal with.",
+      "evidence": "If you suddenly receive an email from an entity or a person you rarely deal with, consider this email suspect.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "diagnostic",
+      "text": "Check if the sender address matches the signature on the message.",
+      "evidence": "The sender address doesn't match the signature on the message itself.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Do not open attachments or links in unsolicited emails, even if they came from a recognized source.",
+      "evidence": "Don't open attachments or links in unsolicited emails, even if the emails came from a recognized source.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "If the email is unexpected, be wary about opening the attachment and verify the URL.",
+      "evidence": "If the email is unexpected, be wary about opening the attachment and verify the URL.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Educate and train employees to be wary of communication requesting personal or financial information.",
+      "evidence": "Enterprises should educate and train their employees to be wary of any communication that requests personal or financial information.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Instruct employees to report the threat to the company's security operations team immediately.",
+      "evidence": "They should also instruct employees to report the threat to the company's security operations team immediately.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Never provide sensitive or personal information through email, unknown websites, or over the phone.",
+      "evidence": "Be aware and never provide sensitive or personal information through email or unknown websites, or over the phone.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Use Microsoft Edge and Windows Defender Application Guard to isolate untrusted websites using Hyper-V virtualization technology.",
+      "evidence": "Microsoft Edge and Windows Defender Application Guard offer protection from the increasing threat of targeted attacks using Microsoft's industry-leading Hyper-V virtualization technology.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Use the built-in security features for cloud mailboxes for spam and malware protection.",
+      "evidence": "The built-in security features for all cloud mailboxes offers enterprise-class reliability and protection against spam and malware, while maintaining access to email during and after emergencies.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Use Microsoft Defender for Office 365 to protect email, files, and online storage against malware.",
+      "evidence": "Use Microsoft Defender for Office 365 to help protect your email, files, and online storage against malware.",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Contact your IT admin if you are on a work computer.",
+      "evidence": "Contact your IT admin if you are on a work computer",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Immediately change all passwords associated with the accounts.",
+      "evidence": "Immediately change all passwords associated with the accounts",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Report any fraudulent activity to your bank and credit card company.",
+      "evidence": "Report any fraudulent activity to your bank and credit card company",
+      "evidence_ok": true
+    },
+    {
+      "issue": "security--phishing-email-detected",
+      "source_id": "support-microsoft-com-en-us-windows-protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860",
+      "kind": "solution",
+      "text": "Report phishing or spam messages using the available reporting options.",
+      "evidence": "Use the following options to report spam or phishing messages:",
       "evidence_ok": true
     }
   ]

@@ -33,6 +33,7 @@ GLM-5.2 read the 17 usable sources (`knowledge/sources/manifest.json`) and extra
 | 2 (2026-11-28) | 2 of 22, cut off at 16,384 tokens | 438 | 99.1% | **38.9%** | 98 |
 | 3 (2026-11-28) | 3 of 25, cut off at 16,384 tokens | 476 | 100.0% | **38.9%** | 99 |
 | 4 (2026-11-28), new judge | 5 of 25, cut off at 16,384 tokens | 372 | 100.0% | **41.7%** | 74 |
+| 4b (2026-11-28), retry of run 4's failures | 1 of 25 (20 from cache) | 513 | 100.0% | **50.0%** | 104 |
 
 Run 3 added three official Microsoft sources (Always On VPN troubleshooting, two Defender update articles) for the two issues at 0%. VPN rose from 0% to 25% (the expired certificate is now found) and antivirus from 0 to 9 extracted causes, but overall recall stayed at 38.9%.
 
@@ -44,6 +45,8 @@ Run 4 is the first with the one-call judge (#39) and the token counts (#37); sou
 | Judge | 101 | 15,040 | 25,979 |
 
 **The five unfinished calls used 81,920 of the 178,479 extraction completion tokens (46%) and produced nothing.** Each hit the 16,384 limit while reasoning, including on an 841-token Defender page. Capping reasoning, not the judge, is now the main cost lever. The judge dropped to 41k tokens for 101 calls.
+
+**Run 4b** re-ran extraction with the reply cache: run 4's 20 finished replies came from the cache and only its 5 failed calls went to the model. Four finished this time, and recall rose to 50.0% (18 of 36): VPN 25%, Wi-Fi 33.3%, phishing 50%. Antivirus has 10 extracted causes but still 0%, consistent with `av-definitions-stale` being a state rather than a cause. The app-update call hit the limit again. **50.0% is a retry-until-finished number, not a single run:** it is what the documentation yields once every call completes. It cost 89,071 tokens (extraction 73,354 in 5 calls, judge 15,717 in 34 calls), against 288,956 for all of run 4. `extraction.json` holds run 4b.
 
 **Run-to-run variation is large per issue.** With unchanged sources, Wi-Fi went from 12 extracted causes to 0 (a call cut off at the token limit), app updates from 66.7% to 33.3%, phishing from 100% to 50%, and printer from 33.3% to 66.7%. Reasoning varies at temperature 0 and some calls never finish. A single run is not a reliable per-issue number: the next step is to run extraction several times and report the minimum and mean, and to keep the union of what every run found as the draft for review.
 
