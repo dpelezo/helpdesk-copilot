@@ -156,6 +156,10 @@ class GraphStore:
             for statement in SCHEMA:
                 session.run(statement).consume()
 
+    def query(self, cypher: str, **params) -> list[dict[str, Any]]:
+        """A read-only query, for retrieval."""
+        return self._read(lambda tx: tx.run(cypher, **params).data())
+
     # Manifests
 
     def manifest(self, release_id: str) -> Manifest | None:
