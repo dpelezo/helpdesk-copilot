@@ -13,6 +13,16 @@ services:
       interval: 5s
       retries: 10
 
+  neo4j:
+    image: neo4j:5.26-community
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:?set in .env}
+    ports:
+      - "7474:7474"  # browser
+      - "7687:7687"  # bolt
+    volumes:
+      - neo4jdata:/data
+
   temporal:
     image: temporalio/auto-setup:1.24.2
     ports:
@@ -60,3 +70,4 @@ services:
 
 volumes:
   pgdata:
+  neo4jdata:
