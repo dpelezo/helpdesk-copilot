@@ -12,7 +12,7 @@ SOURCE = {"ms-outlook": "If your Microsoft cloud storage is full, you cannot sen
 
 
 class KeywordJudge:
-    """Matches when every keyword listed for the reference cause appears in the extracted text."""
+    """Picks every reference whose listed keywords all appear in the extracted text."""
 
     KEYS = {
         "mailbox-full": ["storage is full"],
@@ -24,11 +24,15 @@ class KeywordJudge:
     def __init__(self):
         self.calls = 0
 
-    def same_cause(self, extracted, reference):
+    def match(self, extracted, references):
         self.calls += 1
-        cause = next(c for c in BY_ID.values() if c.summary == reference)
-        keys = self.KEYS.get(cause.id)
-        return bool(keys) and all(k in extracted.lower() for k in keys)
+        picked = []
+        for i, reference in enumerate(references):
+            cause = next(c for c in BY_ID.values() if c.summary == reference)
+            keys = self.KEYS.get(cause.id)
+            if keys and all(k in extracted.lower() for k in keys):
+                picked.append(i)
+        return picked
 
 
 def item(issue, text, evidence, source):
@@ -75,7 +79,7 @@ def test_recall_extra_causes_and_evidence():
     assert set(s.missed) == {"outlook-password-expired", "printer-paper-jam", "printing-service-outage"}
     assert s.extra_causes == 1 and s.evidence_valid == 75.0
     assert s.matched["mailbox-full"] == ["Cloud storage is full, so email can't be sent"]
-    assert s.judge_calls == judge.calls == 3 + 3 + 3 + 3
+    assert s.judge_calls == judge.calls == 4  # one call per extracted cause
 
 
 def test_a_cause_matching_two_catalog_causes_is_counted_as_ambiguous():
@@ -97,12 +101,12 @@ def test_nothing_extracted_scores_zero_recall():
 # ── Judge ──────────────────────────────────────────────────────────────
 
 
-@pytest.mark.parametrize(("text", "answer"), [
-    ("yes", True), ("No.", False), ("Yes — same cause", True),
-    ("Thinking... no wait, yes", True), ("Maybe", None), (None, None),
+@pytest.mark.parametrize(("text", "count", "picked"), [
+    ("2", 3, [1]), ("1, 3", 3, [0, 2]), ("Thinking it over.\nnone", 3, []), ("**2**", 3, [1]),
+    ("A matches the second.\n2", 4, [1]), ("4", 3, None), ("maybe 2", 3, None), ("", 3, None), (None, 3, None),
 ])
-def test_parse_yes_no_takes_the_last_answer(text, answer):
-    assert es.parse_yes_no(text) is answer
+def test_parse_choice_reads_the_final_line(text, count, picked):
+    assert es.parse_choice(text, count) == picked
 
 
 class Scripted:
@@ -121,13 +125,28 @@ class Scripted:
         return Reply({"role": "assistant", "content": answer})
 
 
-def test_llm_judge_asks_one_narrow_question_and_counts_unparsed():
-    judge = es.LLMJudge(Scripted("yes", "no", "it depends", LLMError("HTTP 503")))
-    assert judge.same_cause("A", "B") is True
-    assert "A: A\nB: B" in judge.model.seen[0][1]["content"]
-    assert judge.same_cause("A", "B") is False
-    assert judge.same_cause("A", "B") is False and judge.same_cause("A", "B") is False
+def test_llm_judge_lists_the_candidates_once_and_counts_unparsed():
+    judge = es.LLMJudge(Scripted("2", "none", "it depends", LLMError("HTTP 503")))
+    assert judge.match("A", ["x", "y", "z"]) == [1]
+    prompt = judge.model.seen[0][1]["content"]
+    assert prompt.startswith("A: A") and "1. x\n2. y\n3. z" in prompt
+    assert judge.match("A", ["x"]) == []
+    assert judge.match("A", ["x"]) == [] and judge.match("A", ["x"]) == []
     assert judge.unparsed == 2
+
+
+def test_the_judge_cache_answers_repeat_questions_without_a_call(tmp_path):
+    first = es.LLMJudge(Scripted("1"), cache=tmp_path)
+    assert first.match("A", ["x", "y"]) == [0]
+    second = es.LLMJudge(Scripted(), cache=tmp_path)  # no answers scripted: a call would fail
+    assert second.match("A", ["x", "y"]) == [0] and second.cached == 1
+    third = es.LLMJudge(Scripted("none"), cache=tmp_path)
+    assert third.match("A", ["x", "y", "new"]) == [] and third.cached == 0  # different candidates
+
+
+def test_unparsed_answers_are_not_cached(tmp_path):
+    es.LLMJudge(Scripted("hmm"), cache=tmp_path).match("A", ["x"])
+    assert not list(tmp_path.iterdir())
 
 
 # ── Labels and agreement ───────────────────────────────────────────────
@@ -150,17 +169,26 @@ def test_labels_naming_an_unknown_cause_are_rejected(tmp_path):
 
 
 class Oracle:
+    """Answers from the labels; with flip=n, the first n labelled pairs it sees come out wrong."""
+
     def __init__(self, labels, flip=0):
         by_id = {c.id: c for c in BY_ID.values()}
         self.truth = {(lab.extracted, by_id[lab.cause].summary): lab.same for lab in labels}
         self.flip = flip
+        self.unparsed = 0
 
-    def same_cause(self, extracted, reference):
-        answer = self.truth[(extracted, reference)]
-        if self.flip:
-            self.flip -= 1
-            return not answer
-        return answer
+    def match(self, extracted, references):
+        picked = []
+        for i, ref in enumerate(references):
+            answer = self.truth.get((extracted, ref))
+            if answer is None:
+                continue
+            if self.flip:
+                self.flip -= 1
+                answer = not answer
+            if answer:
+                picked.append(i)
+        return picked
 
 
 def test_a_judge_that_agrees_with_the_labels_is_trusted():
@@ -171,7 +199,7 @@ def test_a_judge_that_agrees_with_the_labels_is_trusted():
 
 def test_a_judge_below_ninety_percent_is_not_trusted():
     labels = es.load_labels()
-    result = es.judge_agreement(Oracle(labels, flip=3), labels)  # 21 of 24 = 87.5%
+    result = es.judge_agreement(Oracle(labels, flip=3), labels)  # 3 wrong: 21 of 24 = 87.5%
     assert result.agreement == 87.5 and not result.trusted
     assert len(result.false_yes) + len(result.false_no) == 3
 
@@ -180,11 +208,8 @@ def test_main_reports_agreement_and_fails_when_not_trusted(monkeypatch, capsys):
     labels = es.load_labels()
     monkeypatch.setenv("TELNYX_API_KEY", "k")
     monkeypatch.setenv("LLM_MODEL", "m")
-
-    class Holder(Oracle):
-        unparsed = 0
-
-    monkeypatch.setattr(es, "LLMJudge", lambda model: Holder(labels, flip=5))
+    monkeypatch.setattr(es, "LLMJudge", lambda model: Oracle(labels, flip=5))
     assert es.main([]) == 1
     out = capsys.readouterr().out
     assert "Judge agreement: 79.2% on 24 labels" in out and "NOT TRUSTED" in out
+    assert "tokens: 0 in 0 calls" in out
