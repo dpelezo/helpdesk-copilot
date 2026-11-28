@@ -13,3 +13,6 @@ build/
 
 # Downloaded seed data (ADR 0005: never committed)
 /data/
+
+# Local model-choice results (the summary goes into ADR 0003)
+/evals/model_choice/results/
