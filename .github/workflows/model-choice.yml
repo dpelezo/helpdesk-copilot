@@ -1,0 +1,68 @@
+name: model choice
+
+# Issue #8: run the tool-calling test on the Telnyx candidates, on the 20
+# tuning tickets only (never held-out). Uses the TELNYX_API_KEY secret, which
+# is passed to the client as an environment variable and never printed.
+# Runs when the harness changes, or on demand.
+
+on:
+  pull_request:
+    paths:
+      - app/llm.py
+      - app/evals/model_choice.py
+      - .github/workflows/model-choice.yml
+  workflow_dispatch:
+    inputs:
+      models:
+        description: Comma-separated model ids
+        default: zai-org/GLM-5.3-Flash,moonshotai/Kimi-K2.6,zai-org/GLM-5.2
+      extra_body:
+        description: JSON merged into each request (default turns reasoning off, as on voice calls)
+        default: '{"chat_template_kwargs":{"enable_thinking":false}}'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: model-choice-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run:
+    name: model choice (tuning tickets)
+    # Secrets are not available to pull requests from forks; skip those.
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      MODELS: ${{ inputs.models || 'zai-org/GLM-5.3-Flash,moonshotai/Kimi-K2.6,zai-org/GLM-5.2' }}
+      LLM_EXTRA_BODY: ${{ inputs.extra_body || '{"chat_template_kwargs":{"enable_thinking":false}}' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check the key is set (without printing it)
+        run: test -n "$TELNYX_API_KEY" || { echo "TELNYX_API_KEY secret is missing"; exit 1; }
+
+      - name: Run the tool-calling test
+        run: python -m app.evals.model_choice --models "$MODELS" | tee table.md
+
+      - name: Show results
+        if: always()
+        run: |
+          cat table.md >> "$GITHUB_STEP_SUMMARY" || true
+          for f in evals/model_choice/results/*.json; do
+            [ -f "$f" ] || continue
+            echo "== $f"
+            python -c "import json,sys; d=json.load(open(sys.argv[1])); print(json.dumps(d['summary'])); [print(json.dumps({k: r[k] for k in ('ticket','expected_outcome','outcome','submitted','steps','error')} | {'calls': [c['tool']+('' if c['valid'] else '!') for c in r['calls']]})) for r in d['runs']]" "$f"
+          done
