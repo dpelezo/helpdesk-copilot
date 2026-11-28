@@ -5,6 +5,7 @@ A LangGraph state graph with four nodes:
     start ─► plan ─► check ─► plan ─► … ─► decide ─► (check ─► decide) ─► end
                └──────────────────────────► decide            (no check left, or budget spent)
     start ─► end                                              (no hypothesis: escalate, no model call)
+    decide ─► approve ─► act ─► end                           (the fix changes an account, #51)
 
 - **plan** (no model): the untried check linked by ``TESTS_FOR`` to the most hypotheses,
   first-listed on a tie. Planning stops at ``CHECK_BUDGET`` checks or when no linked check is left.
@@ -26,12 +27,16 @@ import asyncio
 import json
 import re
 from dataclasses import asdict, dataclass, field
+from datetime import UTC, datetime
 from typing import Any, Literal, TypedDict
 
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import END, START, StateGraph
+from langgraph.types import Command, interrupt
+from pydantic import ValidationError
 
 from app.diagnosis.checks import CheckRunner
+from app.diagnosis.gate import ActionRunner, Approval
 from app.diagnosis.hypotheses import Hypothesis
 from app.llm import LLMError
 from app.mock.faults import BY_ID, ESCALATE
@@ -68,6 +73,9 @@ class State(TypedDict, total=False):
     decisions: int
     usage: list[dict[str, int]]
     outcome: dict[str, Any]
+    proposal: dict[str, Any]
+    approval: dict[str, Any]
+    action: dict[str, Any]
 
 
 @dataclass
@@ -85,6 +93,10 @@ class Diagnosis:
     prompt_tokens: int = 0
     completion_tokens: int = 0
     error: str | None = None
+    awaiting_approval: bool = False
+    proposal: dict[str, Any] | None = None  # the account change waiting for the agent
+    approval: dict[str, Any] | None = None  # the agent's decision, with who and when
+    action: dict[str, Any] | None = None  # the account change that ran, and its result
 
 
 # ── Pure parts ─────────────────────────────────────────────────────────
@@ -138,10 +150,16 @@ def prompt(state: State, allowed_next: list[str]) -> list[dict[str, str]]:
 
 
 class Diagnoser:
-    """Builds the graph once; ``diagnose`` runs it for one ticket against one company."""
+    """Builds the graph once; ``diagnose`` runs it for one ticket against one company.
 
-    def __init__(self, model, checkpointer=None) -> None:
+    With ``gate=True`` (the default) a supported diagnosis whose fix changes an account stops for
+    the agent's approval; ``resume`` continues it. The eval turns the gate off: it scores the
+    diagnosis, and nothing in an eval run should change an account.
+    """
+
+    def __init__(self, model, checkpointer=None, gate: bool = True) -> None:
         self.model = model
+        self.gate = gate
         self.graph = self._build().compile(checkpointer=checkpointer or InMemorySaver())
 
     def _build(self) -> StateGraph:
@@ -149,11 +167,54 @@ class Diagnoser:
         g.add_node("plan", self._plan)
         g.add_node("check", self._check)
         g.add_node("decide", self._decide)
-        g.add_conditional_edges(START, lambda s: "plan" if s["hypotheses"] else END)
-        g.add_conditional_edges("plan", lambda s: "check" if s.get("next_check") else "decide")
-        g.add_conditional_edges("check", lambda s: "decide" if s.get("decisions") else "plan")
-        g.add_conditional_edges("decide", lambda s: "check" if s.get("next_check") else END)
+        g.add_node("approve", self._approve)
+        g.add_node("act", self._act)
+        # Every branch names its possible targets, so the graph can be drawn and checked.
+        g.add_conditional_edges(START, lambda s: "plan" if s["hypotheses"] else END, ["plan", END])
+        g.add_conditional_edges("plan", lambda s: "check" if s.get("next_check") else "decide", ["check", "decide"])
+        g.add_conditional_edges("check", lambda s: "decide" if s.get("decisions") else "plan", ["decide", "plan"])
+        g.add_conditional_edges("decide", self._after_decide, ["check", "approve", END])
+        g.add_conditional_edges("approve", lambda s: "act" if s["approval"]["action"] != "reject" else END,
+                                ["act", END])
+        g.add_edge("act", END)
         return g
+
+    def _after_decide(self, state: State) -> str:
+        if state.get("next_check"):
+            return "check"
+        outcome = state.get("outcome") or {}
+        if self.gate and outcome.get("stop") == "supported" and _action_for(state, outcome.get("cause")):
+            return "approve"
+        return END
+
+    async def _approve(self, state: State, config) -> dict[str, Any]:
+        cause = state["outcome"]["cause"]
+        proposal = {
+            "tool": _action_for(state, cause), "employee_id": state["ticket"]["employee_id"], "cause": cause,
+            "reason": state["outcome"].get("reason", ""),
+            "evidence": [{"tool": c["tool"], "result": c["result"]} for c in state.get("checks", [])],
+            "identity_check": "Verify the employee's identity before approving (handbook pw-4).",
+        }
+        ask = proposal
+        while True:  # an invalid answer is asked again; nothing runs until a valid one arrives
+            answer = interrupt(ask)
+            try:
+                approval = Approval.model_validate(answer)
+                break
+            except ValidationError as error:
+                ask = {**proposal, "error": error.errors()[0]["msg"]}
+        return {"proposal": proposal,
+                "approval": {**approval.model_dump(), "at": datetime.now(UTC).isoformat(timespec="seconds")}}
+
+    async def _act(self, state: State, config) -> dict[str, Any]:
+        if state.get("action"):  # already ran: a resumed or replayed run never repeats it
+            return {}
+        approval, proposal = state["approval"], state["proposal"]
+        tool = approval.get("tool") or proposal["tool"]
+        actions: ActionRunner = config["configurable"]["actions"]
+        result = await actions.run(tool, proposal["employee_id"])
+        return {"action": {"tool": tool, "employee_id": proposal["employee_id"], "result": result,
+                           "approver": approval["approver"], "approved_at": approval["at"]}}
 
     @staticmethod
     def _runner(config) -> CheckRunner:
@@ -204,22 +265,50 @@ class Diagnoser:
                             "error": None if cause else "no valid cause id in the reply"}}
 
     async def diagnose(self, ticket: dict[str, str], hypotheses: list[Hypothesis], policy: list[str],
-                       runner: CheckRunner, thread: str | None = None) -> Diagnosis:
+                       runner: CheckRunner, thread: str | None = None,
+                       actions: ActionRunner | None = None) -> Diagnosis:
         state: State = {"ticket": ticket, "hypotheses": [asdict(h) for h in hypotheses], "policy": policy,
                         "checks": [], "decisions": 0, "usage": []}
-        config = {"configurable": {"thread_id": thread or ticket["id"], "runner": runner}}
-        final = await self.graph.ainvoke(state, config)
-        outcome = final.get("outcome") or {"stop": "no_hypotheses", "cause": ESCALATE,
-                                           "reason": "No possible cause matched the ticket."}
+        config = self._config(thread or ticket["id"], runner, actions)
+        await self.graph.ainvoke(state, config)
+        return await self.result(config)
+
+    async def resume(self, thread: str, approval: Approval | dict[str, Any], runner: CheckRunner,
+                     actions: ActionRunner) -> Diagnosis:
+        """Continue a diagnosis waiting for approval. Refuses an invalid approval before touching the graph."""
+        approval = approval if isinstance(approval, Approval) else Approval.model_validate(approval)
+        config = self._config(thread, runner, actions)
+        snapshot = await self.graph.aget_state(config)
+        if not snapshot.interrupts:  # nothing waiting: never run an approval twice
+            raise ValueError(f"{thread} is not waiting for an approval")
+        await self.graph.ainvoke(Command(resume=approval.model_dump()), config)
+        return await self.result(config)
+
+    @staticmethod
+    def _config(thread: str, runner: CheckRunner, actions: ActionRunner | None) -> dict[str, Any]:
+        return {"configurable": {"thread_id": thread, "runner": runner, "actions": actions}}
+
+    async def result(self, config) -> Diagnosis:
+        snapshot = await self.graph.aget_state(config)
+        values = snapshot.values
+        hypotheses = [Hypothesis(**h) for h in values.get("hypotheses", [])]
+        outcome = values.get("outcome") or {"stop": "no_hypotheses", "cause": ESCALATE,
+                                            "reason": "No possible cause matched the ticket."}
         cause = outcome.get("cause")
-        by_cause = {h.cause: h for h in hypotheses}
-        chosen = by_cause.get(cause)
+        chosen = {h.cause: h for h in hypotheses}.get(cause)
+        waiting = [i.value for i in snapshot.interrupts]
         return Diagnosis(
-            ticket=ticket["id"], cause=cause, stop=outcome["stop"], reason=outcome.get("reason", ""),
+            ticket=values["ticket"]["id"], cause=cause, stop=outcome["stop"], reason=outcome.get("reason", ""),
             reply=outcome.get("reply", ""), fix=chosen.fix if chosen else None,
-            checks=final.get("checks", []), hypotheses=[h.cause for h in hypotheses],
-            sources=list(chosen.sources) if chosen else [], decisions=final.get("decisions", 0),
-            prompt_tokens=sum(u["prompt_tokens"] for u in final.get("usage", [])),
-            completion_tokens=sum(u["completion_tokens"] for u in final.get("usage", [])),
-            error=outcome.get("error"),
+            checks=values.get("checks", []), hypotheses=[h.cause for h in hypotheses],
+            sources=list(chosen.sources) if chosen else [], decisions=values.get("decisions", 0),
+            prompt_tokens=sum(u["prompt_tokens"] for u in values.get("usage", [])),
+            completion_tokens=sum(u["completion_tokens"] for u in values.get("usage", [])),
+            error=outcome.get("error"), awaiting_approval=bool(waiting),
+            proposal=waiting[0] if waiting else values.get("proposal"),
+            approval=values.get("approval"), action=values.get("action"),
         )
+
+
+def _action_for(state: State, cause: str | None) -> str | None:
+    return next((h.get("action") for h in state["hypotheses"] if h["cause"] == cause), None)

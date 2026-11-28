@@ -15,6 +15,7 @@ class Hypothesis:
     fix: str
     checks: tuple[str, ...] = ()
     sources: tuple[str, ...] = field(default=())  # provenance: where the cause and fix come from
+    action: str | None = None  # the account-changing tool the fix needs, from its runbook (#51)
 
     def line(self) -> str:
         """The cause as condition B showed it, so conditions B and C see the same text."""

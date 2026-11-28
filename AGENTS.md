@@ -17,7 +17,7 @@ These rules apply to any AI assistant (Claude Code, Codex, Cursor and others) an
 - Unit tests never call a live model or the network. Use recorded responses. Live calls belong in the eval suite.
 - Keep the eval honest: never change a ticket, an expected answer or a scorer in the same pull request as the code it measures. Held-out tickets are never used for tuning.
 - The seed dataset is downloaded at build time and never committed (ADR 0005). Raw vendor pages are never committed; store URLs and evidence spans.
-- Workflow boundaries (ADR 0001): Workflow A never calls a tool that changes a system; Workflow B never publishes knowledge. Account-changing tools run only through the policy gate, after approval.
+- Workflow boundaries (ADR 0001): Workflow A never calls a tool that changes a system; Workflow B never publishes knowledge. Account-changing tools run only through the policy gate, after approval: `ActionRunner` in `app/diagnosis/gate.py` is the only code that calls them, and only the graph's `act` step, reached only from `approve`, holds one.
 - No real personal or company data anywhere. The mock company is generated.
 - Workflows that call a paid model (`baseline`, `model-choice`, `judge-check`, `extraction`, `retrieval`, `graph`) run only on demand (`workflow_dispatch`), never on pull requests, so reopening or pushing a PR never spends credit. Each has a `token_budget` input (`LLM_TOKEN_BUDGET`): the client refuses calls once it is spent, and the run reports its token use. Record a new run's token use next to its results.
 
@@ -32,6 +32,6 @@ These rules apply to any AI assistant (Claude Code, Codex, Cursor and others) an
 
 - Python 3.13, dependencies pinned in `requirements.txt`.
 - Run locally: `cp .env.example .env`, fill in values, `docker compose up --build`.
-- Tests need no database of their own. The review workflow tests use Temporal's time-skipping test server, which the SDK downloads; the graph tests need a Neo4j (`NEO4J_URI`; `docker compose up neo4j` locally). CI provides both and requires them (`REQUIRE_TEMPORAL_TESTS=1`, `REQUIRE_NEO4J_TESTS=1`).
+- Tests need no database of their own. The review workflow tests use Temporal's time-skipping test server, which the SDK downloads; the graph tests need a Neo4j (`NEO4J_URI`; `docker compose up neo4j` locally); the checkpoint restart test needs a Postgres (`CHECKPOINT_DB_URL`). CI provides all three and requires them (`REQUIRE_TEMPORAL_TESTS=1`, `REQUIRE_NEO4J_TESTS=1`, `REQUIRE_POSTGRES_TESTS=1`).
 - `main` changes only through pull requests with passing checks; merges happen when the owner approves.
 - Decisions are recorded in `docs/adr/`. Read them before proposing a change to the design.

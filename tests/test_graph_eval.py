@@ -42,7 +42,8 @@ def test_the_catalog_graph_holds_every_issue_cause_and_fix():
     kinds = [n.kind for n in r.nodes]
     assert kinds.count("issue") == 13 and kinds.count("cause") == 36 and kinds.count("solution") == 36
     assert {n.id for n in r.nodes if n.kind == "cause"} == {c.id for c in CAUSES}
-    assert {e.kind for e in r.edges} == {"HAS_POSSIBLE_CAUSE", "MITIGATED_BY", "TESTS_FOR"}
+    assert {e.kind for e in r.edges} == {"HAS_POSSIBLE_CAUSE", "MITIGATED_BY", "TESTS_FOR", "IMPLEMENTED_BY"}
+    assert kinds.count("runbook") == 6
     assert sum(e.kind == "TESTS_FOR" for e in r.edges) == sum(len(c.reveals) for c in CAUSES)
 
 
@@ -55,6 +56,25 @@ def test_it_states_the_same_facts_as_the_baselines_documents():
         assert c.summary in flat and c.fix in flat
         assert by_id[c.id].description == c.summary and by_id[f"fix-{c.id}"].description == c.fix
         assert by_id[c.issue].title == ISSUES[c.issue]
+
+
+def test_runbooks_cover_exactly_the_fixes_that_need_approval():
+    need = {c.id for c in CAUSES if c.requires_approval}
+    assert set(catalog_graph.ACTIONS) == need
+    for c in CAUSES:
+        if c.id in need:
+            tool = catalog_graph.ACTIONS[c.id]
+            word = "mfa" if tool == "reset_mfa" else "unlock"
+            assert word in c.fix.lower(), (c.id, c.fix, tool)
+    r = catalog_graph.build()
+    for rb in (n for n in r.nodes if n.kind == "runbook"):
+        assert rb.requires_approval and rb.steps[-1].tool in {"unlock_account", "reset_mfa"}
+
+
+def test_retrieval_reads_the_account_change_from_the_runbook():
+    rb = next(n for n in catalog_graph.build().nodes if n.id == "runbook-mfa-locked")
+    assert gb.account_change([rb.model_dump_json()]) == "reset_mfa"
+    assert gb.account_change([]) is None
 
 
 def test_it_is_approved_valid_and_never_changes():

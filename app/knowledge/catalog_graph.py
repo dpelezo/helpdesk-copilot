@@ -7,6 +7,7 @@ as the graph the copilot reads:
 
     (:Issue)-[:HAS_POSSIBLE_CAUSE]->(:Cause)-[:MITIGATED_BY]->(:Solution)
     (:Diagnostic)-[:TESTS_FOR]->(:Cause)        one Diagnostic per read-only tool
+    (:Solution)-[:IMPLEMENTED_BY]->(:Runbook)   for the six fixes that change an account
 
 Cause node ids are the catalog ids, so the model answers in the scorer's terms. The
 ``TESTS_FOR`` links say which check would reveal each cause (``Cause.reveals``): structure
@@ -27,6 +28,9 @@ from datetime import date
 
 from app.knowledge.model import (
     Cause,
+    ImplementedBy,
+    Runbook,
+    RunbookStep,
     Diagnostic,
     HasPossibleCause,
     Issue,
@@ -43,6 +47,17 @@ RELEASE_ID = "eval-catalog"
 SOURCE_URL = "https://github.com/dpelezo/helpdesk-copilot/blob/main/app/mock/faults.py"
 GENERATED_BY = "generated from the cause catalog (eval fixture)"
 FIXED_ON = date(2026, 11, 28)  # constant, so the release and its hash never drift
+
+# The account change each approval-needing fix makes. Read from the fix text ("Unlock the
+# account", "Reset MFA"); a test checks this covers exactly the causes that need approval.
+ACTIONS = {
+    "vpn-account-locked": "unlock_account",
+    "phishing-account-locked": "unlock_account",
+    "locked-failed-sign-ins": "unlock_account",
+    "locked-expired-password": "unlock_account",
+    "mfa-locked": "reset_mfa",
+    "mfa-not-enrolled": "reset_mfa",
+}
 
 
 def diagnostic_id(tool: str) -> str:
@@ -70,4 +85,12 @@ def build() -> KnowledgeRelease:
         edges.append(MitigatedBy(source=c.id, target=fix_id, provenance=_prov(c.fix)))
         edges += [TestsFor(source=diagnostic_id(t), target=c.id, provenance=_prov(t),
                            supports_if=f"{t} differs from a healthy record") for t in c.reveals]
+        if c.id in ACTIONS:
+            tool, rb = ACTIONS[c.id], f"runbook-{c.id}"
+            nodes.append(Runbook(id=rb, title=c.fix, provenance=_prov(c.fix), steps=[
+                RunbookStep(order=1, instruction="Verify the employee's identity (handbook pw-4)."),
+                RunbookStep(order=2, instruction=f"Run {tool} for the employee, after the agent approves.",
+                            tool=tool, changes_account=True),
+            ]))
+            edges.append(ImplementedBy(source=fix_id, target=rb, provenance=_prov(c.fix)))
     return KnowledgeRelease(release_id=RELEASE_ID, nodes=nodes, edges=edges)
