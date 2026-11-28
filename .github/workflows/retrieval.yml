@@ -1,0 +1,80 @@
+name: retrieval
+
+# Issue #30: right cause in the top 5 for BM25, vectors and hybrid (RRF), on the
+# tuning tickets, then the held-out tickets once. Calls only the embeddings model
+# (no chat model). Uses the TELNYX_API_KEY secret through the environment; it is
+# never printed. Manual only (Actions > retrieval > Run workflow): it spends credit.
+
+on:
+  workflow_dispatch:
+    inputs:
+      embed_model:
+        description: "Embeddings model (Telnyx): thenlper/gte-large, intfloat/multilingual-e5-large or Qwen/Qwen3-Embedding-8B"
+        default: "thenlper/gte-large"
+      token_budget:
+        description: "Token budget for the embeddings. About 60 documents and 112 tickets: well under 50k"
+        default: "50000"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: retrieval-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run:
+    name: retrieval (BM25, vectors, hybrid)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      LLM_TOKEN_BUDGET: ${{ inputs.token_budget || '50000' }}
+      LLM_MODEL: zai-org/GLM-5.2  # required by the client; no chat call is made
+      LLM_EMBED_MODEL: ${{ inputs.embed_model || 'thenlper/gte-large' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check the key is set (without printing it)
+        run: test -n "$TELNYX_API_KEY" || { echo "TELNYX_API_KEY secret is missing"; exit 1; }
+
+      - name: Restore cached embeddings
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/cache/embeddings
+          key: embeddings-${{ github.run_id }}
+          restore-keys: embeddings-
+
+      - name: Tuning tickets
+        run: python -m app.evals.retrieval --split tuning
+
+      - name: Held-out tickets
+        run: python -m app.evals.retrieval --split heldout | tee summary.md
+
+      - name: Save embeddings for the next run
+        if: always()
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/cache/embeddings
+          key: embeddings-${{ github.run_id }}
+
+      - name: Show results
+        if: always()
+        run: |
+          cat summary.md >> "$GITHUB_STEP_SUMMARY" || true
+          for f in evals/results/retrieval-*.json; do
+            [ -f "$f" ] || continue
+            echo "=== BEGIN $f"
+            cat "$f"
+            echo "=== END $f"
+          done

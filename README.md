@@ -15,6 +15,7 @@ An assistant for IT helpdesk agents. It walks a troubleshooting procedure step b
 | Resolve and validate | `make resolve` | `knowledge/draft/release.json`, [`reports/validation.md`](reports/validation.md) |
 | Review (Temporal) | `python -m app.workflows.review_cli start --release-id <id>` | `knowledge/releases/<id>.json` with approval provenance |
 | Publish (Neo4j) | `make publish RELEASE=knowledge/releases/<id>.json` | A versioned release in the graph; `python -m app.knowledge.publish history` / `rollback` |
+| Embed (paid, small) | `python -m app.knowledge.publish embed` | Vectors on the release's issues, symptoms and causes, in Neo4j's vector index |
 
 A reviewer approves, edits, rejects or sends back each issue, from the CLI or `/api/v1/reviews` (API-key auth). Only approved facts reach the release.
 

@@ -9,6 +9,7 @@ never logged, printed or included in an error message.
     LLM_API_KEY    or TELNYX_API_KEY
     LLM_EXTRA_BODY optional JSON merged into each request, e.g. to turn reasoning off
     LLM_TOKEN_BUDGET optional hard limit on prompt + completion tokens for this client
+    LLM_EMBED_MODEL  the embeddings model, for ``embed`` (#30)
 
 Every client counts the tokens it uses. With a budget, a call is refused once the
 budget is spent (the call in flight can overshoot by at most its own size), so a
@@ -72,6 +73,7 @@ class ChatClient:
     # reasoning off. Set with LLM_EXTRA_BODY (JSON). Never holds secrets.
     extra_body: dict[str, Any] = field(default_factory=dict)
     budget: int | None = None
+    embed_model: str | None = None
     prompt_tokens: int = field(default=0, init=False)
     completion_tokens: int = field(default=0, init=False)
     calls: int = field(default=0, init=False)
@@ -112,6 +114,7 @@ class ChatClient:
             base_url=os.environ.get("LLM_BASE_URL") or DEFAULT_BASE_URL,
             extra_body=extra_body,
             budget=int(raw_budget) if raw_budget else None,
+            embed_model=os.environ.get("LLM_EMBED_MODEL") or None,
         )
 
     def complete(
@@ -134,9 +137,43 @@ class ChatClient:
         if tools:
             body["tools"] = tools
             body["tool_choice"] = "auto"
-        headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
-        url = f"{self.base_url.rstrip('/')}/chat/completions"
+        data, seconds = self._post("chat/completions", body, self.model)
+        try:
+            choice = data["choices"][0]
+            message = choice["message"]
+        except (KeyError, IndexError, TypeError):
+            raise LLMError(f"{self.model}: no message in the response") from None
+        usage = data.get("usage") or {}
+        self.calls += 1
+        self.prompt_tokens += int(usage.get("prompt_tokens") or 0)
+        self.completion_tokens += int(usage.get("completion_tokens") or 0)
+        return Reply(message=message, usage=usage, seconds=seconds, finish_reason=choice.get("finish_reason"))
 
+    def embed(self, texts: list[str], model: str | None = None) -> list[list[float]]:
+        """One vector per text, in order, from the OpenAI-compatible embeddings endpoint."""
+        chosen = model or self.embed_model
+        if not chosen:
+            raise LLMError("set LLM_EMBED_MODEL")
+        if self.exhausted:
+            raise BudgetExceeded(f"{chosen}: token budget of {self.budget:,} spent ({self.used:,} used)")
+        if not texts:
+            return []
+        data, _ = self._post("embeddings", {"model": chosen, "input": texts}, chosen)
+        try:
+            rows = sorted(data["data"], key=lambda row: row["index"])
+            vectors = [[float(x) for x in row["embedding"]] for row in rows]
+        except (KeyError, TypeError, ValueError):
+            raise LLMError(f"{chosen}: no embeddings in the response") from None
+        if len(vectors) != len(texts):
+            raise LLMError(f"{chosen}: {len(vectors)} embeddings for {len(texts)} texts")
+        self.calls += 1
+        self.prompt_tokens += int((data.get("usage") or {}).get("prompt_tokens") or 0)
+        return vectors
+
+    def _post(self, path: str, body: dict[str, Any], label: str) -> tuple[dict[str, Any], float]:
+        """POST with retries on rate limits and server errors. Errors never include the key."""
+        headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
+        url = f"{self.base_url.rstrip('/')}/{path}"
         with httpx.Client(timeout=self.timeout, transport=self.transport) as http:
             for attempt in range(self.retries + 1):
                 started = time.perf_counter()
@@ -144,7 +181,7 @@ class ChatClient:
                     response = http.post(url, json=body, headers=headers)
                 except httpx.HTTPError as error:
                     if attempt == self.retries:
-                        raise LLMError(f"{self.model}: request failed ({type(error).__name__})") from None
+                        raise LLMError(f"{label}: request failed ({type(error).__name__})") from None
                     time.sleep(2**attempt)
                     continue
                 seconds = time.perf_counter() - started
@@ -152,26 +189,13 @@ class ChatClient:
                     time.sleep(2**attempt)
                     continue
                 if response.status_code != 200:
-                    raise LLMError(f"{self.model}: HTTP {response.status_code}: {_safe(response.text)}")
-                data = response.json()
-                try:
-                    choice = data["choices"][0]
-                    message = choice["message"]
-                except (KeyError, IndexError, TypeError):
-                    raise LLMError(f"{self.model}: no message in the response") from None
-                usage = data.get("usage") or {}
-                self.calls += 1
-                self.prompt_tokens += int(usage.get("prompt_tokens") or 0)
-                self.completion_tokens += int(usage.get("completion_tokens") or 0)
-                return Reply(
-                    message=message,
-                    usage=usage,
-                    seconds=seconds,
-                    finish_reason=choice.get("finish_reason"),
-                )
-        raise LLMError(f"{self.model}: no response")  # pragma: no cover
+                    raise LLMError(f"{label}: HTTP {response.status_code}: {_safe(response.text, self.api_key)}")
+                return response.json(), seconds
+        raise LLMError(f"{label}: no response")  # pragma: no cover
 
 
-def _safe(text: str, limit: int = 300) -> str:
-    """Error bodies are shown shortened; they never contain our key, which is only in a header."""
+def _safe(text: str, secret: str = "", limit: int = 300) -> str:
+    """An error body, shortened, with the key removed in case a provider echoes it back."""
+    if secret:
+        text = text.replace(secret, "[redacted]")
     return " ".join(text.split())[:limit]
