@@ -1,0 +1,2511 @@
+{
+  "name": "Kestrel Ridge Logistics",
+  "domain": "kestrelridge.example",
+  "as_of": "2026-12-01",
+  "seed": 20261201,
+  "password_max_age_days": 90,
+  "lockout_threshold": 5,
+  "employees": [
+    {
+      "id": "E001",
+      "name": "Jil Hicel",
+      "email": "jhicel@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations lead",
+      "site": "Head office",
+      "manager_id": null
+    },
+    {
+      "id": "E002",
+      "name": "Mand Gelith",
+      "email": "mgelith@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Warehouse",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E003",
+      "name": "Pouzeth Woubus",
+      "email": "pwoubus@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Head office",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E004",
+      "name": "Ram Miloun",
+      "email": "rmiloun@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Warehouse",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E005",
+      "name": "Veith Pihis",
+      "email": "vpihis@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Head office",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E006",
+      "name": "Rowis Sajaen",
+      "email": "rsajaen@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Head office",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E007",
+      "name": "Vael Memoun",
+      "email": "vmemoun@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Head office",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E008",
+      "name": "Juvoul Soker",
+      "email": "jsoker@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Head office",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E009",
+      "name": "Dou Heiceth",
+      "email": "dheiceth@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Warehouse",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E010",
+      "name": "Toumir Jecun",
+      "email": "tjecun@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Head office",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E011",
+      "name": "Lasound Breiheil",
+      "email": "lbreiheil@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Warehouse",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E012",
+      "name": "Pael Vaefaes",
+      "email": "pvaefaes@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Warehouse",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E013",
+      "name": "Jae Kavus",
+      "email": "jkavus@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Head office",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E014",
+      "name": "Pikund Brehein",
+      "email": "pbrehein@kestrelridge.example",
+      "department": "Operations",
+      "title": "Operations specialist",
+      "site": "Warehouse",
+      "manager_id": "E001"
+    },
+    {
+      "id": "E015",
+      "name": "Waekoum Zuroum",
+      "email": "wzuroum@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales lead",
+      "site": "Remote",
+      "manager_id": null
+    },
+    {
+      "id": "E016",
+      "name": "Rican Vanous",
+      "email": "rvanous@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales specialist",
+      "site": "Head office",
+      "manager_id": "E015"
+    },
+    {
+      "id": "E017",
+      "name": "Vim Saezeil",
+      "email": "vsaezeil@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales specialist",
+      "site": "Head office",
+      "manager_id": "E015"
+    },
+    {
+      "id": "E018",
+      "name": "Giden Waeseind",
+      "email": "gwaeseind@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales specialist",
+      "site": "Remote",
+      "manager_id": "E015"
+    },
+    {
+      "id": "E019",
+      "name": "Vowur Maenae",
+      "email": "vmaenae@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales specialist",
+      "site": "Head office",
+      "manager_id": "E015"
+    },
+    {
+      "id": "E020",
+      "name": "Nil Dirin",
+      "email": "ndirin@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales specialist",
+      "site": "Remote",
+      "manager_id": "E015"
+    },
+    {
+      "id": "E021",
+      "name": "Lul Pegur",
+      "email": "lpegur@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales specialist",
+      "site": "Head office",
+      "manager_id": "E015"
+    },
+    {
+      "id": "E022",
+      "name": "Lace Bromir",
+      "email": "lbromir@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales specialist",
+      "site": "Remote",
+      "manager_id": "E015"
+    },
+    {
+      "id": "E023",
+      "name": "Zokei Kugith",
+      "email": "zkugith@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales specialist",
+      "site": "Remote",
+      "manager_id": "E015"
+    },
+    {
+      "id": "E024",
+      "name": "Fozur Cojim",
+      "email": "fcojim@kestrelridge.example",
+      "department": "Sales",
+      "title": "Sales specialist",
+      "site": "Head office",
+      "manager_id": "E015"
+    },
+    {
+      "id": "E025",
+      "name": "Kateith Wuround",
+      "email": "kwuround@kestrelridge.example",
+      "department": "Engineering",
+      "title": "Engineering lead",
+      "site": "Remote",
+      "manager_id": null
+    },
+    {
+      "id": "E026",
+      "name": "Reim Sufand",
+      "email": "rsufand@kestrelridge.example",
+      "department": "Engineering",
+      "title": "Engineering specialist",
+      "site": "Remote",
+      "manager_id": "E025"
+    },
+    {
+      "id": "E027",
+      "name": "Mith Gaerem",
+      "email": "mgaerem@kestrelridge.example",
+      "department": "Engineering",
+      "title": "Engineering specialist",
+      "site": "Remote",
+      "manager_id": "E025"
+    },
+    {
+      "id": "E028",
+      "name": "Gehath Muceind",
+      "email": "gmuceind@kestrelridge.example",
+      "department": "Engineering",
+      "title": "Engineering specialist",
+      "site": "Head office",
+      "manager_id": "E025"
+    },
+    {
+      "id": "E029",
+      "name": "Vozir Fitul",
+      "email": "vfitul@kestrelridge.example",
+      "department": "Engineering",
+      "title": "Engineering specialist",
+      "site": "Head office",
+      "manager_id": "E025"
+    },
+    {
+      "id": "E030",
+      "name": "Faen Jazour",
+      "email": "fjazour@kestrelridge.example",
+      "department": "Engineering",
+      "title": "Engineering specialist",
+      "site": "Head office",
+      "manager_id": "E025"
+    },
+    {
+      "id": "E031",
+      "name": "Fund Jeikour",
+      "email": "fjeikour@kestrelridge.example",
+      "department": "Engineering",
+      "title": "Engineering specialist",
+      "site": "Head office",
+      "manager_id": "E025"
+    },
+    {
+      "id": "E032",
+      "name": "Getath Beijith",
+      "email": "gbeijith@kestrelridge.example",
+      "department": "Engineering",
+      "title": "Engineering specialist",
+      "site": "Remote",
+      "manager_id": "E025"
+    },
+    {
+      "id": "E033",
+      "name": "Jeidaer Poucan",
+      "email": "jpoucan@kestrelridge.example",
+      "department": "Engineering",
+      "title": "Engineering specialist",
+      "site": "Remote",
+      "manager_id": "E025"
+    },
+    {
+      "id": "E034",
+      "name": "Zoun Paezes",
+      "email": "zpaezes@kestrelridge.example",
+      "department": "Finance",
+      "title": "Finance lead",
+      "site": "Head office",
+      "manager_id": null
+    },
+    {
+      "id": "E035",
+      "name": "Jei Juku",
+      "email": "jjuku@kestrelridge.example",
+      "department": "Finance",
+      "title": "Finance specialist",
+      "site": "Head office",
+      "manager_id": "E034"
+    },
+    {
+      "id": "E036",
+      "name": "Bul Goureith",
+      "email": "bgoureith@kestrelridge.example",
+      "department": "Finance",
+      "title": "Finance specialist",
+      "site": "Head office",
+      "manager_id": "E034"
+    },
+    {
+      "id": "E037",
+      "name": "Pir Boubror",
+      "email": "pboubror@kestrelridge.example",
+      "department": "Finance",
+      "title": "Finance specialist",
+      "site": "Head office",
+      "manager_id": "E034"
+    },
+    {
+      "id": "E038",
+      "name": "Ceim Leboul",
+      "email": "cleboul@kestrelridge.example",
+      "department": "Finance",
+      "title": "Finance specialist",
+      "site": "Head office",
+      "manager_id": "E034"
+    },
+    {
+      "id": "E039",
+      "name": "Veitour Feidos",
+      "email": "vfeidos@kestrelridge.example",
+      "department": "Finance",
+      "title": "Finance specialist",
+      "site": "Head office",
+      "manager_id": "E034"
+    },
+    {
+      "id": "E040",
+      "name": "Setouth Zufond",
+      "email": "szufond@kestrelridge.example",
+      "department": "Customer Support",
+      "title": "Customer Support lead",
+      "site": "Head office",
+      "manager_id": null
+    },
+    {
+      "id": "E041",
+      "name": "Taer Tunend",
+      "email": "ttunend@kestrelridge.example",
+      "department": "Customer Support",
+      "title": "Customer Support specialist",
+      "site": "Head office",
+      "manager_id": "E040"
+    },
+    {
+      "id": "E042",
+      "name": "Doth Debith",
+      "email": "ddebith@kestrelridge.example",
+      "department": "Customer Support",
+      "title": "Customer Support specialist",
+      "site": "Head office",
+      "manager_id": "E040"
+    },
+    {
+      "id": "E043",
+      "name": "Zugeim Toufouth",
+      "email": "ztoufouth@kestrelridge.example",
+      "department": "Customer Support",
+      "title": "Customer Support specialist",
+      "site": "Head office",
+      "manager_id": "E040"
+    },
+    {
+      "id": "E044",
+      "name": "Pousos Raevam",
+      "email": "praevam@kestrelridge.example",
+      "department": "Customer Support",
+      "title": "Customer Support specialist",
+      "site": "Head office",
+      "manager_id": "E040"
+    },
+    {
+      "id": "E045",
+      "name": "Lecous Hevae",
+      "email": "lhevae@kestrelridge.example",
+      "department": "Customer Support",
+      "title": "Customer Support specialist",
+      "site": "Head office",
+      "manager_id": "E040"
+    },
+    {
+      "id": "E046",
+      "name": "Caend Peiwom",
+      "email": "cpeiwom@kestrelridge.example",
+      "department": "People",
+      "title": "People lead",
+      "site": "Head office",
+      "manager_id": null
+    },
+    {
+      "id": "E047",
+      "name": "Vozouth Neigel",
+      "email": "vneigel@kestrelridge.example",
+      "department": "People",
+      "title": "People specialist",
+      "site": "Head office",
+      "manager_id": "E046"
+    },
+    {
+      "id": "E048",
+      "name": "Hil Zoubou",
+      "email": "hzoubou@kestrelridge.example",
+      "department": "People",
+      "title": "People specialist",
+      "site": "Head office",
+      "manager_id": "E046"
+    },
+    {
+      "id": "E049",
+      "name": "Weizer Mobor",
+      "email": "wmobor@kestrelridge.example",
+      "department": "IT",
+      "title": "IT lead",
+      "site": "Head office",
+      "manager_id": null
+    },
+    {
+      "id": "E050",
+      "name": "Pun Soujaen",
+      "email": "psoujaen@kestrelridge.example",
+      "department": "IT",
+      "title": "IT specialist",
+      "site": "Head office",
+      "manager_id": "E049"
+    }
+  ],
+  "accounts": [
+    {
+      "employee_id": "E001",
+      "username": "jhicel",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-15",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 7.1,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E002",
+      "username": "mgelith",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-13",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 9.1,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E003",
+      "username": "pwoubus",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-14",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 23.2,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E004",
+      "username": "rmiloun",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-07",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 6.7,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E005",
+      "username": "vpihis",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-03",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 19.7,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E006",
+      "username": "rsajaen",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-22",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 15.2,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E007",
+      "username": "vmemoun",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-12",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 24.5,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E008",
+      "username": "jsoker",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-09-17",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 11.4,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E009",
+      "username": "dheiceth",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-09-28",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 11.3,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E010",
+      "username": "tjecun",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-30",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 15.3,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E011",
+      "username": "lbreiheil",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-16",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 23.5,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E012",
+      "username": "pvaefaes",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-13",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 23.7,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E013",
+      "username": "jkavus",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-05",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 18.8,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E014",
+      "username": "pbrehein",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-09-30",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 19.6,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E015",
+      "username": "wzuroum",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-24",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 11.7,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E016",
+      "username": "rvanous",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-20",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 12.9,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E017",
+      "username": "vsaezeil",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-15",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 6.3,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E018",
+      "username": "gwaeseind",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-31",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 24.7,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E019",
+      "username": "vmaenae",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-09-17",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 8.8,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E020",
+      "username": "ndirin",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-09-20",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 5.3,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E021",
+      "username": "lpegur",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-10",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 23.2,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E022",
+      "username": "lbromir",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-13",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 23.7,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E023",
+      "username": "zkugith",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-05",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 11.8,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E024",
+      "username": "fcojim",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-20",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 29.9,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E025",
+      "username": "kwuround",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-09-28",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 13.3,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E026",
+      "username": "rsufand",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-02",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 24.5,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E027",
+      "username": "mgaerem",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-20",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 27.1,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E028",
+      "username": "gmuceind",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-14",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 7.8,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E029",
+      "username": "vfitul",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-04",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 18.7,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E030",
+      "username": "fjazour",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-01",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 24.8,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E031",
+      "username": "fjeikour",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-09-20",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 29.2,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E032",
+      "username": "gbeijith",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-20",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 13.0,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E033",
+      "username": "jpoucan",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-15",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 22.6,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E034",
+      "username": "zpaezes",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-09-30",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 16.0,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E035",
+      "username": "jjuku",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-09-21",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 15.4,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E036",
+      "username": "bgoureith",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-31",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 5.3,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E037",
+      "username": "pboubror",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-24",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 19.7,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E038",
+      "username": "cleboul",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-08",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 17.7,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E039",
+      "username": "vfeidos",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-01",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 11.0,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E040",
+      "username": "szufond",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-26",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 17.9,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E041",
+      "username": "ttunend",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-06",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 8.6,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E042",
+      "username": "ddebith",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-22",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 17.3,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E043",
+      "username": "ztoufouth",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-22",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 23.2,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E044",
+      "username": "praevam",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-21",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 9.6,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E045",
+      "username": "lhevae",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-22",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 5.5,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E046",
+      "username": "cpeiwom",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-24",
+      "mfa_enrolled": true,
+      "mfa_method": "hardware_key",
+      "mfa_locked": false,
+      "mailbox_used_gb": 20.1,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E047",
+      "username": "vneigel",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-20",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 3.3,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E048",
+      "username": "hzoubou",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-10-07",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 4.5,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E049",
+      "username": "wmobor",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-02",
+      "mfa_enrolled": true,
+      "mfa_method": "authenticator",
+      "mfa_locked": false,
+      "mailbox_used_gb": 4.0,
+      "mailbox_quota_gb": 50.0
+    },
+    {
+      "employee_id": "E050",
+      "username": "psoujaen",
+      "locked": false,
+      "failed_logins": 0,
+      "password_last_set": "2026-11-24",
+      "mfa_enrolled": true,
+      "mfa_method": "sms",
+      "mfa_locked": false,
+      "mailbox_used_gb": 19.0,
+      "mailbox_quota_gb": 50.0
+    }
+  ],
+  "devices": [
+    {
+      "id": "D001",
+      "owner_id": "E001",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.2",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 499,
+      "cpu_temp_c": 67,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D002",
+      "owner_id": "E002",
+      "kind": "desktop",
+      "os": "macOS 15",
+      "os_build": "15.1",
+      "disk_total_gb": 512,
+      "disk_free_gb": 246,
+      "cpu_temp_c": 58,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D003",
+      "owner_id": "E003",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2432",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 648,
+      "cpu_temp_c": 43,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D004",
+      "owner_id": "E004",
+      "kind": "desktop",
+      "os": "Windows 11",
+      "os_build": "26100.2265",
+      "disk_total_gb": 512,
+      "disk_free_gb": 345,
+      "cpu_temp_c": 66,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D005",
+      "owner_id": "E005",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2393",
+      "disk_total_gb": 512,
+      "disk_free_gb": 288,
+      "cpu_temp_c": 60,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D006",
+      "owner_id": "E006",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2119",
+      "disk_total_gb": 512,
+      "disk_free_gb": 159,
+      "cpu_temp_c": 43,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D007",
+      "owner_id": "E007",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2440",
+      "disk_total_gb": 256,
+      "disk_free_gb": 127,
+      "cpu_temp_c": 43,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D008",
+      "owner_id": "E008",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.1",
+      "disk_total_gb": 512,
+      "disk_free_gb": 148,
+      "cpu_temp_c": 68,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D009",
+      "owner_id": "E009",
+      "kind": "desktop",
+      "os": "macOS 15",
+      "os_build": "15.3",
+      "disk_total_gb": 256,
+      "disk_free_gb": 126,
+      "cpu_temp_c": 54,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D010",
+      "owner_id": "E010",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2235",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 390,
+      "cpu_temp_c": 59,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D011",
+      "owner_id": "E011",
+      "kind": "desktop",
+      "os": "Windows 11",
+      "os_build": "26100.2046",
+      "disk_total_gb": 256,
+      "disk_free_gb": 78,
+      "cpu_temp_c": 51,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D012",
+      "owner_id": "E012",
+      "kind": "desktop",
+      "os": "Windows 11",
+      "os_build": "26100.2027",
+      "disk_total_gb": 256,
+      "disk_free_gb": 156,
+      "cpu_temp_c": 46,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D013",
+      "owner_id": "E013",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2343",
+      "disk_total_gb": 512,
+      "disk_free_gb": 246,
+      "cpu_temp_c": 42,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D014",
+      "owner_id": "E014",
+      "kind": "desktop",
+      "os": "Windows 11",
+      "os_build": "26100.2486",
+      "disk_total_gb": 256,
+      "disk_free_gb": 95,
+      "cpu_temp_c": 67,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "Route planner",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D015",
+      "owner_id": "E015",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2047",
+      "disk_total_gb": 256,
+      "disk_free_gb": 136,
+      "cpu_temp_c": 49,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D016",
+      "owner_id": "E016",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2559",
+      "disk_total_gb": 512,
+      "disk_free_gb": 216,
+      "cpu_temp_c": 44,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D017",
+      "owner_id": "E017",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2106",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 324,
+      "cpu_temp_c": 59,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D018",
+      "owner_id": "E018",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2314",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 350,
+      "cpu_temp_c": 43,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D019",
+      "owner_id": "E019",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2374",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 396,
+      "cpu_temp_c": 49,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D020",
+      "owner_id": "E020",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.1",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 556,
+      "cpu_temp_c": 65,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D021",
+      "owner_id": "E021",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2222",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 669,
+      "cpu_temp_c": 54,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D022",
+      "owner_id": "E022",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2413",
+      "disk_total_gb": 512,
+      "disk_free_gb": 248,
+      "cpu_temp_c": 49,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D023",
+      "owner_id": "E023",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2535",
+      "disk_total_gb": 512,
+      "disk_free_gb": 176,
+      "cpu_temp_c": 55,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D024",
+      "owner_id": "E024",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2199",
+      "disk_total_gb": 256,
+      "disk_free_gb": 84,
+      "cpu_temp_c": 57,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "CRM client",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D025",
+      "owner_id": "E025",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.1",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 711,
+      "cpu_temp_c": 50,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Container runtime",
+        "IDE",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D026",
+      "owner_id": "E026",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.2",
+      "disk_total_gb": 256,
+      "disk_free_gb": 75,
+      "cpu_temp_c": 54,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Container runtime",
+        "IDE",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D027",
+      "owner_id": "E027",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.3",
+      "disk_total_gb": 256,
+      "disk_free_gb": 176,
+      "cpu_temp_c": 42,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Container runtime",
+        "IDE",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D028",
+      "owner_id": "E028",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.2",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 618,
+      "cpu_temp_c": 44,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Container runtime",
+        "IDE",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D029",
+      "owner_id": "E029",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.1",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 368,
+      "cpu_temp_c": 53,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Container runtime",
+        "IDE",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D030",
+      "owner_id": "E030",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.3",
+      "disk_total_gb": 256,
+      "disk_free_gb": 141,
+      "cpu_temp_c": 58,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Container runtime",
+        "IDE",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D031",
+      "owner_id": "E031",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.1",
+      "disk_total_gb": 256,
+      "disk_free_gb": 168,
+      "cpu_temp_c": 50,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Container runtime",
+        "IDE",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D032",
+      "owner_id": "E032",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.2",
+      "disk_total_gb": 256,
+      "disk_free_gb": 77,
+      "cpu_temp_c": 42,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Container runtime",
+        "IDE",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D033",
+      "owner_id": "E033",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.2",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 630,
+      "cpu_temp_c": 68,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Container runtime",
+        "IDE",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D034",
+      "owner_id": "E034",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2496",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 506,
+      "cpu_temp_c": 61,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Accounting suite",
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D035",
+      "owner_id": "E035",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2249",
+      "disk_total_gb": 256,
+      "disk_free_gb": 110,
+      "cpu_temp_c": 52,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Accounting suite",
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D036",
+      "owner_id": "E036",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2343",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 580,
+      "cpu_temp_c": 43,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Accounting suite",
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D037",
+      "owner_id": "E037",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2325",
+      "disk_total_gb": 512,
+      "disk_free_gb": 313,
+      "cpu_temp_c": 61,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Accounting suite",
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D038",
+      "owner_id": "E038",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2136",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 313,
+      "cpu_temp_c": 66,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Accounting suite",
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D039",
+      "owner_id": "E039",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2471",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 565,
+      "cpu_temp_c": 48,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Accounting suite",
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D040",
+      "owner_id": "E040",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2257",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 495,
+      "cpu_temp_c": 60,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D041",
+      "owner_id": "E041",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2485",
+      "disk_total_gb": 512,
+      "disk_free_gb": 357,
+      "cpu_temp_c": 63,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D042",
+      "owner_id": "E042",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.1",
+      "disk_total_gb": 512,
+      "disk_free_gb": 253,
+      "cpu_temp_c": 68,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D043",
+      "owner_id": "E043",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2032",
+      "disk_total_gb": 256,
+      "disk_free_gb": 138,
+      "cpu_temp_c": 61,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D044",
+      "owner_id": "E044",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2006",
+      "disk_total_gb": 512,
+      "disk_free_gb": 171,
+      "cpu_temp_c": 48,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D045",
+      "owner_id": "E045",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2017",
+      "disk_total_gb": 512,
+      "disk_free_gb": 296,
+      "cpu_temp_c": 68,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D046",
+      "owner_id": "E046",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.1",
+      "disk_total_gb": 256,
+      "disk_free_gb": 115,
+      "cpu_temp_c": 46,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D047",
+      "owner_id": "E047",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.3",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 560,
+      "cpu_temp_c": 56,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D048",
+      "owner_id": "E048",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.3",
+      "disk_total_gb": 1024,
+      "disk_free_gb": 453,
+      "cpu_temp_c": 59,
+      "compliant": true,
+      "antivirus_definitions": "2026-11-30",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D049",
+      "owner_id": "E049",
+      "kind": "laptop",
+      "os": "macOS 15",
+      "os_build": "15.3",
+      "disk_total_gb": 512,
+      "disk_free_gb": 133,
+      "cpu_temp_c": 61,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    },
+    {
+      "id": "D050",
+      "owner_id": "E050",
+      "kind": "laptop",
+      "os": "Windows 11",
+      "os_build": "26100.2138",
+      "disk_total_gb": 512,
+      "disk_free_gb": 247,
+      "cpu_temp_c": 53,
+      "compliant": true,
+      "antivirus_definitions": "2026-12-01",
+      "pending_updates": 0,
+      "software": [
+        "Antivirus",
+        "Browser",
+        "Chat",
+        "Mail client",
+        "Office suite",
+        "VPN client"
+      ]
+    }
+  ],
+  "vpn": [
+    {
+      "employee_id": "E001",
+      "certificate_expires": "2027-06-10",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E002",
+      "certificate_expires": "2027-10-24",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E003",
+      "certificate_expires": "2027-11-15",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E004",
+      "certificate_expires": "2027-03-10",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E005",
+      "certificate_expires": "2027-09-18",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E006",
+      "certificate_expires": "2027-08-30",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E007",
+      "certificate_expires": "2027-05-28",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E008",
+      "certificate_expires": "2027-02-03",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E009",
+      "certificate_expires": "2027-06-02",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E010",
+      "certificate_expires": "2027-05-02",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E011",
+      "certificate_expires": "2027-09-09",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E012",
+      "certificate_expires": "2027-09-02",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E013",
+      "certificate_expires": "2027-06-24",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E014",
+      "certificate_expires": "2027-10-29",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E015",
+      "certificate_expires": "2027-05-17",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E016",
+      "certificate_expires": "2027-03-23",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E017",
+      "certificate_expires": "2027-05-01",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E018",
+      "certificate_expires": "2027-06-11",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E019",
+      "certificate_expires": "2027-05-28",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E020",
+      "certificate_expires": "2027-04-30",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E021",
+      "certificate_expires": "2027-08-13",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E022",
+      "certificate_expires": "2027-11-30",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E023",
+      "certificate_expires": "2027-03-07",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E024",
+      "certificate_expires": "2027-09-23",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E025",
+      "certificate_expires": "2027-08-22",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E026",
+      "certificate_expires": "2027-09-08",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E027",
+      "certificate_expires": "2027-08-31",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E028",
+      "certificate_expires": "2027-11-23",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E029",
+      "certificate_expires": "2027-09-07",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E030",
+      "certificate_expires": "2027-09-03",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E031",
+      "certificate_expires": "2027-08-11",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E032",
+      "certificate_expires": "2027-09-10",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E033",
+      "certificate_expires": "2027-09-08",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E034",
+      "certificate_expires": "2027-07-04",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E035",
+      "certificate_expires": "2027-07-17",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E036",
+      "certificate_expires": "2027-07-27",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E037",
+      "certificate_expires": "2027-02-28",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E038",
+      "certificate_expires": "2027-06-10",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E039",
+      "certificate_expires": "2027-10-05",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E040",
+      "certificate_expires": "2027-03-18",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E041",
+      "certificate_expires": "2027-07-30",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E042",
+      "certificate_expires": "2027-06-20",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E043",
+      "certificate_expires": "2027-08-20",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E044",
+      "certificate_expires": "2027-03-31",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E045",
+      "certificate_expires": "2027-02-13",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E046",
+      "certificate_expires": "2027-06-02",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E047",
+      "certificate_expires": "2027-10-20",
+      "client_version": "5.2.1",
+      "last_error": null
+    },
+    {
+      "employee_id": "E048",
+      "certificate_expires": "2027-10-25",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E049",
+      "certificate_expires": "2027-06-25",
+      "client_version": "5.2.3",
+      "last_error": null
+    },
+    {
+      "employee_id": "E050",
+      "certificate_expires": "2027-06-05",
+      "client_version": "5.2.1",
+      "last_error": null
+    }
+  ],
+  "printers": [
+    {
+      "id": "PRN-HQ-1",
+      "site": "Head office",
+      "status": "online",
+      "queue_length": 0
+    },
+    {
+      "id": "PRN-HQ-2",
+      "site": "Head office",
+      "status": "online",
+      "queue_length": 0
+    },
+    {
+      "id": "PRN-WH-1",
+      "site": "Warehouse",
+      "status": "online",
+      "queue_length": 0
+    }
+  ],
+  "services": [
+    {
+      "name": "email",
+      "status": "operational"
+    },
+    {
+      "name": "sso",
+      "status": "operational"
+    },
+    {
+      "name": "vpn",
+      "status": "operational"
+    },
+    {
+      "name": "wifi",
+      "status": "operational"
+    },
+    {
+      "name": "printing",
+      "status": "operational"
+    },
+    {
+      "name": "software-catalog",
+      "status": "operational"
+    }
+  ],
+  "tickets": []
+}
