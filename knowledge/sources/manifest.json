@@ -42,6 +42,63 @@
     "reason": null
   },
   {
+    "id": "learn-microsoft-com-en-us-defender-endpoint-security-intelligence-update-tshoot",
+    "url": "https://learn.microsoft.com/en-us/defender-endpoint/security-intelligence-update-tshoot",
+    "issues": [
+      "security--antivirus-not-updating"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Security Intelligence update troubleshooting from Microsoft Update source - Microsoft Defender for Endpoint | Microsoft Learn",
+    "sha256": "5603eab20e644a5a4f670f6e86007be30c5f35d7c002b537f2de2a9bd4c0ccfc",
+    "chars": 3127,
+    "relevant_to": [
+      "security--antivirus-not-updating"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "Security intelligence updates that fail from Microsoft Update, step by step."
+  },
+  {
+    "id": "learn-microsoft-com-en-us-defender-endpoint-troubleshoot-security-intelligence-not-updated",
+    "url": "https://learn.microsoft.com/en-us/defender-endpoint/troubleshoot-security-intelligence-not-updated",
+    "issues": [
+      "security--antivirus-not-updating"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Troubleshoot Microsoft Defender Antivirus Security intelligence not getting updated - Microsoft Defender for Endpoint | Microsoft Learn",
+    "sha256": "512add65eb073a298021f56ccf4a8db9dd6a38d3b4f8fa9d9ee527396f90721d",
+    "chars": 3317,
+    "relevant_to": [
+      "security--antivirus-not-updating"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "The antivirus source was a general security page (no causes extracted); this covers definition updates that fail."
+  },
+  {
+    "id": "learn-microsoft-com-en-us-troubleshoot-windows-server-networking-troubleshoot-always-on-vpn",
+    "url": "https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/troubleshoot-always-on-vpn",
+    "issues": [
+      "network--vpn-not-connecting"
+    ],
+    "fetched": "2026-11-28",
+    "status": "ok",
+    "final_url": null,
+    "title": "Troubleshoot Always On VPN - Windows Server | Microsoft Learn",
+    "sha256": "deb8a12e23890d375394845ff5d5bf5e68935f6f685e9b792ab8162ce12e67f7",
+    "chars": 22142,
+    "relevant_to": [
+      "network--vpn-not-connecting"
+    ],
+    "licence": "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed.",
+    "origin": "curated",
+    "reason": "The seed's VPN link is a Wi-Fi article (one cause extracted); this is Microsoft's VPN connection troubleshooting, including certificate and server-reachability checks."
+  },
+  {
     "id": "support-apple-com",
     "url": "https://support.apple.com/",
     "issues": [
