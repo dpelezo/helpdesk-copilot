@@ -3,14 +3,9 @@ name: model choice
 # Issue #8: run the tool-calling test on the Telnyx candidates, on the 20
 # tuning tickets only (never held-out). Uses the TELNYX_API_KEY secret, which
 # is passed to the client as an environment variable and never printed.
-# Runs when the harness changes, or on demand.
+# Manual only (Actions > model choice > Run workflow): every run spends Telnyx credit.
 
 on:
-  pull_request:
-    paths:
-      - app/llm.py
-      - app/evals/model_choice.py
-      - .github/workflows/model-choice.yml
   workflow_dispatch:
     inputs:
       models:
@@ -30,8 +25,6 @@ concurrency:
 jobs:
   run:
     name: model choice (tuning tickets)
-    # Secrets are not available to pull requests from forks; skip those.
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
