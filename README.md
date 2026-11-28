@@ -21,6 +21,8 @@ An assistant for IT helpdesk agents. It walks a troubleshooting procedure step b
 
 ## Data
 
+**Seed profile:** the 10,500-row seed collapses to 33 canonical issues, and its cause column is empty; see [reports/seed_profile.md](reports/seed_profile.md).
+
 No real customer or company data is used. The planned ticket source is a public dataset that is downloaded at build time and not committed to this repo.
 
 ## Run locally
