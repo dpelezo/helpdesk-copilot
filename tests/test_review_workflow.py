@@ -41,11 +41,12 @@ async def env():
 
 
 @pytest.fixture
-def draft_path(tmp_path) -> Path:
+async def draft_path(tmp_path) -> Path:
     items = [{"issue": i, "source_id": "ms-a", "kind": "cause", "text": f"Cause of {i}.", "evidence": "words",
               "evidence_ok": True} for i in ISSUES]
     source = Source(id="ms-a", url="https://learn.microsoft.com/a", issues=[], fetched="2026-11-28", status="ok")
-    release, report = resolve.resolve({"date": "2026-11-28", "items": items}, [source], resolve.registered_tools())
+    # Inside the test's event loop: asyncio.run (registered_tools) would close it.
+    release, report = resolve.resolve({"date": "2026-11-28", "items": items}, [source], await resolve._list_tools())
     assert report.valid
     path = tmp_path / "draft.json"
     path.write_text(release.model_dump_json(indent=2))
