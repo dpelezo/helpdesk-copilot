@@ -226,6 +226,18 @@ def render_report(p: Profile, issues: list[CanonicalIssue], digest: str) -> str:
         f"Rows of the same issue disagree on symptoms, solution, keywords or link in "
         f"{p.issues_with_conflicts} of {p.canonical_issues} issues.",
         "",
+    ]
+    conflicted = [i for i in issues if i.conflicts]
+    if conflicted:
+        lines += [
+            "| Issue | Column | Distinct values |",
+            "| --- | --- | ---: |",
+        ]
+        for issue in conflicted:
+            for column, values in issue.conflicts.items():
+                lines.append(f"| `{issue.id}` | {column} | {len(values)} |")
+        lines.append("")
+    lines += [
         "## Canonical issues by category",
         "",
         "| Category | Issues |",

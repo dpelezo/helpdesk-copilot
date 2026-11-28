@@ -102,6 +102,7 @@ def test_report_leads_with_the_collapse_and_lists_issues(sample):
     assert "**5 rows collapse to 2 canonical issues**" in text
     assert "`hardware--monitor-blank`" in text
     assert "carries no information" in text
+    assert "| `network--vpn-drops` | Solution Steps | 2 |" in text
 
 
 def test_download_fetches_the_pinned_file(tmp_path):
