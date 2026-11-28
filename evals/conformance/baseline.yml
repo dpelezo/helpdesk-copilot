@@ -1,0 +1,41 @@
+# Conformance scenarios the mock IT systems fail by design (#6).
+#
+# The mock systems expose tools only: no resources, prompts, logging, completion,
+# sampling or elicitation. Their tools return one structured result, with no
+# progress, images or audio. The suite's other scenarios call fixtures that only
+# its reference server defines, such as `test_prompt_with_image`.
+# `--expected-failures` makes CI fail on any new failure and on any entry here
+# that starts passing.
+# Checked with @modelcontextprotocol/conformance 0.1.16 on 2026-11-27:
+# on each of the six servers: 9 passed, 21 failed, and server-sse-multiple-streams
+# recorded no checks; all 22 are expected.
+server:
+  # Logging and completion: not offered
+  - logging-set-level
+  - completion-complete
+  - tools-call-with-logging
+  # Tool results other than structured text, and progress
+  - tools-call-image
+  - tools-call-audio
+  - tools-call-embedded-resource
+  - tools-call-mixed-content
+  - tools-call-with-progress
+  # Several GET SSE streams on one session: the servers are stateless, so they
+  # give no session and the scenario records no checks, which the suite counts as failed
+  - server-sse-multiple-streams
+  # Server-to-client requests: not used
+  - tools-call-sampling
+  - tools-call-elicitation
+  - elicitation-sep1034-defaults
+  - elicitation-sep1330-enums
+  # Resources: not offered (resources/list answers with an empty list and passes)
+  - resources-read-text
+  - resources-read-binary
+  - resources-templates-read
+  - resources-subscribe
+  - resources-unsubscribe
+  # Prompts: not offered (prompts/list answers with an empty list and passes)
+  - prompts-get-simple
+  - prompts-get-with-args
+  - prompts-get-embedded-resource
+  - prompts-get-with-image

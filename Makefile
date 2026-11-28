@@ -1,4 +1,4 @@
-.PHONY: company seed lint test
+.PHONY: company seed lint test conformance
 
 # Regenerate the mock company fixture (fixtures/company.json).
 company:
@@ -13,3 +13,7 @@ lint:
 
 test:
 	pytest tests/ -q
+
+# Run the MCP conformance suite on the six mock systems (needs npx, Node 22).
+conformance:
+	bash scripts/conformance.sh
