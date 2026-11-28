@@ -31,10 +31,10 @@ No real customer or company data is used. The planned ticket source is a public 
 | --- | ---: |
 | Chance | 26.9% |
 | **A. Keyword search, no checks (baseline)** | **29.0%** |
-| B. Graph retrieval | week 2 |
+| B. Graph retrieval | 28.0% |
 | C. Graph + live checks | week 3 |
 
-Search alone puts the right cause in front of the model 82.6% of the time and still barely beats chance: without checking systems it cannot tell which cause is real. Vector search raises that to 97.8% (hybrid 95.7%), so retrieval is no longer the bottleneck; telling the planted cause from its siblings is. Details in [evals/results](evals/results/README.md).
+Search alone puts the right cause in front of the model 82.6% of the time and still barely beats chance: without checking systems it cannot tell which cause is real. Graph retrieval (condition B) shows the right cause 93.5% of the time and scores 28.0%: of the 19 tickets that changed against A, retrieval explains 2. Retrieval is no longer the bottleneck; telling the planted cause from its siblings is, and that takes checking the systems (condition C). Details in [evals/results](evals/results/README.md).
 
 ## Mock company and systems
 

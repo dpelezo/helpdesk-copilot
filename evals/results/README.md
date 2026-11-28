@@ -6,7 +6,7 @@ Root-cause accuracy on the **100 held-out tickets** (`evals/tickets/heldout.json
 | --- | --- | --- | ---: | ---: | --- |
 | A. Keyword search (baseline) | BM25 over causes and handbook, one call, no checks | `zai-org/GLM-5.2` | **29.0%** | 82.6% | 2026-11-28 |
 | *Retrieval only (#30)* | *Hybrid / vectors over the same documents, no model call* | `thenlper/gte-large` | | *95.7% / 97.8%* | 2026-11-28 |
-| B. Graph retrieval | *week 2* | | | | |
+| B. Graph retrieval | Vector entry linking into the catalog graph, top 2 issues' causes, fixes and checks; one call, no checks | `zai-org/GLM-5.2` | **28.0%** | 93.5% (shown) | 2026-11-28 |
 | C. Graph + checks | *week 3* | | | | |
 
 ## A. Baseline: what it shows
@@ -15,12 +15,33 @@ The right cause was among the five documents shown to the model for 82.6% of tic
 
 Per issue, from `baseline-bm25-heldout.json`: overheating 66.7%, account locked 55.6%, antivirus 40.0%, phishing 36.4%, install 30.0%, Outlook 20.0%, Wi-Fi 20.0%, MFA 10.0%, VPN 10.0%, slow system 9.1%. Escalation precision 6.5%, recall 25.0%.
 
+## B. Graph retrieval: what it shows (issue #31)
+
+Retrieval got better and accuracy did not: the right cause was shown for **93.5%** of tickets (A: 82.6%), and the model picked it **28.0%** of the time (A: 29.0%; chance 26.9%). This is the result the eval was designed to expose. Shown the 3 to 4 possible causes of an issue, the model still cannot tell which one is planted without checking the systems.
+
+The graph is the cause catalog (`app/knowledge/catalog_graph.py`): the same causes and fixes as A's documents, plus which check reveals each cause. Prompt, model, token limit, reply format and scorer are A's. Settings fixed before the run: 5 entry nodes by vector search over issues and causes (`thenlper/gte-large`; vectors, not hybrid, chosen on #30's tuning split), at most 2 issues, 2 handbook sections. 7.6 documents shown per ticket (A: 5).
+
+**Every movement against A, ticket by ticket** (held-out, 100 tickets): 19 right in both, 62 wrong in both, and 19 that changed.
+
+| Change | Tickets | Why |
+| --- | ---: | --- |
+| B right, A wrong | 9 | 6 picked differently from the same shown causes; 2 escalate tickets B escalated; 1 (`HO-080`, `slow-low-disk`) shown only by B |
+| A right, B wrong | 10 | 8 picked differently from the same shown causes, 4 of them by escalating; 1 escalate ticket B answered with a cause; 1 (`HO-090`, `locked-failed-sign-ins`) shown only by A |
+| **Net** | **−1** | **Retrieval explains 2 of the 19 changes, one each way** |
+
+So the per-issue swings are choices, not retrieval. Program install fell from 30.0% to 0% because B escalated three install tickets A guessed right, with the right cause shown to both. Slow system rose from 9.1% to 36.4% the same way, in the other direction. Of B's 72 wrong answers, 61 had the right cause in front of the model: 33 named a sibling cause of the same issue, 26 escalated, and 2 were invalid replies. B escalated slightly more often (35 against 31 tickets), so its escalation recall rose (37.5% against 25.0%) and precision stayed low (8.6%).
+
+**One run per condition.** The changes are the size of run-to-run variation in a reasoning model at temperature 0 (extraction runs differed this much on unchanged input). A second run of A and B would put a band around both numbers. The direction of the finding does not depend on it: better retrieval, flat accuracy.
+
+Per issue (B): overheating 66.7%, phishing 45.5%, account locked 44.4%, slow system 36.4%, MFA 20.0%, Outlook 20.0%, VPN 20.0%, antivirus 20.0%, Wi-Fi 10.0%, install 0%. Cost: held-out 132,142 tokens (1,319 per ticket, A: 1,172), tuning 34,364; chat and embeddings together. Files: `graph-heldout.json`, `graph-tuning.json` (every ticket's entry nodes, linked issues, documents shown and reply).
+
 ## Run history
 
 | Date | Condition | Held-out accuracy | Note |
 | --- | --- | ---: | --- |
 | 2026-11-28 | A, first run | 25.0% | 21 of 100 replies cut off at a 1,024-token limit by reasoning Telnyx cannot switch off. Not a model result. |
 | 2026-11-28 | A | **29.0%** | Limit raised to 4,096; prompt, documents and scorer unchanged. 3 replies still cut off, scored as wrong. |
+| 2026-11-28 | B | **28.0%** | Graph retrieval over the cause catalog, same prompt and scorer. Right cause shown 93.5% (A 82.6%). 2 invalid replies. |
 
 Each run: one model call per ticket, temperature 0, `zai-org/GLM-5.2` on Telnyx. The JSON files hold every ticket's retrieved documents, prediction, tokens and latency.
 
