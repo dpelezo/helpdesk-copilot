@@ -19,7 +19,7 @@ These rules apply to any AI assistant (Claude Code, Codex, Cursor and others) an
 - The seed dataset is downloaded at build time and never committed (ADR 0005). Raw vendor pages are never committed; store URLs and evidence spans.
 - Workflow boundaries (ADR 0001): Workflow A never calls a tool that changes a system; Workflow B never publishes knowledge. Account-changing tools run only through the policy gate, after approval.
 - No real personal or company data anywhere. The mock company is generated.
-- Workflows that call a paid model (`baseline`, `model-choice`, `judge-check`, `extraction`, `retrieval`) run only on demand (`workflow_dispatch`), never on pull requests, so reopening or pushing a PR never spends credit. Each has a `token_budget` input (`LLM_TOKEN_BUDGET`): the client refuses calls once it is spent, and the run reports its token use. Record a new run's token use next to its results.
+- Workflows that call a paid model (`baseline`, `model-choice`, `judge-check`, `extraction`, `retrieval`, `graph`) run only on demand (`workflow_dispatch`), never on pull requests, so reopening or pushing a PR never spends credit. Each has a `token_budget` input (`LLM_TOKEN_BUDGET`): the client refuses calls once it is spent, and the run reports its token use. Record a new run's token use next to its results.
 
 ## Before saying "done"
 

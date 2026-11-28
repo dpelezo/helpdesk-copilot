@@ -1,0 +1,93 @@
+name: graph
+
+# Issue #31: condition B, graph retrieval and one model call, no checks. Publishes the
+# cause catalog as a graph into a throwaway Neo4j in this job, embeds it, then scores the
+# tuning tickets and the held-out tickets once, with the baseline's prompt and scorer.
+# Uses the TELNYX_API_KEY secret through the environment; it is never printed.
+# Manual only (Actions > graph > Run workflow): every run spends Telnyx credit.
+
+on:
+  workflow_dispatch:
+    inputs:
+      token_budget:
+        description: "Token budget per split run. Baseline held-out measured: ~117k tokens"
+        default: "250000"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: graph-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run:
+    name: condition B (graph retrieval, no checks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    services:
+      neo4j:
+        image: neo4j:5.26-community
+        env:
+          NEO4J_AUTH: neo4j/eval-only-neo4j  # throwaway, this job only
+        ports:
+          - 7687:7687
+        options: >-
+          --health-cmd "cypher-shell -u neo4j -p eval-only-neo4j 'RETURN 1'"
+          --health-interval 5s
+          --health-timeout 10s
+          --health-retries 20
+    env:
+      TELNYX_API_KEY: ${{ secrets.TELNYX_API_KEY }}
+      LLM_TOKEN_BUDGET: ${{ inputs.token_budget || '250000' }}
+      LLM_MODEL: zai-org/GLM-5.2
+      LLM_EMBED_MODEL: thenlper/gte-large
+      NEO4J_URI: bolt://localhost:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: eval-only-neo4j
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check the key is set (without printing it)
+        run: test -n "$TELNYX_API_KEY" || { echo "TELNYX_API_KEY secret is missing"; exit 1; }
+
+      - name: Restore cached embeddings
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/cache/embeddings
+          key: embeddings-${{ github.run_id }}
+          restore-keys: embeddings-
+
+      - name: Tuning tickets
+        run: python -m app.evals.graph --split tuning
+
+      - name: Held-out tickets
+        run: python -m app.evals.graph --split heldout | tee summary.md
+
+      - name: Save embeddings for the next run
+        if: always()
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/cache/embeddings
+          key: embeddings-${{ github.run_id }}
+
+      - name: Show results
+        if: always()
+        run: |
+          cat summary.md >> "$GITHUB_STEP_SUMMARY" || true
+          for f in evals/results/graph-*.json; do
+            [ -f "$f" ] || continue
+            echo "=== BEGIN $f"
+            cat "$f"
+            echo "=== END $f"
+          done
