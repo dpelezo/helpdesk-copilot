@@ -37,6 +37,8 @@ CACHE = Path("data/sources")
 USER_AGENT = "helpdesk-copilot-sources/0.1 (+https://github.com/dpelezo/helpdesk-copilot)"
 DELAY_SECONDS = 1.0
 MAX_BYTES = 3_000_000
+# Less text than this is a bot challenge, a cookie wall or a page that needs JavaScript.
+MIN_CHARS = 500
 LICENCE_NOTE = "Vendor documentation. Cleaned text cached locally for extraction only; not redistributed."
 
 # Issues written by hand (no seed row, so no seed links): sourced from the handbook.
@@ -112,8 +114,14 @@ def seed_links(rows: list[dict[str, str]]) -> dict[str, list[str]]:
     return links
 
 
+def vendor(host: str | None) -> str:
+    """The vendor's domain: the last two labels of a host (support.microsoft.com -> microsoft.com)."""
+    return ".".join((host or "").split(".")[-2:])
+
+
 def allowed_hosts(links: dict[str, list[str]]) -> frozenset[str]:
-    return frozenset(urlparse(u).hostname or "" for urls in links.values() for u in urls)
+    """Vendor domains of the seed's links. Any host under one of them is allowed."""
+    return frozenset(vendor(urlparse(u).hostname) for urls in links.values() for u in urls)
 
 
 def relevant(issue: str, text: str) -> bool:
@@ -146,7 +154,7 @@ def _source_id(url: str) -> str:
 def fetch(url: str, issues: list[str], hosts: frozenset[str], client: httpx.Client, today: str) -> tuple[Source, str]:
     """Fetch one page. Returns the manifest entry and the cleaned text ("" on failure)."""
     entry = Source(id=_source_id(url), url=url, issues=issues, fetched=today, status="ok")
-    if urlparse(url).scheme != "https" or urlparse(url).hostname not in hosts:
+    if urlparse(url).scheme != "https" or vendor(urlparse(url).hostname) not in hosts:
         entry.status = "skipped: not an allowlisted https URL"
         return entry, ""
     try:
@@ -156,7 +164,7 @@ def fetch(url: str, issues: list[str], hosts: frozenset[str], client: httpx.Clie
         return entry, ""
     final = str(response.url)
     entry.final_url = final if final != url else None
-    if urlparse(final).hostname not in hosts:
+    if vendor(urlparse(final).hostname) not in hosts:
         entry.status = f"skipped: redirected off the allowlist to {urlparse(final).hostname}"
         return entry, ""
     if response.status_code != 200:
@@ -166,8 +174,8 @@ def fetch(url: str, issues: list[str], hosts: frozenset[str], client: httpx.Clie
         entry.status = "skipped: page larger than 3 MB"
         return entry, ""
     title, text = clean_html(response.text)
-    if not text:
-        entry.status = "failed: no text after cleaning"
+    if len(text) < MIN_CHARS:
+        entry.status = f"failed: only {len(text)} characters of text (bot challenge, cookie wall or script-only page)"
         return entry, ""
     entry.title = title or None
     entry.sha256 = hashlib.sha256(text.encode()).hexdigest()

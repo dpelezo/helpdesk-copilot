@@ -13,8 +13,10 @@ PRINT_2 = "https://support.printco.example/print-queue"
 PAGES = {
     VPN: "<html><head><title>VPN troubleshooting</title><script>var x=1</script></head>"
          "<body><nav>Home | Products</nav><h1>VPN client cannot connect</h1>"
-         "<p>Check the certificate expiry.</p><footer>Copyright</footer></body></html>",
-    PRINT: "<html><head><title>Printer offline</title></head><body><p>Power-cycle the printer.</p></body></html>",
+         "<p>Check the certificate expiry.</p>" + "<p>" + "Reinstall the client if it still fails. " * 20 + "</p>"
+         "<footer>Copyright</footer></body></html>",
+    PRINT: "<html><head><title>Printer offline</title></head><body><p>" + "Power-cycle the printer. " * 30
+           + "</p></body></html>",
 }
 
 
@@ -52,13 +54,14 @@ def test_links_for_in_scope_issues_include_alternate_links(rows):
         "network--vpn-not-connecting": [VPN],
         "hardware--printer-not-responding": [PRINT_2, PRINT],
     }
-    assert sources.allowed_hosts(links) == {"docs.vendor.example", "support.printco.example"}
+    assert sources.allowed_hosts(links) == {"vendor.example", "printco.example"}
 
 
 def test_clean_html_drops_scripts_navigation_and_footer():
     title, text = sources.clean_html(PAGES[VPN])
     assert title == "VPN troubleshooting"
-    assert text == "VPN client cannot connect\nCheck the certificate expiry."
+    assert text.startswith("VPN client cannot connect\nCheck the certificate expiry.\nReinstall")
+    assert "Home" not in text and "Copyright" not in text and "var x" not in text
 
 
 @pytest.mark.parametrize(("issue", "text", "expected"), [
@@ -93,6 +96,22 @@ def test_collect_fetches_caches_and_records_failures(rows, tmp_path):
     assert "https://games.example/lag" not in by_url  # out of scope, never fetched
 
 
+def test_a_redirect_within_the_same_vendor_is_followed(rows, tmp_path):
+    moved = "https://learn.vendor.example/vpn"
+    pages = {**PAGES, moved: PAGES[VPN]}
+    with web(pages, redirects={VPN: moved}) as client:
+        found = {s.url: s for s in sources.collect(rows, client, cache=tmp_path, delay=0)}
+    assert found[VPN].status == "ok" and found[VPN].final_url == moved
+
+
+def test_a_page_with_too_little_text_is_a_failure(tmp_path):
+    hosts = frozenset({"vendor.example"})
+    tiny = {VPN: "<html><title>Client Challenge</title><body>Please enable JavaScript.</body></html>"}
+    with web(tiny) as client:
+        entry, text = sources.fetch(VPN, [], hosts, client, "d")
+    assert entry.status.startswith("failed: only 25 characters") and text == ""
+
+
 def test_a_redirect_off_the_allowlist_is_not_followed_into_the_manifest(rows, tmp_path):
     with web(redirects={VPN: "https://tracker.elsewhere.example/landing"}) as client:
         found = {s.url: s for s in sources.collect(rows, client, cache=tmp_path, delay=0)}
@@ -100,7 +119,7 @@ def test_a_redirect_off_the_allowlist_is_not_followed_into_the_manifest(rows, tm
 
 
 def test_non_https_and_unlisted_urls_are_skipped(tmp_path):
-    hosts = frozenset({"docs.vendor.example"})
+    hosts = frozenset({"vendor.example"})
     with web() as client:
         http, _ = sources.fetch("http://docs.vendor.example/x", [], hosts, client, "d")
         other, _ = sources.fetch("https://evil.example/x", [], hosts, client, "d")
@@ -111,7 +130,7 @@ def test_network_errors_and_huge_pages_are_recorded(tmp_path, monkeypatch):
     def boom(request):
         raise httpx.ConnectTimeout("slow", request=request)
 
-    hosts = frozenset({"docs.vendor.example"})
+    hosts = frozenset({"vendor.example"})
     with httpx.Client(transport=httpx.MockTransport(boom)) as client:
         entry, text = sources.fetch(VPN, [], hosts, client, "d")
     assert entry.status == "failed: ConnectTimeout" and text == ""
