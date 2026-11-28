@@ -25,6 +25,25 @@ An assistant for IT helpdesk agents. It walks a troubleshooting procedure step b
 
 No real customer or company data is used. The planned ticket source is a public dataset that is downloaded at build time and not committed to this repo.
 
+## Mock company and systems
+
+A generated company, Kestrel Ridge Logistics (50 employees, `make company`), backs six MCP servers in `app/mock/systems.py`:
+
+| Server | Tools |
+| --- | --- |
+| identity | `account_status` |
+| devices | `device_health`, `installed_software` |
+| vpn | `vpn_certificate_status`, `vpn_last_session` |
+| status | `service_status`, `printer_status` |
+| tickets | `recent_tickets` |
+| actions | `unlock_account`, `reset_mfa` (change an account; approval required) |
+
+```bash
+python -m app.mock.systems identity            # stdio
+python -m app.mock.systems vpn --http --port 8003
+make conformance                               # official MCP conformance suite, all six
+```
+
 ## Run locally
 
 ```bash
