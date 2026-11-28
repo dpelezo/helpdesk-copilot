@@ -141,7 +141,11 @@ def test_a_run_scores_like_the_baseline(retriever):
     result = gb.evaluate(FirstShown(), retriever, "tuning")
     assert result["condition"].startswith("B:") and result["split"] == "tuning"
     assert 0 <= result["score"]["root_cause_accuracy"] <= 100
-    assert result["right_cause_shown"] >= 50 and result["score"]["errors"] == 0
+    # The stand-in embedder says nothing about real retrieval quality; check the bookkeeping.
+    fix = [r for r in result["runs"] if r["retrieval_hit"] is not None]
+    assert result["right_cause_shown"] == round(100 * sum(r["retrieval_hit"] for r in fix) / len(fix), 1)
+    assert all(r["retrieval_hit"] == (f"cause:{r['expected']}" in r["retrieved"]) for r in fix)
+    assert result["score"]["errors"] == 0
     run = result["runs"][0]
     assert run["entry"] and run["issues"] and run["retrieved"]
 
