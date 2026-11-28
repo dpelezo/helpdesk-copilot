@@ -1,0 +1,3101 @@
+{
+  "condition": "B: graph retrieval (vector entry linking, bounded traversal), no checks",
+  "model": "zai-org/GLM-5.2",
+  "embedding_model": "thenlper/gte-large",
+  "split": "heldout",
+  "date": "2026-11-28",
+  "settings": {
+    "entry_k": 5,
+    "max_issues": 2,
+    "policy_k": 2
+  },
+  "score": {
+    "tickets": 100,
+    "root_cause_accuracy": 28.0,
+    "answered": 98.0,
+    "per_issue": {
+      "hardware--laptop-overheating": 66.7,
+      "identity--account-locked": 44.4,
+      "identity--mfa-lockout": 20.0,
+      "microsoft-office--outlook-not-sending-emails": 20.0,
+      "network--vpn-not-connecting": 20.0,
+      "network--wi-fi-not-connecting": 10.0,
+      "security--antivirus-not-updating": 20.0,
+      "security--phishing-email-detected": 45.5,
+      "software--program-won-t-install": 0.0,
+      "system--system-running-slow": 36.4
+    },
+    "escalation_precision": 8.6,
+    "escalation_recall": 37.5,
+    "missed_causes": 32,
+    "invented_causes": 5,
+    "errors": 2
+  },
+  "chance_accuracy": 26.9,
+  "right_cause_shown": 93.5,
+  "documents_per_ticket": 7.6,
+  "seconds_per_ticket": 2.75,
+  "tokens_per_ticket": 1319,
+  "runs": [
+    {
+      "ticket": "HO-001",
+      "expected": "vpn-gateway-outage",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "policy:vpn-1",
+        "policy:vpn-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.058997063999982,
+      "prompt_tokens": 600,
+      "completion_tokens": 553,
+      "error": null,
+      "entry": [
+        "network--vpn-not-connecting",
+        "vpn-gateway-outage",
+        "vpn-client-outdated",
+        "av-remote-vpn-expired",
+        "vpn-certificate-expired"
+      ],
+      "issues": [
+        "network--vpn-not-connecting",
+        "security--antivirus-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-002",
+      "expected": "mailbox-full",
+      "predicted": "mailbox-full",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:mail-1",
+        "policy:mail-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.510820257000006,
+      "prompt_tokens": 496,
+      "completion_tokens": 1652,
+      "error": null,
+      "entry": [
+        "microsoft-office--outlook-not-sending-emails",
+        "email-service-outage",
+        "outlook-password-expired",
+        "mailbox-full",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-003",
+      "expected": "install-disk-full",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "policy:sw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.0993613809999943,
+      "prompt_tokens": 528,
+      "completion_tokens": 268,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-device-noncompliant",
+        "install-disk-full",
+        "install-catalog-outage",
+        "app-update-low-disk"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-004",
+      "expected": "av-remote-vpn-expired",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "policy:sw-3",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.870223836000008,
+      "prompt_tokens": 606,
+      "completion_tokens": 1170,
+      "error": null,
+      "entry": [
+        "security--antivirus-not-updating",
+        "av-definitions-stale",
+        "vpn-certificate-expired",
+        "av-remote-vpn-expired",
+        "wifi-password-expired"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "network--vpn-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-005",
+      "expected": "escalate",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-3",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": null,
+      "seconds": 1.3539842349999844,
+      "prompt_tokens": 624,
+      "completion_tokens": 294,
+      "error": null,
+      "entry": [
+        "outlook-password-expired",
+        "wifi-password-expired",
+        "locked-expired-password",
+        "mfa-sso-outage",
+        "identity--account-locked"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-006",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.495209483999986,
+      "prompt_tokens": 520,
+      "completion_tokens": 716,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "email-service-outage",
+        "outlook-password-expired",
+        "wifi-password-expired",
+        "phishing-suspicious-sign-ins"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-007",
+      "expected": "install-disk-full",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.2273458390000087,
+      "prompt_tokens": 485,
+      "completion_tokens": 299,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-device-noncompliant",
+        "install-catalog-outage",
+        "install-disk-full",
+        "software--application-not-updating"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-008",
+      "expected": "outlook-password-expired",
+      "predicted": "email-service-outage",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:mail-4",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.6077037889999986,
+      "prompt_tokens": 506,
+      "completion_tokens": 423,
+      "error": null,
+      "entry": [
+        "microsoft-office--outlook-not-sending-emails",
+        "email-service-outage",
+        "outlook-password-expired",
+        "mailbox-full",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-009",
+      "expected": "slow-thermal-throttling",
+      "predicted": "slow-low-disk",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:dev-3",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.786511397999988,
+      "prompt_tokens": 525,
+      "completion_tokens": 1866,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-pending-updates",
+        "app-update-waits-for-os",
+        "install-catalog-outage",
+        "slow-thermal-throttling"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-010",
+      "expected": "outlook-password-expired",
+      "predicted": "email-service-outage",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:mail-1",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.282350100000002,
+      "prompt_tokens": 517,
+      "completion_tokens": 1518,
+      "error": null,
+      "entry": [
+        "microsoft-office--outlook-not-sending-emails",
+        "email-service-outage",
+        "outlook-password-expired",
+        "mailbox-full",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-011",
+      "expected": "av-definitions-stale",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-3",
+        "policy:dev-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.764527031,
+      "prompt_tokens": 523,
+      "completion_tokens": 473,
+      "error": null,
+      "entry": [
+        "security--antivirus-not-updating",
+        "av-definitions-stale",
+        "software--application-not-updating",
+        "av-remote-vpn-expired",
+        "app-update-low-disk"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-012",
+      "expected": "email-service-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:mail-1",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.4719803639999895,
+      "prompt_tokens": 502,
+      "completion_tokens": 351,
+      "error": null,
+      "entry": [
+        "microsoft-office--outlook-not-sending-emails",
+        "email-service-outage",
+        "outlook-password-expired",
+        "mailbox-full",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-013",
+      "expected": "email-service-outage",
+      "predicted": "email-service-outage",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:mail-4",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 7.289257341999985,
+      "prompt_tokens": 519,
+      "completion_tokens": 2332,
+      "error": null,
+      "entry": [
+        "email-service-outage",
+        "microsoft-office--outlook-not-sending-emails",
+        "outlook-password-expired",
+        "mailbox-full",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-014",
+      "expected": "wifi-service-degraded",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:vpn-4",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.8281272039999976,
+      "prompt_tokens": 512,
+      "completion_tokens": 482,
+      "error": null,
+      "entry": [
+        "wifi-service-degraded",
+        "network--wi-fi-not-connecting",
+        "email-service-outage",
+        "wifi-password-expired",
+        "printing-service-outage"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-015",
+      "expected": "vpn-account-locked",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "policy:vpn-2",
+        "policy:vpn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.510931951000003,
+      "prompt_tokens": 601,
+      "completion_tokens": 1240,
+      "error": null,
+      "entry": [
+        "vpn-gateway-outage",
+        "network--vpn-not-connecting",
+        "vpn-certificate-expired",
+        "vpn-client-outdated",
+        "av-remote-vpn-expired"
+      ],
+      "issues": [
+        "network--vpn-not-connecting",
+        "security--antivirus-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-016",
+      "expected": "overheating-fan",
+      "predicted": "overheating-fan",
+      "retrieved": [
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:dev-3",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.383759961999999,
+      "prompt_tokens": 476,
+      "completion_tokens": 990,
+      "error": null,
+      "entry": [
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "overheating-fan",
+        "system--system-running-slow",
+        "overheating-pending-firmware"
+      ],
+      "issues": [
+        "hardware--laptop-overheating",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-017",
+      "expected": "vpn-client-outdated",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "policy:vpn-2",
+        "policy:vpn-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.076262985999989,
+      "prompt_tokens": 588,
+      "completion_tokens": 244,
+      "error": null,
+      "entry": [
+        "network--vpn-not-connecting",
+        "vpn-gateway-outage",
+        "av-remote-vpn-expired",
+        "vpn-certificate-expired",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "network--vpn-not-connecting",
+        "security--antivirus-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-018",
+      "expected": "wifi-service-degraded",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:prn-3",
+        "policy:vpn-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.6197812820000195,
+      "prompt_tokens": 498,
+      "completion_tokens": 1168,
+      "error": null,
+      "entry": [
+        "wifi-service-degraded",
+        "network--wi-fi-not-connecting",
+        "email-service-outage",
+        "vpn-gateway-outage",
+        "wifi-device-noncompliant"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-019",
+      "expected": "install-device-noncompliant",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.8362536250000119,
+      "prompt_tokens": 485,
+      "completion_tokens": 495,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-device-noncompliant",
+        "install-disk-full",
+        "install-catalog-outage",
+        "app-update-low-disk"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-020",
+      "expected": "vpn-gateway-outage",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "policy:vpn-2",
+        "policy:vpn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.0003654029999893,
+      "prompt_tokens": 438,
+      "completion_tokens": 865,
+      "error": null,
+      "entry": [
+        "vpn-gateway-outage",
+        "network--vpn-not-connecting",
+        "vpn-client-outdated",
+        "vpn-certificate-expired",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "network--vpn-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-021",
+      "expected": "overheating-pending-firmware",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:dev-3",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.1590946309999879,
+      "prompt_tokens": 501,
+      "completion_tokens": 313,
+      "error": null,
+      "entry": [
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "overheating-fan",
+        "overheating-pending-firmware",
+        "email-service-outage"
+      ],
+      "issues": [
+        "hardware--laptop-overheating",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-022",
+      "expected": "locked-expired-password",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.8998021540000138,
+      "prompt_tokens": 558,
+      "completion_tokens": 533,
+      "error": null,
+      "entry": [
+        "identity--account-locked",
+        "locked-failed-sign-ins",
+        "locked-expired-password",
+        "phishing-account-locked",
+        "mfa-sso-outage"
+      ],
+      "issues": [
+        "identity--account-locked",
+        "security--phishing-email-detected"
+      ]
+    },
+    {
+      "ticket": "HO-023",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.350844961000007,
+      "prompt_tokens": 513,
+      "completion_tokens": 1026,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "phishing-account-locked",
+        "phishing-suspicious-sign-ins",
+        "outlook-password-expired",
+        "wifi-password-expired"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-024",
+      "expected": "overheating-fan",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:dev-3",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.737603366000002,
+      "prompt_tokens": 501,
+      "completion_tokens": 1141,
+      "error": null,
+      "entry": [
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "overheating-fan",
+        "overheating-pending-firmware",
+        "system--system-running-slow"
+      ],
+      "issues": [
+        "hardware--laptop-overheating",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-025",
+      "expected": "mfa-locked",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": false,
+      "seconds": 1.7576784559999794,
+      "prompt_tokens": 604,
+      "completion_tokens": 470,
+      "error": null,
+      "entry": [
+        "wifi-password-expired",
+        "locked-expired-password",
+        "mfa-locked",
+        "vpn-account-locked",
+        "phishing-account-locked"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "identity--account-locked"
+      ]
+    },
+    {
+      "ticket": "HO-026",
+      "expected": "wifi-device-noncompliant",
+      "predicted": "wifi-service-degraded",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:prn-3",
+        "policy:pw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 6.228803165999977,
+      "prompt_tokens": 563,
+      "completion_tokens": 1846,
+      "error": null,
+      "entry": [
+        "wifi-service-degraded",
+        "network--wi-fi-not-connecting",
+        "wifi-password-expired",
+        "email-service-outage",
+        "vpn-gateway-outage"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-027",
+      "expected": "vpn-certificate-expired",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "policy:vpn-2",
+        "policy:vpn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 6.940933032000004,
+      "prompt_tokens": 586,
+      "completion_tokens": 2190,
+      "error": null,
+      "entry": [
+        "vpn-gateway-outage",
+        "vpn-certificate-expired",
+        "network--vpn-not-connecting",
+        "vpn-client-outdated",
+        "av-remote-vpn-expired"
+      ],
+      "issues": [
+        "network--vpn-not-connecting",
+        "security--antivirus-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-028",
+      "expected": "wifi-password-expired",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:vpn-4",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.4461121150000054,
+      "prompt_tokens": 511,
+      "completion_tokens": 396,
+      "error": null,
+      "entry": [
+        "network--wi-fi-not-connecting",
+        "wifi-password-expired",
+        "wifi-service-degraded",
+        "wifi-device-noncompliant",
+        "email-service-outage"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-029",
+      "expected": "slow-pending-updates",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-3",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.300861260999966,
+      "prompt_tokens": 499,
+      "completion_tokens": 326,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-thermal-throttling",
+        "hardware--laptop-overheating",
+        "slow-pending-updates",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "hardware--laptop-overheating"
+      ]
+    },
+    {
+      "ticket": "HO-030",
+      "expected": "av-low-disk",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-3",
+        "policy:dev-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.6251266080000164,
+      "prompt_tokens": 526,
+      "completion_tokens": 78,
+      "error": null,
+      "entry": [
+        "av-definitions-stale",
+        "security--antivirus-not-updating",
+        "app-update-catalog-degraded",
+        "install-device-noncompliant",
+        "vpn-client-outdated"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-031",
+      "expected": "wifi-device-noncompliant",
+      "predicted": "wifi-service-degraded",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:dev-3",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.705279721000011,
+      "prompt_tokens": 527,
+      "completion_tokens": 1092,
+      "error": null,
+      "entry": [
+        "wifi-service-degraded",
+        "network--wi-fi-not-connecting",
+        "wifi-password-expired",
+        "email-service-outage",
+        "wifi-device-noncompliant"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-032",
+      "expected": "slow-low-disk",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-3",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.3993867170000271,
+      "prompt_tokens": 477,
+      "completion_tokens": 309,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "slow-pending-updates",
+        "overheating-fan"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "hardware--laptop-overheating"
+      ]
+    },
+    {
+      "ticket": "HO-033",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.8055077639999695,
+      "prompt_tokens": 505,
+      "completion_tokens": 532,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "phishing-suspicious-sign-ins",
+        "phishing-account-locked",
+        "email-service-outage",
+        "outlook-password-expired"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-034",
+      "expected": "overheating-fan",
+      "predicted": "overheating-fan",
+      "retrieved": [
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:dev-3",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.7541337580000231,
+      "prompt_tokens": 475,
+      "completion_tokens": 460,
+      "error": null,
+      "entry": [
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "overheating-fan",
+        "system--system-running-slow",
+        "overheating-pending-firmware"
+      ],
+      "issues": [
+        "hardware--laptop-overheating",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-035",
+      "expected": "mailbox-full",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:mail-1",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.7499252169999977,
+      "prompt_tokens": 516,
+      "completion_tokens": 143,
+      "error": null,
+      "entry": [
+        "microsoft-office--outlook-not-sending-emails",
+        "email-service-outage",
+        "outlook-password-expired",
+        "mailbox-full",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-036",
+      "expected": "vpn-client-outdated",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "policy:vpn-2",
+        "policy:vpn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.7540659580000124,
+      "prompt_tokens": 439,
+      "completion_tokens": 127,
+      "error": null,
+      "entry": [
+        "vpn-gateway-outage",
+        "network--vpn-not-connecting",
+        "vpn-client-outdated",
+        "vpn-certificate-expired",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "network--vpn-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-037",
+      "expected": "escalate",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-3",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": null,
+      "seconds": 1.086453892999998,
+      "prompt_tokens": 499,
+      "completion_tokens": 285,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-thermal-throttling",
+        "hardware--laptop-overheating",
+        "overheating-fan",
+        "slow-pending-updates"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "hardware--laptop-overheating"
+      ]
+    },
+    {
+      "ticket": "HO-038",
+      "expected": "mfa-locked",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-3",
+        "policy:pw-1"
+      ],
+      "retrieval_hit": false,
+      "seconds": 1.4468551779999643,
+      "prompt_tokens": 645,
+      "completion_tokens": 435,
+      "error": null,
+      "entry": [
+        "outlook-password-expired",
+        "wifi-password-expired",
+        "locked-expired-password",
+        "mfa-sso-outage",
+        "phishing-account-locked"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-039",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.1075076980000063,
+      "prompt_tokens": 600,
+      "completion_tokens": 179,
+      "error": null,
+      "entry": [
+        "identity--account-locked",
+        "locked-failed-sign-ins",
+        "locked-expired-password",
+        "wifi-password-expired",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "identity--account-locked",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-040",
+      "expected": "overheating-fan",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:dev-3",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.700135545000023,
+      "prompt_tokens": 501,
+      "completion_tokens": 1493,
+      "error": null,
+      "entry": [
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "overheating-fan",
+        "overheating-pending-firmware",
+        "slow-low-disk"
+      ],
+      "issues": [
+        "hardware--laptop-overheating",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-041",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.5609828650000281,
+      "prompt_tokens": 601,
+      "completion_tokens": 327,
+      "error": null,
+      "entry": [
+        "identity--account-locked",
+        "locked-failed-sign-ins",
+        "locked-expired-password",
+        "wifi-password-expired",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "identity--account-locked",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-042",
+      "expected": "locked-expired-password",
+      "predicted": null,
+      "retrieved": [
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.7982047510000143,
+      "prompt_tokens": 559,
+      "completion_tokens": 127,
+      "error": "no valid cause id in the reply",
+      "entry": [
+        "identity--account-locked",
+        "locked-failed-sign-ins",
+        "phishing-account-locked",
+        "locked-expired-password",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "identity--account-locked",
+        "security--phishing-email-detected"
+      ]
+    },
+    {
+      "ticket": "HO-043",
+      "expected": "outlook-password-expired",
+      "predicted": "mailbox-full",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:mail-1",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.02652425399998,
+      "prompt_tokens": 482,
+      "completion_tokens": 1258,
+      "error": null,
+      "entry": [
+        "email-service-outage",
+        "microsoft-office--outlook-not-sending-emails",
+        "mailbox-full",
+        "outlook-password-expired",
+        "phishing-account-locked"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "security--phishing-email-detected"
+      ]
+    },
+    {
+      "ticket": "HO-044",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.2347862099999816,
+      "prompt_tokens": 560,
+      "completion_tokens": 318,
+      "error": null,
+      "entry": [
+        "locked-failed-sign-ins",
+        "identity--account-locked",
+        "phishing-account-locked",
+        "locked-expired-password",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "identity--account-locked",
+        "security--phishing-email-detected"
+      ]
+    },
+    {
+      "ticket": "HO-045",
+      "expected": "overheating-pending-firmware",
+      "predicted": "overheating-fan",
+      "retrieved": [
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:dev-3",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.9528576769999972,
+      "prompt_tokens": 475,
+      "completion_tokens": 222,
+      "error": null,
+      "entry": [
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "overheating-fan",
+        "system--system-running-slow",
+        "overheating-pending-firmware"
+      ],
+      "issues": [
+        "hardware--laptop-overheating",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-046",
+      "expected": "phishing-account-locked",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.244175869000003,
+      "prompt_tokens": 521,
+      "completion_tokens": 660,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "email-service-outage",
+        "outlook-password-expired",
+        "wifi-password-expired",
+        "phishing-suspicious-sign-ins"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-047",
+      "expected": "escalate",
+      "predicted": "email-service-outage",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:mail-4",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": null,
+      "seconds": 6.656256086000042,
+      "prompt_tokens": 505,
+      "completion_tokens": 2019,
+      "error": null,
+      "entry": [
+        "microsoft-office--outlook-not-sending-emails",
+        "email-service-outage",
+        "outlook-password-expired",
+        "mailbox-full",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-048",
+      "expected": "slow-pending-updates",
+      "predicted": "slow-low-disk",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:disk-nearly-full",
+        "cause:update-cache-filling-disk",
+        "policy:dev-3",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.636764691999986,
+      "prompt_tokens": 476,
+      "completion_tokens": 1478,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-pending-updates",
+        "slow-thermal-throttling",
+        "update-cache-filling-disk",
+        "app-update-waits-for-os"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "system--disk-space-running-out"
+      ]
+    },
+    {
+      "ticket": "HO-049",
+      "expected": "slow-thermal-throttling",
+      "predicted": "slow-pending-updates",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-3",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.223997617000009,
+      "prompt_tokens": 477,
+      "completion_tokens": 634,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-thermal-throttling",
+        "hardware--laptop-overheating",
+        "overheating-fan",
+        "slow-pending-updates"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "hardware--laptop-overheating"
+      ]
+    },
+    {
+      "ticket": "HO-050",
+      "expected": "wifi-service-degraded",
+      "predicted": "wifi-service-degraded",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:vpn-4",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 7.0118421189999935,
+      "prompt_tokens": 511,
+      "completion_tokens": 2167,
+      "error": null,
+      "entry": [
+        "network--wi-fi-not-connecting",
+        "wifi-service-degraded",
+        "wifi-password-expired",
+        "wifi-device-noncompliant",
+        "email-service-outage"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-051",
+      "expected": "overheating-fan",
+      "predicted": "overheating-fan",
+      "retrieved": [
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:dev-3",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.235338194999997,
+      "prompt_tokens": 475,
+      "completion_tokens": 1703,
+      "error": null,
+      "entry": [
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "overheating-fan",
+        "system--system-running-slow",
+        "overheating-pending-firmware"
+      ],
+      "issues": [
+        "hardware--laptop-overheating",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-052",
+      "expected": "locked-expired-password",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.7711146700000313,
+      "prompt_tokens": 559,
+      "completion_tokens": 463,
+      "error": null,
+      "entry": [
+        "identity--account-locked",
+        "locked-failed-sign-ins",
+        "phishing-account-locked",
+        "locked-expired-password",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "identity--account-locked",
+        "security--phishing-email-detected"
+      ]
+    },
+    {
+      "ticket": "HO-053",
+      "expected": "av-definitions-stale",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:sw-3",
+        "policy:dev-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.1830053219999854,
+      "prompt_tokens": 547,
+      "completion_tokens": 595,
+      "error": null,
+      "entry": [
+        "av-definitions-stale",
+        "security--antivirus-not-updating",
+        "install-catalog-outage",
+        "vpn-client-outdated",
+        "vpn-certificate-expired"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-054",
+      "expected": "slow-pending-updates",
+      "predicted": "slow-pending-updates",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-3",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.2467576529999747,
+      "prompt_tokens": 474,
+      "completion_tokens": 898,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-thermal-throttling",
+        "hardware--laptop-overheating",
+        "overheating-fan",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "hardware--laptop-overheating"
+      ]
+    },
+    {
+      "ticket": "HO-055",
+      "expected": "phishing-account-locked",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.8141541780000239,
+      "prompt_tokens": 490,
+      "completion_tokens": 459,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "phishing-suspicious-sign-ins",
+        "phishing-account-locked",
+        "outlook-password-expired",
+        "wifi-password-expired"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-056",
+      "expected": "mailbox-full",
+      "predicted": "email-service-outage",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:mail-4",
+        "policy:mail-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.232735787000024,
+      "prompt_tokens": 519,
+      "completion_tokens": 1227,
+      "error": null,
+      "entry": [
+        "email-service-outage",
+        "microsoft-office--outlook-not-sending-emails",
+        "outlook-password-expired",
+        "mailbox-full",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-057",
+      "expected": "slow-thermal-throttling",
+      "predicted": "slow-low-disk",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:dev-3",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.750845002999995,
+      "prompt_tokens": 517,
+      "completion_tokens": 858,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-pending-updates",
+        "install-catalog-outage",
+        "slow-thermal-throttling",
+        "app-update-catalog-degraded"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-058",
+      "expected": "wifi-service-degraded",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:printer-offline",
+        "cause:printer-paper-jam",
+        "cause:printing-service-outage",
+        "policy:vpn-4",
+        "policy:prn-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.6791395010000087,
+      "prompt_tokens": 490,
+      "completion_tokens": 115,
+      "error": null,
+      "entry": [
+        "network--wi-fi-not-connecting",
+        "wifi-service-degraded",
+        "wifi-device-noncompliant",
+        "wifi-password-expired",
+        "printer-offline"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "hardware--printer-not-responding"
+      ]
+    },
+    {
+      "ticket": "HO-059",
+      "expected": "install-disk-full",
+      "predicted": "install-catalog-outage",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.04182677,
+      "prompt_tokens": 501,
+      "completion_tokens": 935,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-catalog-outage",
+        "install-device-noncompliant",
+        "software--application-not-updating",
+        "install-disk-full"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-060",
+      "expected": "email-service-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "policy:mail-1",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.7075943450000182,
+      "prompt_tokens": 504,
+      "completion_tokens": 468,
+      "error": null,
+      "entry": [
+        "microsoft-office--outlook-not-sending-emails",
+        "email-service-outage",
+        "mailbox-full",
+        "outlook-password-expired",
+        "install-catalog-outage"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "software--program-won-t-install"
+      ]
+    },
+    {
+      "ticket": "HO-061",
+      "expected": "wifi-device-noncompliant",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:prn-3",
+        "policy:vpn-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.6099235390000217,
+      "prompt_tokens": 511,
+      "completion_tokens": 446,
+      "error": null,
+      "entry": [
+        "network--wi-fi-not-connecting",
+        "wifi-service-degraded",
+        "wifi-password-expired",
+        "wifi-device-noncompliant",
+        "email-service-outage"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-062",
+      "expected": "vpn-certificate-expired",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "policy:vpn-2",
+        "policy:vpn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 6.83983476100002,
+      "prompt_tokens": 601,
+      "completion_tokens": 1991,
+      "error": null,
+      "entry": [
+        "vpn-gateway-outage",
+        "network--vpn-not-connecting",
+        "vpn-certificate-expired",
+        "vpn-client-outdated",
+        "av-remote-vpn-expired"
+      ],
+      "issues": [
+        "network--vpn-not-connecting",
+        "security--antivirus-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-063",
+      "expected": "mfa-sso-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": false,
+      "seconds": 1.8292944230000217,
+      "prompt_tokens": 634,
+      "completion_tokens": 517,
+      "error": null,
+      "entry": [
+        "outlook-password-expired",
+        "wifi-password-expired",
+        "mfa-sso-outage",
+        "locked-failed-sign-ins",
+        "locked-expired-password"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-064",
+      "expected": "escalate",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-3",
+        "policy:dev-1"
+      ],
+      "retrieval_hit": null,
+      "seconds": 1.0766469010000037,
+      "prompt_tokens": 526,
+      "completion_tokens": 197,
+      "error": null,
+      "entry": [
+        "av-definitions-stale",
+        "security--antivirus-not-updating",
+        "app-update-catalog-degraded",
+        "install-device-noncompliant",
+        "vpn-client-outdated"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-065",
+      "expected": "escalate",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": null,
+      "seconds": 2.6857842300000243,
+      "prompt_tokens": 517,
+      "completion_tokens": 769,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "phishing-account-locked",
+        "phishing-suspicious-sign-ins",
+        "email-service-outage",
+        "outlook-password-expired"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-066",
+      "expected": "install-device-noncompliant",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.8242238459999953,
+      "prompt_tokens": 501,
+      "completion_tokens": 839,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-catalog-outage",
+        "install-device-noncompliant",
+        "install-disk-full",
+        "app-update-low-disk"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-067",
+      "expected": "slow-low-disk",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-3",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.404214842999977,
+      "prompt_tokens": 500,
+      "completion_tokens": 371,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-thermal-throttling",
+        "hardware--laptop-overheating",
+        "slow-pending-updates",
+        "overheating-fan"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "hardware--laptop-overheating"
+      ]
+    },
+    {
+      "ticket": "HO-068",
+      "expected": "install-catalog-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.2677689500000042,
+      "prompt_tokens": 485,
+      "completion_tokens": 296,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-catalog-outage",
+        "install-device-noncompliant",
+        "app-update-catalog-degraded",
+        "install-disk-full"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-069",
+      "expected": "install-catalog-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.564452012000004,
+      "prompt_tokens": 500,
+      "completion_tokens": 1713,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-catalog-outage",
+        "install-device-noncompliant",
+        "install-disk-full",
+        "app-update-low-disk"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-070",
+      "expected": "overheating-pending-firmware",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:dev-3",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.7644433090000007,
+      "prompt_tokens": 488,
+      "completion_tokens": 454,
+      "error": null,
+      "entry": [
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "overheating-fan",
+        "overheating-pending-firmware",
+        "email-service-outage"
+      ],
+      "issues": [
+        "hardware--laptop-overheating",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-071",
+      "expected": "overheating-pending-firmware",
+      "predicted": "overheating-pending-firmware",
+      "retrieved": [
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:dev-3",
+        "policy:dev-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 0.9495654859999831,
+      "prompt_tokens": 500,
+      "completion_tokens": 230,
+      "error": null,
+      "entry": [
+        "hardware--laptop-overheating",
+        "slow-thermal-throttling",
+        "overheating-fan",
+        "overheating-pending-firmware",
+        "slow-low-disk"
+      ],
+      "issues": [
+        "hardware--laptop-overheating",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-072",
+      "expected": "av-remote-vpn-expired",
+      "predicted": null,
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-3",
+        "policy:dev-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 12.485768588999974,
+      "prompt_tokens": 537,
+      "completion_tokens": 4096,
+      "error": "reply cut off at the token limit",
+      "entry": [
+        "security--antivirus-not-updating",
+        "av-definitions-stale",
+        "av-remote-vpn-expired",
+        "software--application-not-updating",
+        "app-update-low-disk"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-073",
+      "expected": "mfa-not-enrolled",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mfa-locked",
+        "cause:mfa-not-enrolled",
+        "cause:mfa-sso-outage",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-3",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.8150013900000204,
+      "prompt_tokens": 628,
+      "completion_tokens": 518,
+      "error": null,
+      "entry": [
+        "mfa-locked",
+        "mfa-not-enrolled",
+        "identity--mfa-lockout",
+        "wifi-password-expired",
+        "outlook-password-expired"
+      ],
+      "issues": [
+        "identity--mfa-lockout",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-074",
+      "expected": "av-low-disk",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "policy:sw-3",
+        "policy:dev-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.9689466870000274,
+      "prompt_tokens": 588,
+      "completion_tokens": 564,
+      "error": null,
+      "entry": [
+        "av-definitions-stale",
+        "security--antivirus-not-updating",
+        "vpn-client-outdated",
+        "av-remote-vpn-expired",
+        "vpn-certificate-expired"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "network--vpn-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-075",
+      "expected": "escalate",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": null,
+      "seconds": 1.7375853730000017,
+      "prompt_tokens": 505,
+      "completion_tokens": 391,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "phishing-suspicious-sign-ins",
+        "phishing-account-locked",
+        "email-service-outage",
+        "outlook-password-expired"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-076",
+      "expected": "av-remote-vpn-expired",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "policy:sw-3",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 3.830210412999975,
+      "prompt_tokens": 606,
+      "completion_tokens": 1170,
+      "error": null,
+      "entry": [
+        "security--antivirus-not-updating",
+        "av-definitions-stale",
+        "vpn-certificate-expired",
+        "av-remote-vpn-expired",
+        "wifi-password-expired"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "network--vpn-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-077",
+      "expected": "vpn-client-outdated",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "policy:vpn-2",
+        "policy:vpn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.823964758000045,
+      "prompt_tokens": 438,
+      "completion_tokens": 442,
+      "error": null,
+      "entry": [
+        "vpn-gateway-outage",
+        "network--vpn-not-connecting",
+        "vpn-certificate-expired",
+        "vpn-client-outdated",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "network--vpn-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-078",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.116327442999989,
+      "prompt_tokens": 585,
+      "completion_tokens": 1342,
+      "error": null,
+      "entry": [
+        "wifi-password-expired",
+        "identity--account-locked",
+        "mfa-sso-outage",
+        "locked-expired-password",
+        "locked-failed-sign-ins"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "identity--account-locked"
+      ]
+    },
+    {
+      "ticket": "HO-079",
+      "expected": "mfa-not-enrolled",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mfa-locked",
+        "cause:mfa-not-enrolled",
+        "cause:mfa-sso-outage",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-3",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.0128611330000012,
+      "prompt_tokens": 614,
+      "completion_tokens": 609,
+      "error": null,
+      "entry": [
+        "mfa-locked",
+        "mfa-not-enrolled",
+        "identity--mfa-lockout",
+        "wifi-password-expired",
+        "locked-failed-sign-ins"
+      ],
+      "issues": [
+        "identity--mfa-lockout",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-080",
+      "expected": "slow-low-disk",
+      "predicted": "slow-low-disk",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:disk-nearly-full",
+        "cause:update-cache-filling-disk",
+        "policy:dev-3",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 6.029218638999964,
+      "prompt_tokens": 475,
+      "completion_tokens": 1812,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-pending-updates",
+        "slow-thermal-throttling",
+        "disk-nearly-full",
+        "update-cache-filling-disk"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "system--disk-space-running-out"
+      ]
+    },
+    {
+      "ticket": "HO-081",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.3783778769999913,
+      "prompt_tokens": 490,
+      "completion_tokens": 627,
+      "error": null,
+      "entry": [
+        "phishing-suspicious-sign-ins",
+        "security--phishing-email-detected",
+        "phishing-account-locked",
+        "outlook-password-expired",
+        "wifi-password-expired"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-082",
+      "expected": "install-device-noncompliant",
+      "predicted": "install-disk-full",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "policy:sw-1",
+        "policy:sw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.1267470440000125,
+      "prompt_tokens": 532,
+      "completion_tokens": 597,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-device-noncompliant",
+        "install-catalog-outage",
+        "install-disk-full",
+        "slow-pending-updates"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "system--system-running-slow"
+      ]
+    },
+    {
+      "ticket": "HO-083",
+      "expected": "phishing-suspicious-sign-ins",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "policy:mail-2",
+        "policy:mail-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.775121616999968,
+      "prompt_tokens": 429,
+      "completion_tokens": 491,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "phishing-suspicious-sign-ins",
+        "phishing-account-locked",
+        "locked-expired-password",
+        "outlook-password-expired"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "identity--account-locked"
+      ]
+    },
+    {
+      "ticket": "HO-084",
+      "expected": "av-low-disk",
+      "predicted": "av-remote-vpn-expired",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-3",
+        "policy:dev-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 5.699491275000014,
+      "prompt_tokens": 538,
+      "completion_tokens": 1658,
+      "error": null,
+      "entry": [
+        "security--antivirus-not-updating",
+        "av-definitions-stale",
+        "software--application-not-updating",
+        "av-remote-vpn-expired",
+        "app-update-low-disk"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-085",
+      "expected": "mfa-sso-outage",
+      "predicted": "mfa-sso-outage",
+      "retrieved": [
+        "cause:mfa-locked",
+        "cause:mfa-not-enrolled",
+        "cause:mfa-sso-outage",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-3",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.556123630000002,
+      "prompt_tokens": 629,
+      "completion_tokens": 1358,
+      "error": null,
+      "entry": [
+        "mfa-locked",
+        "mfa-not-enrolled",
+        "identity--mfa-lockout",
+        "wifi-password-expired",
+        "mfa-sso-outage"
+      ],
+      "issues": [
+        "identity--mfa-lockout",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-086",
+      "expected": "av-definitions-stale",
+      "predicted": "av-definitions-stale",
+      "retrieved": [
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "policy:sw-3",
+        "policy:dev-1"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.098830425000017,
+      "prompt_tokens": 587,
+      "completion_tokens": 278,
+      "error": null,
+      "entry": [
+        "av-definitions-stale",
+        "security--antivirus-not-updating",
+        "vpn-client-outdated",
+        "vpn-certificate-expired",
+        "av-remote-vpn-expired"
+      ],
+      "issues": [
+        "security--antivirus-not-updating",
+        "network--vpn-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-087",
+      "expected": "mfa-sso-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-3",
+        "policy:pw-2"
+      ],
+      "retrieval_hit": false,
+      "seconds": 1.4686247110000181,
+      "prompt_tokens": 648,
+      "completion_tokens": 329,
+      "error": null,
+      "entry": [
+        "outlook-password-expired",
+        "wifi-password-expired",
+        "locked-expired-password",
+        "mfa-sso-outage",
+        "phishing-account-locked"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-088",
+      "expected": "vpn-certificate-expired",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "policy:vpn-2",
+        "policy:vpn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.652669880000019,
+      "prompt_tokens": 437,
+      "completion_tokens": 452,
+      "error": null,
+      "entry": [
+        "vpn-gateway-outage",
+        "vpn-certificate-expired",
+        "network--vpn-not-connecting",
+        "vpn-client-outdated",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "network--vpn-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-089",
+      "expected": "mfa-not-enrolled",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-2",
+        "policy:pw-4"
+      ],
+      "retrieval_hit": false,
+      "seconds": 0.8624816249999867,
+      "prompt_tokens": 574,
+      "completion_tokens": 209,
+      "error": null,
+      "entry": [
+        "outlook-password-expired",
+        "wifi-password-expired",
+        "locked-expired-password",
+        "mfa-sso-outage",
+        "locked-failed-sign-ins"
+      ],
+      "issues": [
+        "microsoft-office--outlook-not-sending-emails",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-090",
+      "expected": "locked-failed-sign-ins",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mfa-locked",
+        "cause:mfa-not-enrolled",
+        "cause:mfa-sso-outage",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": false,
+      "seconds": 1.7979774009999687,
+      "prompt_tokens": 650,
+      "completion_tokens": 529,
+      "error": null,
+      "entry": [
+        "wifi-password-expired",
+        "mfa-sso-outage",
+        "identity--account-locked",
+        "phishing-account-locked",
+        "locked-expired-password"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "identity--mfa-lockout"
+      ]
+    },
+    {
+      "ticket": "HO-091",
+      "expected": "install-catalog-outage",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "policy:sw-2"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.406245391000027,
+      "prompt_tokens": 500,
+      "completion_tokens": 1244,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-catalog-outage",
+        "install-device-noncompliant",
+        "install-disk-full",
+        "app-update-low-disk"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-092",
+      "expected": "wifi-password-expired",
+      "predicted": "wifi-service-degraded",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:prn-3",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 4.130698001999974,
+      "prompt_tokens": 527,
+      "completion_tokens": 1169,
+      "error": null,
+      "entry": [
+        "wifi-service-degraded",
+        "network--wi-fi-not-connecting",
+        "email-service-outage",
+        "wifi-password-expired",
+        "printing-service-outage"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-093",
+      "expected": "vpn-account-locked",
+      "predicted": "vpn-certificate-expired",
+      "retrieved": [
+        "cause:vpn-certificate-expired",
+        "cause:vpn-client-outdated",
+        "cause:vpn-gateway-outage",
+        "cause:vpn-account-locked",
+        "cause:av-definitions-stale",
+        "cause:av-low-disk",
+        "cause:av-remote-vpn-expired",
+        "policy:vpn-2",
+        "policy:vpn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.751451067000005,
+      "prompt_tokens": 601,
+      "completion_tokens": 791,
+      "error": null,
+      "entry": [
+        "vpn-gateway-outage",
+        "network--vpn-not-connecting",
+        "vpn-certificate-expired",
+        "vpn-client-outdated",
+        "av-remote-vpn-expired"
+      ],
+      "issues": [
+        "network--vpn-not-connecting",
+        "security--antivirus-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-094",
+      "expected": "phishing-account-locked",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-4"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.6636350109999967,
+      "prompt_tokens": 520,
+      "completion_tokens": 436,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "email-service-outage",
+        "outlook-password-expired",
+        "wifi-password-expired",
+        "phishing-account-locked"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-095",
+      "expected": "escalate",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:slow-low-disk",
+        "cause:slow-thermal-throttling",
+        "cause:slow-pending-updates",
+        "cause:overheating-fan",
+        "cause:overheating-pending-firmware",
+        "policy:dev-3",
+        "policy:dev-4"
+      ],
+      "retrieval_hit": null,
+      "seconds": 0.9993001480000316,
+      "prompt_tokens": 462,
+      "completion_tokens": 198,
+      "error": null,
+      "entry": [
+        "system--system-running-slow",
+        "slow-thermal-throttling",
+        "hardware--laptop-overheating",
+        "slow-pending-updates",
+        "overheating-fan"
+      ],
+      "issues": [
+        "system--system-running-slow",
+        "hardware--laptop-overheating"
+      ]
+    },
+    {
+      "ticket": "HO-096",
+      "expected": "locked-expired-password",
+      "predicted": "locked-failed-sign-ins",
+      "retrieved": [
+        "cause:locked-failed-sign-ins",
+        "cause:locked-expired-password",
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.1763640899999928,
+      "prompt_tokens": 600,
+      "completion_tokens": 247,
+      "error": null,
+      "entry": [
+        "identity--account-locked",
+        "locked-failed-sign-ins",
+        "locked-expired-password",
+        "wifi-password-expired",
+        "vpn-account-locked"
+      ],
+      "issues": [
+        "identity--account-locked",
+        "network--wi-fi-not-connecting"
+      ]
+    },
+    {
+      "ticket": "HO-097",
+      "expected": "phishing-account-locked",
+      "predicted": "phishing-suspicious-sign-ins",
+      "retrieved": [
+        "cause:phishing-suspicious-sign-ins",
+        "cause:phishing-account-locked",
+        "cause:mailbox-full",
+        "cause:email-service-outage",
+        "cause:outlook-password-expired",
+        "policy:mail-2",
+        "policy:mail-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.5152144169999815,
+      "prompt_tokens": 478,
+      "completion_tokens": 359,
+      "error": null,
+      "entry": [
+        "security--phishing-email-detected",
+        "phishing-suspicious-sign-ins",
+        "phishing-account-locked",
+        "outlook-password-expired",
+        "locked-expired-password"
+      ],
+      "issues": [
+        "security--phishing-email-detected",
+        "microsoft-office--outlook-not-sending-emails"
+      ]
+    },
+    {
+      "ticket": "HO-098",
+      "expected": "escalate",
+      "predicted": "install-disk-full",
+      "retrieved": [
+        "cause:install-catalog-outage",
+        "cause:install-disk-full",
+        "cause:install-device-noncompliant",
+        "cause:app-update-catalog-degraded",
+        "cause:app-update-low-disk",
+        "cause:app-update-waits-for-os",
+        "policy:sw-1",
+        "policy:sw-3"
+      ],
+      "retrieval_hit": null,
+      "seconds": 2.0190953779999745,
+      "prompt_tokens": 528,
+      "completion_tokens": 539,
+      "error": null,
+      "entry": [
+        "software--program-won-t-install",
+        "install-device-noncompliant",
+        "install-disk-full",
+        "install-catalog-outage",
+        "app-update-low-disk"
+      ],
+      "issues": [
+        "software--program-won-t-install",
+        "software--application-not-updating"
+      ]
+    },
+    {
+      "ticket": "HO-099",
+      "expected": "mfa-locked",
+      "predicted": "mfa-sso-outage",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:mfa-locked",
+        "cause:mfa-not-enrolled",
+        "cause:mfa-sso-outage",
+        "policy:pw-2",
+        "policy:pw-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 2.322640094999997,
+      "prompt_tokens": 656,
+      "completion_tokens": 655,
+      "error": null,
+      "entry": [
+        "wifi-password-expired",
+        "mfa-sso-outage",
+        "phishing-account-locked",
+        "locked-expired-password",
+        "locked-failed-sign-ins"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "identity--mfa-lockout"
+      ]
+    },
+    {
+      "ticket": "HO-100",
+      "expected": "wifi-password-expired",
+      "predicted": "escalate",
+      "retrieved": [
+        "cause:wifi-service-degraded",
+        "cause:wifi-password-expired",
+        "cause:wifi-device-noncompliant",
+        "cause:printer-offline",
+        "cause:printer-paper-jam",
+        "cause:printing-service-outage",
+        "policy:vpn-4",
+        "policy:prn-3"
+      ],
+      "retrieval_hit": true,
+      "seconds": 1.2205965429999992,
+      "prompt_tokens": 483,
+      "completion_tokens": 297,
+      "error": null,
+      "entry": [
+        "network--wi-fi-not-connecting",
+        "wifi-service-degraded",
+        "wifi-device-noncompliant",
+        "wifi-password-expired",
+        "printer-offline"
+      ],
+      "issues": [
+        "network--wi-fi-not-connecting",
+        "hardware--printer-not-responding"
+      ]
+    }
+  ],
+  "tokens": {
+    "calls": 108,
+    "prompt_tokens": 53208,
+    "completion_tokens": 78934,
+    "budget": 250000
+  }
+}
