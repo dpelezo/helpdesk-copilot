@@ -1,4 +1,4 @@
-.PHONY: company seed lint test conformance
+.PHONY: company seed lint test conformance tickets
 
 # Regenerate the mock company fixture (fixtures/company.json).
 company:
@@ -17,3 +17,7 @@ test:
 # Run the MCP conformance suite on the six mock systems (needs npx, Node 22).
 conformance:
 	bash scripts/conformance.sh
+
+# Regenerate the eval tickets (eval ground truth: change only in its own PR).
+tickets:
+	python -m app.mock.tickets
